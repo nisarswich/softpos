@@ -74,6 +74,11 @@
 </div>
 
 <div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
   <div class="tag">Mockup controls — entry origin</div>
   <button data-state-btn-group="origin" data-state-btn="manual" class="active" onclick="showState('origin','manual')">Manual entry</button>
   <button data-state-btn-group="origin" data-state-btn="ecr" onclick="showState('origin','ecr')">From ECR request</button>

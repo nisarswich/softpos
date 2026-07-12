@@ -35,11 +35,11 @@
         </div>
 
         <div class="card" style="margin-bottom:14px;">
-          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Reference</span><span class="mono" style="color:#fff; font-size:12.5px;">#TXN-88231</span></div>
-          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Time</span><span style="color:#fff; font-size:13px;">Today, 3:14 PM</span></div>
-          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Branch</span><span style="color:#fff; font-size:13px;">Riverside Outlet</span></div>
-          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Channel</span><span style="color:#fff; font-size:13px;" id="channel-label">Retail</span></div>
-          <div class="card-strip" style="display:flex; justify-content:space-between; border-bottom:none;"><span class="body-text">Method</span><span style="color:#fff; font-size:13px;">Card · **** 4471</span></div>
+          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Reference</span><span class="mono" style="color:var(--heading); font-size:12.5px;">#TXN-88231</span></div>
+          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Time</span><span style="color:var(--heading); font-size:13px;">Today, 3:14 PM</span></div>
+          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Branch</span><span style="color:var(--heading); font-size:13px;">Riverside Outlet</span></div>
+          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Channel</span><span style="color:var(--heading); font-size:13px;" id="channel-label">Retail</span></div>
+          <div class="card-strip" style="display:flex; justify-content:space-between; border-bottom:none;"><span class="body-text">Method</span><span style="color:var(--heading); font-size:13px;">Card · **** 4471</span></div>
         </div>
 
         <!-- Cashier/device info — retail only -->
@@ -73,6 +73,11 @@
 </div>
 
 <div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
   <div class="tag">Mockup controls — channel</div>
   <button data-state-btn-group="channel" data-state-btn="retail" class="active" onclick="showState('channel','retail'); document.getElementById('channel-label').textContent='Retail';">Retail</button>
   <button data-state-btn-group="channel" data-state-btn="online" onclick="showState('channel','online'); document.getElementById('channel-label').textContent='Online';">Online</button>

@@ -35,8 +35,8 @@
           <p class="body-text" style="margin-bottom:16px;">You'll be signed out. The device stays bound to this outlet — the next cashier just signs in.</p>
 
           <div class="card" style="margin-bottom:18px;">
-            <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Your shift total</span><span style="font-weight:700; color:#fff;">Rs 18,420.00</span></div>
-            <div class="card-strip" style="border-bottom:none; display:flex; justify-content:space-between;"><span class="body-text">Transactions</span><span style="font-weight:700; color:#fff;">11</span></div>
+            <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Your shift total</span><span style="font-weight:700; color:var(--heading);">Rs 18,420.00</span></div>
+            <div class="card-strip" style="border-bottom:none; display:flex; justify-content:space-between;"><span class="body-text">Transactions</span><span style="font-weight:700; color:var(--heading);">11</span></div>
           </div>
 
           <a href="screen-01-login.html" class="btn primary block" style="margin-bottom:10px;">End Shift & Sign Out</a>
@@ -52,6 +52,11 @@
 </div>
 
 <div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
   <a href="index.html" class="back" style="width:100%;text-align:center;">← All screens</a>
 </div>
 

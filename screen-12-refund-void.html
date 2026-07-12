@@ -31,15 +31,15 @@
         <div class="micro-label" style="padding:0 16px 8px;">Today's transactions</div>
         <div style="flex:1; overflow-y:auto;">
           <button class="list-row" style="width:100%; background:none; border:none; border-bottom:1px solid var(--border); text-align:left; cursor:pointer;" onclick="showState('refund','confirm')">
-            <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:#fff;">Rs 2,450.00</div><div class="body-text" style="font-size:12px;">Card · 3:14 PM · #TXN-88231</div></div>
+            <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:var(--heading);">Rs 2,450.00</div><div class="body-text" style="font-size:12px;">Card · 3:14 PM · #TXN-88231</div></div>
             <span class="badge green">Success</span>
           </button>
           <button class="list-row" style="width:100%; background:none; border:none; border-bottom:1px solid var(--border); text-align:left; cursor:pointer;">
-            <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:#fff;">Rs 890.00</div><div class="body-text" style="font-size:12px;">QR · 2:52 PM · #TXN-88229</div></div>
+            <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:var(--heading);">Rs 890.00</div><div class="body-text" style="font-size:12px;">QR · 2:52 PM · #TXN-88229</div></div>
             <span class="badge green">Success</span>
           </button>
           <button class="list-row" style="width:100%; background:none; border:none; text-align:left; cursor:pointer;">
-            <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:#fff;">Rs 1,200.00</div><div class="body-text" style="font-size:12px;">Card · 1:40 PM · #TXN-88225</div></div>
+            <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:var(--heading);">Rs 1,200.00</div><div class="body-text" style="font-size:12px;">Card · 1:40 PM · #TXN-88225</div></div>
             <span class="badge red">Declined</span>
           </button>
         </div>
@@ -48,7 +48,7 @@
       <!-- Confirm refund -->
       <div data-state-group="refund" data-state-name="confirm" data-active="false" style="flex:1; display:flex; flex-direction:column; padding:0 20px;">
         <div class="card" style="margin:12px 0 18px;">
-          <div class="card-strip"><div class="micro-label" style="margin-bottom:3px;">Original transaction</div><div style="font-size:14.5px; font-weight:600; color:#fff;">Rs 2,450.00 · Card · #TXN-88231</div></div>
+          <div class="card-strip"><div class="micro-label" style="margin-bottom:3px;">Original transaction</div><div style="font-size:14.5px; font-weight:600; color:var(--heading);">Rs 2,450.00 · Card · #TXN-88231</div></div>
           <div class="card-strip" style="border-bottom:none;"><div class="micro-label" style="margin-bottom:3px;">Paid</div><div class="body-text">Today, 3:14 PM · **** 4471</div></div>
         </div>
 
@@ -88,6 +88,11 @@
 </div>
 
 <div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
   <div class="tag">Mockup controls — state</div>
   <button data-state-btn-group="refund" data-state-btn="list" class="active" onclick="showState('refund','list')">Select transaction</button>
   <button data-state-btn-group="refund" data-state-btn="confirm" onclick="showState('refund','confirm')">Confirm refund</button>

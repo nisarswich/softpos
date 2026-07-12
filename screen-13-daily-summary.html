@@ -34,12 +34,12 @@
         <div style="display:flex; gap:10px; margin-bottom:14px;">
           <div class="card card-pad" style="flex:1;">
             <div class="micro-label" style="margin-bottom:6px;">Card</div>
-            <div style="font-size:19px; font-weight:800; color:#fff;">Rs 31,200</div>
+            <div style="font-size:19px; font-weight:800; color:var(--heading);">Rs 31,200</div>
             <div class="body-text" style="font-size:12px;">18 txns</div>
           </div>
           <div class="card card-pad" style="flex:1;">
             <div class="micro-label" style="margin-bottom:6px;">QR</div>
-            <div style="font-size:19px; font-weight:800; color:#fff;">Rs 17,730</div>
+            <div style="font-size:19px; font-weight:800; color:var(--heading);">Rs 17,730</div>
             <div class="body-text" style="font-size:12px;">9 txns</div>
           </div>
         </div>
@@ -51,11 +51,11 @@
 
         <div class="micro-label" style="margin-bottom:8px;">Recent transactions</div>
         <div class="card">
-          <div class="list-row"><div style="flex:1;"><div style="font-size:14px; font-weight:600; color:#fff;">Rs 2,450.00</div><div class="body-text" style="font-size:11.5px;">Card · 3:14 PM</div></div><span class="badge green">Success</span></div>
-          <div class="list-row"><div style="flex:1;"><div style="font-size:14px; font-weight:600; color:#fff;">Rs 890.00</div><div class="body-text" style="font-size:11.5px;">QR · 2:52 PM</div></div><span class="badge green">Success</span></div>
-          <div class="list-row"><div style="flex:1;"><div style="font-size:14px; font-weight:600; color:#fff;">Rs 1,200.00</div><div class="body-text" style="font-size:11.5px;">Card · 1:40 PM</div></div><span class="badge red">Declined</span></div>
-          <div class="list-row"><div style="flex:1;"><div style="font-size:14px; font-weight:600; color:#fff;">Rs 3,600.00</div><div class="body-text" style="font-size:11.5px;">QR · 12:58 PM</div></div><span class="badge green">Success</span></div>
-          <div class="list-row"><div style="flex:1;"><div style="font-size:14px; font-weight:600; color:#fff;">Rs 540.00</div><div class="body-text" style="font-size:11.5px;">Card · 12:11 PM</div></div><span class="badge amber">Refunded</span></div>
+          <div class="list-row"><div style="flex:1;"><div style="font-size:14px; font-weight:600; color:var(--heading);">Rs 2,450.00</div><div class="body-text" style="font-size:11.5px;">Card · 3:14 PM</div></div><span class="badge green">Success</span></div>
+          <div class="list-row"><div style="flex:1;"><div style="font-size:14px; font-weight:600; color:var(--heading);">Rs 890.00</div><div class="body-text" style="font-size:11.5px;">QR · 2:52 PM</div></div><span class="badge green">Success</span></div>
+          <div class="list-row"><div style="flex:1;"><div style="font-size:14px; font-weight:600; color:var(--heading);">Rs 1,200.00</div><div class="body-text" style="font-size:11.5px;">Card · 1:40 PM</div></div><span class="badge red">Declined</span></div>
+          <div class="list-row"><div style="flex:1;"><div style="font-size:14px; font-weight:600; color:var(--heading);">Rs 3,600.00</div><div class="body-text" style="font-size:11.5px;">QR · 12:58 PM</div></div><span class="badge green">Success</span></div>
+          <div class="list-row"><div style="flex:1;"><div style="font-size:14px; font-weight:600; color:var(--heading);">Rs 540.00</div><div class="body-text" style="font-size:11.5px;">Card · 12:11 PM</div></div><span class="badge amber">Refunded</span></div>
         </div>
       </div>
     </div>
@@ -67,6 +67,11 @@
 </div>
 
 <div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
   <a href="index.html" class="back" style="width:100%;text-align:center;">← All screens</a>
 </div>
 

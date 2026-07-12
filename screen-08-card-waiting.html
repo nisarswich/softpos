@@ -72,6 +72,11 @@
 </div>
 
 <div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
   <div class="tag">Mockup controls — card state</div>
   <button data-state-btn-group="card" data-state-btn="waiting" class="active" onclick="showState('card','waiting')">Waiting for tap</button>
   <button data-state-btn-group="card" data-state-btn="reading" onclick="showState('card','reading')">Reading</button>
