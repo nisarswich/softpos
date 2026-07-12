@@ -2,10 +2,12 @@
 
 // iOS-style status bar icons (signal / wifi / battery), reused on every screen.
 function renderStatusIcons() {
+  // fill="currentColor" instead of a hardcoded white — .statusbar sets
+  // color: var(--heading), so these invert automatically with the theme.
   return `
-    <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="7" width="3" height="5" rx="0.5" fill="#fff"/><rect x="5" y="5" width="3" height="7" rx="0.5" fill="#fff"/><rect x="10" y="3" width="3" height="9" rx="0.5" fill="#fff"/><rect x="15" y="0" width="3" height="12" rx="0.5" fill="#fff"/></svg>
-    <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 9.8a1 1 0 100 2 1 1 0 000-2z" fill="#fff"/><path d="M4.6 7.2a4.8 4.8 0 016.8 0l-1.2 1.2a3 3 0 00-4.4 0L4.6 7.2z" fill="#fff"/><path d="M2 4.6a8.4 8.4 0 0112 0L12.8 5.8a6.6 6.6 0 00-9.6 0L2 4.6z" fill="#fff"/></svg>
-    <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="#fff" opacity="0.4"/><rect x="2" y="2" width="18" height="8" rx="1.3" fill="#fff"/><rect x="22.5" y="4" width="1.6" height="4" rx="0.8" fill="#fff" opacity="0.4"/></svg>
+    <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="7" width="3" height="5" rx="0.5" fill="currentColor"/><rect x="5" y="5" width="3" height="7" rx="0.5" fill="currentColor"/><rect x="10" y="3" width="3" height="9" rx="0.5" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="0.5" fill="currentColor"/></svg>
+    <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 9.8a1 1 0 100 2 1 1 0 000-2z" fill="currentColor"/><path d="M4.6 7.2a4.8 4.8 0 016.8 0l-1.2 1.2a3 3 0 00-4.4 0L4.6 7.2z" fill="currentColor"/><path d="M2 4.6a8.4 8.4 0 0112 0L12.8 5.8a6.6 6.6 0 00-9.6 0L2 4.6z" fill="currentColor"/></svg>
+    <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="18" height="8" rx="1.3" fill="currentColor"/><rect x="22.5" y="4" width="1.6" height="4" rx="0.8" fill="currentColor" opacity="0.4"/></svg>
   `;
 }
 
@@ -103,4 +105,41 @@ function initRoleUI() {
   applyRole();
 }
 
-document.addEventListener('DOMContentLoaded', () => { initStatusBar(); initRoleUI(); });
+// =====================================================================
+// Light/dark theme (Settings > Appearance)
+// Scoped to the .phone element (not <html>) so only the actual product
+// surface re-themes — the dark review chrome around it (frame-stage,
+// captions, mockup controls) is untouched, same separation as the role
+// system. Dark is the default; persisted in localStorage so the choice
+// survives navigating between screens, same as the role selector.
+// =====================================================================
+const THEME_KEY = 'swich_demo_theme';
+
+function getTheme() {
+  return localStorage.getItem(THEME_KEY) || 'dark';
+}
+
+function setTheme(theme) {
+  localStorage.setItem(THEME_KEY, theme);
+  applyTheme();
+}
+
+function applyTheme() {
+  const theme = getTheme();
+  document.querySelectorAll('.phone').forEach(el => el.setAttribute('data-theme', theme));
+
+  document.querySelectorAll('[data-theme-btn]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.themeBtn === theme);
+  });
+
+  // Keep the browser chrome (mobile Safari/Chrome address bar tint) in
+  // sync with whatever the phone's current background actually is.
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', theme === 'light' ? '#f5f6f8' : '#070707');
+}
+
+function initTheme() {
+  applyTheme();
+}
+
+document.addEventListener('DOMContentLoaded', () => { initStatusBar(); initRoleUI(); initTheme(); });
