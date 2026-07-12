@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 10 — Transaction Result — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar">
+        <div style="flex:1;"></div>
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px 26px;">
+
+        <!-- SUCCESS -->
+        <div data-state-group="result" data-state-name="success" data-active="true" style="width:100%; text-align:center;">
+          <div class="result-icon success">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div class="result-title success">Payment successful</div>
+          <div class="result-sub">Rs 2,450.00 · Card · **** 4471</div>
+
+          <div data-state-group="origin2" data-state-name="ecr" data-active="false" style="margin-top:14px;">
+            <span class="badge blue">✓ Response sent to ECR (Order #ORD-4821)</span>
+          </div>
+
+          <div style="margin-top:26px; width:100%; display:flex; flex-direction:column; gap:10px;">
+            <a href="screen-04-idle.html" class="btn primary block">New Transaction</a>
+            <a href="screen-11-receipt.html" class="btn ghost block">Send receipt</a>
+          </div>
+        </div>
+
+        <!-- DECLINED -->
+        <div data-state-group="result" data-state-name="declined" data-active="false" style="width:100%; text-align:center;">
+          <div class="result-icon decline">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div class="result-title decline">Card declined</div>
+          <div class="result-sub">Rs 2,450.00 · Insufficient funds</div>
+          <div style="margin-top:26px; width:100%; display:flex; flex-direction:column; gap:10px;">
+            <a href="screen-07-payment-method.html" class="btn primary block">Try Again</a>
+            <a href="screen-04-idle.html" class="btn ghost block">Cancel</a>
+          </div>
+        </div>
+
+        <!-- NETWORK / CONNECTIVITY FAILURE — deliberately amber + cloud icon, not red/card icon -->
+        <div data-state-group="result" data-state-name="network" data-active="false" style="width:100%; text-align:center;">
+          <div class="result-icon network">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.61 16.95A5 5 0 0018 10h-1.26A8 8 0 104 16.25"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </div>
+          <div class="result-title network">Couldn't reach server</div>
+          <div class="result-sub">This is a connection issue, not a card decline — nothing was charged. Check the network and try again.</div>
+          <div style="margin-top:26px; width:100%; display:flex; flex-direction:column; gap:10px;">
+            <a href="screen-07-payment-method.html" class="btn primary block">Retry</a>
+            <a href="screen-04-idle.html" class="btn ghost block">Cancel</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 10</b> — Transaction Result</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Mockup controls — outcome</div>
+  <button data-state-btn-group="result" data-state-btn="success" class="active" onclick="showState('result','success')">Success</button>
+  <button data-state-btn-group="result" data-state-btn="declined" onclick="showState('result','declined')">Declined</button>
+  <button data-state-btn-group="result" data-state-btn="network" onclick="showState('result','network')">Network failure</button>
+  <div class="tag" style="margin-top:6px;">Origin (success only)</div>
+  <button data-state-btn-group="origin2" data-state-btn="manual" class="active" onclick="showState('origin2','manual')">Manual</button>
+  <button data-state-btn-group="origin2" data-state-btn="ecr" onclick="showState('origin2','ecr')">From ECR</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

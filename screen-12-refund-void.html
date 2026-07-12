@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 12 — Refund / Void — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar">
+        <a href="screen-04-idle.html" class="icon-btn" title="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+        <div class="topbar-title">Refund / Void</div>
+      </div>
+
+      <!-- Search & select -->
+      <div data-state-group="refund" data-state-name="list" data-active="true" style="flex:1; display:flex; flex-direction:column;">
+        <div style="padding:0 16px 10px;">
+          <input type="text" placeholder="Search by amount, time, or reference" style="width:100%; background:var(--bg-elevated); border:1px solid var(--border); border-radius:999px; padding:11px 16px; font-size:13.5px; color:var(--text); font-family:inherit;" />
+        </div>
+        <div class="micro-label" style="padding:0 16px 8px;">Today's transactions</div>
+        <div style="flex:1; overflow-y:auto;">
+          <button class="list-row" style="width:100%; background:none; border:none; border-bottom:1px solid var(--border); text-align:left; cursor:pointer;" onclick="showState('refund','confirm')">
+            <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:#fff;">Rs 2,450.00</div><div class="body-text" style="font-size:12px;">Card · 3:14 PM · #TXN-88231</div></div>
+            <span class="badge green">Success</span>
+          </button>
+          <button class="list-row" style="width:100%; background:none; border:none; border-bottom:1px solid var(--border); text-align:left; cursor:pointer;">
+            <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:#fff;">Rs 890.00</div><div class="body-text" style="font-size:12px;">QR · 2:52 PM · #TXN-88229</div></div>
+            <span class="badge green">Success</span>
+          </button>
+          <button class="list-row" style="width:100%; background:none; border:none; text-align:left; cursor:pointer;">
+            <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:#fff;">Rs 1,200.00</div><div class="body-text" style="font-size:12px;">Card · 1:40 PM · #TXN-88225</div></div>
+            <span class="badge red">Declined</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Confirm refund -->
+      <div data-state-group="refund" data-state-name="confirm" data-active="false" style="flex:1; display:flex; flex-direction:column; padding:0 20px;">
+        <div class="card" style="margin:12px 0 18px;">
+          <div class="card-strip"><div class="micro-label" style="margin-bottom:3px;">Original transaction</div><div style="font-size:14.5px; font-weight:600; color:#fff;">Rs 2,450.00 · Card · #TXN-88231</div></div>
+          <div class="card-strip" style="border-bottom:none;"><div class="micro-label" style="margin-bottom:3px;">Paid</div><div class="body-text">Today, 3:14 PM · **** 4471</div></div>
+        </div>
+
+        <div class="field">
+          <label>Refund amount</label>
+          <div style="display:flex; gap:8px; margin-bottom:8px;">
+            <button class="btn ghost sm active" style="flex:1; background:var(--accent-dim); border-color:rgba(47,111,237,0.35); color:#cfe0fc;">Full — Rs 2,450.00</button>
+            <button class="btn ghost sm" style="flex:1;">Partial</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Reason (optional)</label>
+          <input type="text" placeholder="e.g. Customer changed mind" />
+        </div>
+
+        <div style="flex:1;"></div>
+        <div style="padding-bottom:14px; display:flex; flex-direction:column; gap:10px;">
+          <button class="btn primary block" onclick="showState('refund','done')">Confirm Refund</button>
+          <button class="btn subtle" onclick="showState('refund','list')">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div data-state-group="refund" data-state-name="done" data-active="false" style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px;">
+        <div class="result-icon success"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <div class="result-title success" style="font-size:19px;">Refund complete</div>
+        <div class="result-sub">Rs 2,450.00 refunded to **** 4471 · #TXN-88231</div>
+        <a href="screen-04-idle.html" class="btn primary block" style="margin-top:24px; width:100%;">Done</a>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 12</b> — Refund / Void</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Mockup controls — state</div>
+  <button data-state-btn-group="refund" data-state-btn="list" class="active" onclick="showState('refund','list')">Select transaction</button>
+  <button data-state-btn-group="refund" data-state-btn="confirm" onclick="showState('refund','confirm')">Confirm refund</button>
+  <button data-state-btn-group="refund" data-state-btn="done" onclick="showState('refund','done')">Result</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

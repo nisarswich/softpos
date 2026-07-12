@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 1 — Login — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:28px 26px;">
+
+        <div class="logo" style="margin-bottom:28px;">
+          <svg width="26" height="26" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><linearGradient id="g1" x1="2" y1="4" x2="28" y2="26" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#34D399"/><stop offset="0.5" stop-color="#22D3C9"/><stop offset="1" stop-color="#2F6FED"/></linearGradient></defs>
+            <path d="M21.5 7.5C19.8 5.4 17.2 4 14.3 4C9.2 4 5 8.1 5 13.2C5 16 6.3 18.5 8.3 20.1" stroke="url(#g1)" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M8.5 22.5C10.2 24.6 12.8 26 15.7 26C20.8 26 25 21.9 25 16.8C25 14 23.7 11.5 21.7 9.9" stroke="url(#g1)" stroke-width="3.4" stroke-linecap="round"/>
+          </svg>
+          <span class="logo-word">swich</span>
+        </div>
+
+        <div class="h1" style="margin-bottom:4px;">Sign in</div>
+        <p class="body-text" style="margin-bottom:22px;">Enter your staff credentials to start your shift.</p>
+
+        <div class="field readonly">
+          <label>Outlet</label>
+          <input type="text" value="Riverside Outlet — RVS-014" readonly />
+        </div>
+        <div class="field">
+          <label>Staff ID</label>
+          <input type="text" placeholder="e.g. cashier-nisar" value="cashier-nisar" />
+        </div>
+        <div class="field">
+          <label>PIN / password</label>
+          <input type="password" placeholder="••••••" value="••••••" />
+        </div>
+
+        <div data-state-group="login" data-state-name="error" data-active="false" style="margin-bottom:14px;">
+          <div class="error-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Incorrect Staff ID or PIN. Try again.
+          </div>
+        </div>
+
+        <div data-state-group="login" data-state-name="default" data-active="true">
+          <a href="screen-04-idle.html" class="btn primary block">Sign in</a>
+        </div>
+        <div data-state-group="login" data-state-name="loading" data-active="false">
+          <button class="btn primary block" disabled><span class="spinner" style="border-top-color:#04140f; border-color:rgba(4,20,15,0.35);"></span>Signing in…</button>
+        </div>
+
+        <a href="#" class="btn subtle" style="margin:8px auto 0; display:block; text-align:center;">Forgot password?</a>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 1</b> — Login</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Mockup controls — state</div>
+  <button data-state-btn-group="login" data-state-btn="default" class="active" onclick="showState('login','default')">Default</button>
+  <button data-state-btn-group="login" data-state-btn="error" onclick="showState('login','error')">Error</button>
+  <button data-state-btn-group="login" data-state-btn="loading" onclick="showState('login','loading')">Loading</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

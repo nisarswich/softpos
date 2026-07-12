@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 7 — Payment Method Selection — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar">
+        <a href="screen-06-manual-amount.html" class="icon-btn" title="Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </a>
+        <div class="topbar-title">Choose payment method</div>
+        <a href="screen-04-idle.html" class="btn subtle" style="padding:8px 4px;">Cancel</a>
+      </div>
+
+      <div style="padding:6px 20px 0; text-align:center;">
+        <div data-state-group="origin" data-state-name="manual" data-active="true" class="body-text" style="font-size:12px;">Manual entry</div>
+        <div data-state-group="origin" data-state-name="ecr" data-active="false">
+          <span class="badge blue">Order #ORD-4821 · from ECR</span>
+        </div>
+      </div>
+
+      <div style="text-align:center; padding:20px 20px 8px;">
+        <div class="micro-label" style="margin-bottom:8px;">Amount due</div>
+        <div class="amount-display lg"><span class="amount-currency">Rs</span>2,450.00</div>
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:14px; padding:20px 20px 8px;">
+        <a href="screen-08-card-waiting.html" class="card" style="display:flex; align-items:center; gap:16px; padding:20px; text-decoration:none;">
+          <div style="width:52px;height:52px;border-radius:14px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div style="flex:1;">
+            <div class="h2" style="font-size:16px;">Card</div>
+            <div class="body-text" style="font-size:12.5px;">Tap card or wallet on this phone</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+
+        <a href="screen-09-qr-waiting.html" class="card" style="display:flex; align-items:center; gap:16px; padding:20px; text-decoration:none;">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(34,211,201,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--brand-teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14h1v1h-1zM14 20h1v1h-1zM18 18h3v3h-3z"/></svg>
+          </div>
+          <div style="flex:1;">
+            <div class="h2" style="font-size:16px;">QR</div>
+            <div class="body-text" style="font-size:12.5px;">Customer scans with their banking app</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+      </div>
+
+      <div style="padding:6px 20px calc(var(--safe-bottom) + 14px); text-align:center;">
+        <span class="body-text" style="font-size:12px;">Returning here keeps the same amount — nothing is charged yet.</span>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 7</b> — Payment Method Selection</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Mockup controls — entry origin</div>
+  <button data-state-btn-group="origin" data-state-btn="manual" class="active" onclick="showState('origin','manual')">Manual entry</button>
+  <button data-state-btn-group="origin" data-state-btn="ecr" onclick="showState('origin','ecr')">From ECR request</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

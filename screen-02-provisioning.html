@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 2 — Device Provisioning — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar"><div class="topbar-title">Device setup</div></div>
+
+      <div style="padding:0 24px; flex:1; display:flex; flex-direction:column;">
+
+        <!-- Entry state -->
+        <div data-state-group="prov" data-state-name="entry" data-active="true" style="flex:1; display:flex; flex-direction:column;">
+          <div class="h1" style="font-size:19px; margin:8px 0 6px;">Activate this device</div>
+          <p class="body-text" style="margin-bottom:22px;">One-time step. Enter the activation code from your merchant portal, or scan it.</p>
+
+          <div class="field">
+            <label>Activation code</label>
+            <input type="text" class="mono" placeholder="XXXX-XXXX-XXXX" value="8K2Q-7M4T-P1RZ" />
+          </div>
+
+          <button class="btn ghost block sm" style="margin-bottom:22px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+            Scan code instead
+          </button>
+
+          <div style="flex:1;"></div>
+          <button class="btn primary block" style="margin-bottom:16px;" onclick="showState('prov','confirm')">Activate</button>
+        </div>
+
+        <!-- Confirmation state -->
+        <div data-state-group="prov" data-state-name="confirm" data-active="false" style="flex:1; display:flex; flex-direction:column;">
+          <div style="text-align:center; margin:20px 0 24px;">
+            <div class="result-icon success"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="h1" style="font-size:19px;">Device activated</div>
+            <p class="body-text">This device is now bound to:</p>
+          </div>
+
+          <div class="card">
+            <div class="card-strip">
+              <div class="micro-label" style="margin-bottom:4px;">Merchant</div>
+              <div style="font-size:15px; font-weight:600; color:#fff;">Riverside Coffee Co.</div>
+            </div>
+            <div class="card-strip">
+              <div class="micro-label" style="margin-bottom:4px;">Outlet</div>
+              <div style="font-size:15px; font-weight:600; color:#fff;">Riverside Outlet — RVS-014</div>
+            </div>
+            <div class="card-strip" style="border-bottom:none;">
+              <div class="micro-label" style="margin-bottom:4px;">Merchant ID</div>
+              <div class="mono" style="font-size:13px; color:var(--text-dim);">MID-882410</div>
+            </div>
+          </div>
+
+          <div class="banner blue" style="margin-top:16px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div>This screen won't appear again unless an admin resets the device.</div>
+          </div>
+
+          <div style="flex:1;"></div>
+          <a href="screen-01-login.html" class="btn primary block" style="margin-bottom:16px;">Confirm & Continue</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 2</b> — Device Provisioning / Outlet Binding</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Mockup controls — state</div>
+  <button data-state-btn-group="prov" data-state-btn="entry" class="active" onclick="showState('prov','entry')">Code entry</button>
+  <button data-state-btn-group="prov" data-state-btn="confirm" onclick="showState('prov','confirm')">Confirmation</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

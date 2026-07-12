@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 8 — Card Waiting — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar">
+        <a href="screen-07-payment-method.html" class="icon-btn" title="Change method">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </a>
+        <div class="topbar-title">Card payment</div>
+        <a href="screen-04-idle.html" class="btn subtle" style="padding:8px 4px;">Cancel</a>
+      </div>
+
+      <div style="text-align:center; padding:10px 20px 0;">
+        <div class="micro-label" style="margin-bottom:6px;">Amount due</div>
+        <div class="amount-display"><span class="amount-currency">Rs</span>2,450.00</div>
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px;">
+
+        <div data-state-group="card" data-state-name="waiting" data-active="true" style="text-align:center;">
+          <div class="nfc-cue">
+            <div class="nfc-ring"></div>
+            <div class="nfc-ring r2"></div>
+            <div class="nfc-ring r3"></div>
+            <div class="nfc-core">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#04140f" stroke-width="2" stroke-linecap="round"><path d="M6.5 12.5a7 7 0 0111 0"/><path d="M9 15a3.2 3.2 0 016 0"/><circle cx="12" cy="18" r="1" fill="#04140f" stroke="none"/></svg>
+            </div>
+          </div>
+          <div class="h2">Present card to phone</div>
+          <p class="body-text" style="margin-top:4px;">Tap contactless card, phone, or watch on the back of this device.</p>
+        </div>
+
+        <div data-state-group="card" data-state-name="reading" data-active="false" style="text-align:center;">
+          <div class="nfc-cue"><div class="nfc-core" style="animation:none;"><span class="spinner lg" style="border-top-color:#04140f;border-color:rgba(4,20,15,0.3);border-top-color:#04140f;"></span></div></div>
+          <div class="h2">Reading…</div>
+          <p class="body-text" style="margin-top:4px;">Don't remove the card yet.</p>
+        </div>
+
+        <div data-state-group="card" data-state-name="processing" data-active="false" style="text-align:center;">
+          <div class="nfc-cue"><div class="nfc-core" style="animation:none; background:var(--surface-2);"><span class="spinner lg"></span></div></div>
+          <div class="h2">Processing payment…</div>
+          <p class="body-text" style="margin-top:4px;">This usually takes a few seconds.</p>
+        </div>
+
+      </div>
+
+      <div style="padding:10px 20px calc(var(--safe-bottom) + 14px); display:flex; flex-direction:column; gap:10px;">
+        <a href="screen-07-payment-method.html" class="btn ghost block">Change method</a>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 8</b> — Card, Waiting State</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Mockup controls — card state</div>
+  <button data-state-btn-group="card" data-state-btn="waiting" class="active" onclick="showState('card','waiting')">Waiting for tap</button>
+  <button data-state-btn-group="card" data-state-btn="reading" onclick="showState('card','reading')">Reading</button>
+  <button data-state-btn-group="card" data-state-btn="processing" onclick="showState('card','processing')">Processing</button>
+  <div class="tag" style="margin-top:6px;">Simulate outcome</div>
+  <a href="screen-10-result.html" class="btn ghost sm">Continue to result →</a>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

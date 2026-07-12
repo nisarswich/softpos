@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 9 — QR Waiting — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar">
+        <a href="screen-07-payment-method.html" class="icon-btn" title="Change method">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </a>
+        <div class="topbar-title">QR payment</div>
+        <a href="screen-04-idle.html" class="btn subtle" style="padding:8px 4px;">Cancel</a>
+      </div>
+
+      <!-- Amount sits above the QR, always, per spec -->
+      <div style="text-align:center; padding:8px 20px 0;">
+        <div class="micro-label" style="margin-bottom:6px;">Amount due</div>
+        <div class="amount-display"><span class="amount-currency">Rs</span>2,450.00</div>
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 16px;">
+
+        <div data-state-group="qr" data-state-name="waiting" data-active="true" style="text-align:center; width:100%;">
+          <div class="qr-wrap"><div class="qr-pattern" id="qrpattern1"></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:7px; margin-top:16px;">
+            <span class="spinner"></span>
+            <span class="h2" style="font-size:14.5px;">Waiting for payment</span>
+          </div>
+          <div class="body-text" style="font-size:12px; margin-top:4px;">Expires in <span class="mono" style="color:var(--text-dim);">1:47</span> — customer scans with any banking or wallet app</div>
+        </div>
+
+        <div data-state-group="qr" data-state-name="scanned" data-active="false" style="text-align:center; width:100%;">
+          <div class="qr-wrap" style="opacity:0.55;"><div class="qr-pattern" id="qrpattern2"></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:7px; margin-top:16px;">
+            <span class="spinner"></span>
+            <span class="h2" style="font-size:14.5px;">Confirming payment…</span>
+          </div>
+          <div class="body-text" style="font-size:12px; margin-top:4px;">Scanned — waiting on the customer's bank to confirm.</div>
+        </div>
+
+        <div data-state-group="qr" data-state-name="expired" data-active="false" style="text-align:center; width:100%;">
+          <div class="qr-wrap invalid">
+            <div class="qr-pattern" id="qrpattern3"></div>
+            <div class="qr-expired-badge">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <div style="font-weight:700; font-size:13.5px;">QR expired</div>
+            </div>
+          </div>
+          <div class="h2" style="margin-top:16px; font-size:14.5px; color:var(--amber);">This code is no longer payable</div>
+          <div class="body-text" style="font-size:12px; margin-top:4px;">Generate a new one to keep waiting for this amount.</div>
+          <button class="btn primary sm" style="margin-top:14px;" onclick="showState('qr','waiting')">Generate new QR</button>
+        </div>
+
+      </div>
+
+      <div style="padding:6px 20px calc(var(--safe-bottom) + 14px); display:flex; flex-direction:column; gap:8px;">
+        <div class="body-text" style="font-size:11.5px; text-align:center;">Safe to cancel — nothing is charged until the customer's bank confirms. Backing out invalidates this code.</div>
+        <a href="screen-07-payment-method.html" class="btn ghost block">Change method</a>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 9</b> — QR, Display / Waiting State</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Mockup controls — QR state</div>
+  <button data-state-btn-group="qr" data-state-btn="waiting" class="active" onclick="showState('qr','waiting')">Displayed / waiting</button>
+  <button data-state-btn-group="qr" data-state-btn="scanned" onclick="showState('qr','scanned')">Scanned / processing</button>
+  <button data-state-btn-group="qr" data-state-btn="expired" onclick="showState('qr','expired')">Expired</button>
+  <div class="tag" style="margin-top:6px;">Simulate outcome</div>
+  <a href="screen-10-result.html" class="btn ghost sm">Continue to result →</a>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+  renderQrPattern(document.getElementById('qrpattern1'), 7);
+  renderQrPattern(document.getElementById('qrpattern2'), 7);
+  renderQrPattern(document.getElementById('qrpattern3'), 7);
+</script>
+</body>
+</html>

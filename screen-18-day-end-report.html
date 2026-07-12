@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 18 — Day-End Closing Report — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar">
+        <a href="screen-15-dashboard.html" class="icon-btn" title="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+        <div class="topbar-title">Day-End Report</div>
+      </div>
+
+      <div class="access-restricted" data-role-show="cashier">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="h2" style="font-size:15.5px;">Not available for this role</div>
+        <p class="body-text" style="max-width:230px; margin-top:6px;">Cashier accounts don't have reporting access.</p>
+      </div>
+
+      <div data-role-show="owner,branch_manager,solo" style="flex:1; overflow-y:auto; padding:0 16px 16px; display:flex; flex-direction:column; gap:14px;">
+
+        <p class="body-text" style="font-size:12.5px;">Distinct from the general date filter — set a cutoff that matches how this branch actually closes out, not just calendar midnight.</p>
+
+        <div class="field" style="margin-bottom:0;">
+          <label>Cutoff</label>
+          <div class="segmented">
+            <button class="active" onclick="setCutoffMode(this,false)">Standard day (12:00 AM–11:59 PM)</button>
+            <button onclick="setCutoffMode(this,true)">Custom cutoff</button>
+          </div>
+        </div>
+
+        <div id="custom-cutoff-row" style="display:none; gap:10px;">
+          <div style="flex:1;">
+            <label style="display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px;">From</label>
+            <input type="text" value="6:00 AM" style="width:100%; background:var(--bg-elevated); border:1px solid var(--border); border-radius:12px; padding:11px 14px; font-size:13.5px; color:var(--text); font-family:inherit;" />
+          </div>
+          <div style="flex:1;">
+            <label style="display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px;">To (next day)</label>
+            <input type="text" value="6:00 AM" style="width:100%; background:var(--bg-elevated); border:1px solid var(--border); border-radius:12px; padding:11px 14px; font-size:13.5px; color:var(--text); font-family:inherit;" />
+          </div>
+        </div>
+
+        <div data-role-show="owner" class="select-pill">
+          <span>Consolidated — All Branches</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+
+        <button class="btn primary block" onclick="generateReport()">Generate report</button>
+
+        <!-- The report itself: this is what gets printed/emailed, so the
+             header carries its own range + branch context explicitly. -->
+        <div class="report-doc" id="report-doc">
+          <div class="doc-header">
+            <div class="doc-title">Day-End Closing Report</div>
+            <div class="doc-meta">
+              <span id="doc-range">Today, 12:00 AM – 11:59 PM (standard day)</span><br/>
+              <span id="doc-branch">Consolidated — All Branches</span><br/>
+              Generated Jul 12, 2026, 9:41 AM by nisar@numbers.pk
+            </div>
+          </div>
+
+          <div class="doc-row"><span>Gross sales</span><b>Rs 142,860.00</b></div>
+          <div class="doc-row"><span>Refunds / voids</span><b style="color:var(--red);">– Rs 2,990.00</b></div>
+          <div class="doc-row total"><span>Net sales</span><b>Rs 139,870.00</b></div>
+
+          <div style="margin-top:14px; padding-top:12px; border-top:1px dashed var(--border-strong);">
+            <div class="doc-row"><span>Transaction count</span><b>86</b></div>
+            <div class="doc-row"><span>Online</span><b>Rs 61,240 · 31 txns</b></div>
+            <div class="doc-row"><span>Retail</span><b>Rs 81,620 · 55 txns</b></div>
+          </div>
+
+          <div style="margin-top:14px; padding-top:12px; border-top:1px dashed var(--border-strong);">
+            <div class="doc-row"><span>Card</span><b>Rs 88,100 · 52 txns</b></div>
+            <div class="doc-row"><span>QR</span><b>Rs 41,960 · 27 txns</b></div>
+            <div class="doc-row"><span>Wallet</span><b>Rs 12,800 · 7 txns</b></div>
+          </div>
+        </div>
+
+        <a href="screen-19-export-share.html" class="btn ghost block">Export / Share this report</a>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 18</b> — Day-End Closing / Report</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Demo role</div>
+  <div class="role-switcher">
+    <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
+    <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
+    <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
+    <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
+  </div>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+  function setCutoffMode(btn, isCustom) {
+    document.querySelectorAll('.segmented button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('custom-cutoff-row').style.display = isCustom ? 'flex' : 'none';
+    document.getElementById('doc-range').textContent = isCustom
+      ? 'Today 6:00 AM – Tomorrow 6:00 AM (custom cutoff)'
+      : 'Today, 12:00 AM – 11:59 PM (standard day)';
+  }
+  function generateReport() {
+    document.getElementById('report-doc').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
+</body>
+</html>

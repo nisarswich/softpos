@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 11 — Receipt — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar">
+        <div style="flex:1;"></div>
+        <a href="screen-04-idle.html" class="btn subtle" style="padding:8px 4px;">Skip</a>
+      </div>
+
+      <div style="padding:0 24px; flex:1; display:flex; flex-direction:column;">
+
+        <div data-state-group="receipt" data-state-name="form" data-active="true">
+          <div style="text-align:center; margin:6px 0 22px;">
+            <div class="result-icon success" style="width:64px;height:64px;margin-bottom:14px;">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <div class="h1" style="font-size:19px;">Payment complete</div>
+            <div class="body-text" style="font-size:13px;">Rs 2,450.00 · Card</div>
+          </div>
+
+          <div class="h2" style="margin-bottom:12px;">Send a digital receipt</div>
+          <div class="field">
+            <label>Customer phone number</label>
+            <input type="tel" placeholder="+92 300 1234567" />
+          </div>
+
+          <div style="display:flex; gap:10px; margin-top:4px;">
+            <button class="btn ghost block sm" style="flex:1;" onclick="showState('receipt','sent')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              SMS
+            </button>
+            <button class="btn ghost block sm" style="flex:1;" onclick="showState('receipt','sent')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+              WhatsApp
+            </button>
+          </div>
+
+          <div style="margin-top:22px;">
+            <a href="screen-04-idle.html" class="btn primary block">Skip — no receipt</a>
+          </div>
+        </div>
+
+        <div data-state-group="receipt" data-state-name="sent" data-active="false" style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+          <div class="result-icon success">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div class="result-title success" style="font-size:18px;">Receipt sent</div>
+          <div class="result-sub">via WhatsApp to +92 300 1234567</div>
+          <a href="screen-04-idle.html" class="btn primary block" style="margin-top:26px; width:100%;">New Transaction</a>
+        </div>
+
+      </div>
+
+      <div style="padding:10px 24px calc(var(--safe-bottom) + 10px); text-align:center;">
+        <span class="body-text" style="font-size:11px;">ECR-integrated outlets: printing is handled by the terminal — this step is skipped automatically.</span>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 11</b> — Receipt</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Mockup controls</div>
+  <button data-state-btn-group="receipt" data-state-btn="form" class="active" onclick="showState('receipt','form')">Entry form</button>
+  <button data-state-btn-group="receipt" data-state-btn="sent" onclick="showState('receipt','sent')">Sent confirmation</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

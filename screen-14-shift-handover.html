@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 14 — Shift Handover — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <!-- Rendered as idle screen dimmed behind a bottom sheet, so it reads
+         as a quick handoff action rather than a separate destination. -->
+    <div class="screen" style="position:relative;">
+      <div class="topbar">
+        <div><div class="topbar-title">Front Counter</div><div class="body-text" style="font-size:12px;">Riverside Outlet · Nisar A.</div></div>
+      </div>
+      <div style="padding:0 16px;"><span class="status-pill connected"><span class="dot"></span>Terminal connected · ECR-Counter1</span></div>
+      <div style="flex:1; display:flex; align-items:center; justify-content:center; opacity:0.35;">
+        <div class="h1">Ready for payment</div>
+      </div>
+
+      <div class="sheet-overlay">
+        <div class="sheet">
+          <div class="sheet-handle"></div>
+          <div class="h2" style="margin-bottom:6px;">End your shift?</div>
+          <p class="body-text" style="margin-bottom:16px;">You'll be signed out. The device stays bound to this outlet — the next cashier just signs in.</p>
+
+          <div class="card" style="margin-bottom:18px;">
+            <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Your shift total</span><span style="font-weight:700; color:#fff;">Rs 18,420.00</span></div>
+            <div class="card-strip" style="border-bottom:none; display:flex; justify-content:space-between;"><span class="body-text">Transactions</span><span style="font-weight:700; color:#fff;">11</span></div>
+          </div>
+
+          <a href="screen-01-login.html" class="btn primary block" style="margin-bottom:10px;">End Shift & Sign Out</a>
+          <a href="screen-04-idle.html" class="btn subtle" style="text-align:center;">Stay signed in</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 14</b> — Shift Handover</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <a href="index.html" class="back" style="width:100%;text-align:center;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

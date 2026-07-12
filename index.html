@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Swich SoftPOS — Mockup Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+  body { background: var(--bg); }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 100px; }
+  .hero { margin-bottom: 40px; position: relative; }
+  .hero::before { content:""; position:absolute; top:-60px; left:5%; width:70%; height:260px; background: radial-gradient(ellipse at center, rgba(47,111,237,0.14), rgba(34,211,201,0.07) 45%, transparent 72%); pointer-events:none; z-index:0; }
+  .hero > * { position:relative; z-index:1; }
+  .tier-title { font-size: 21px; font-weight: 700; color: #fff; margin: 44px 0 6px; padding-bottom: 12px; border-bottom: 1px solid var(--border); letter-spacing:-0.01em; }
+  .tier-sub { font-size: 13.5px; color: var(--text-dim); margin-bottom: 18px; max-width: 640px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .tile {
+    display: block; text-decoration: none; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px; transition: border-color 0.15s, background 0.15s;
+  }
+  .tile:hover { border-color: var(--border-strong); background: var(--surface-2); }
+  .tile .num { font-size: 10.5px; font-weight: 700; color: var(--text-faint); letter-spacing:0.06em; text-transform:uppercase; margin-bottom: 8px; }
+  .tile .name { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .tile .states { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .callout-note { border-radius: 10px; padding: 14px 16px; font-size: 13.5px; border: 1px solid rgba(34,211,201,0.25); background: rgba(34,211,201,0.06); color: #bfeeea; margin-bottom: 6px; }
+  .callout-note strong { color: #fff; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="logo" style="margin-bottom:18px;">
+      <svg width="26" height="26" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs><linearGradient id="g0" x1="2" y1="4" x2="28" y2="26" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#34D399"/><stop offset="0.5" stop-color="#22D3C9"/><stop offset="1" stop-color="#2F6FED"/></linearGradient></defs>
+        <path d="M21.5 7.5C19.8 5.4 17.2 4 14.3 4C9.2 4 5 8.1 5 13.2C5 16 6.3 18.5 8.3 20.1" stroke="url(#g0)" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M8.5 22.5C10.2 24.6 12.8 26 15.7 26C20.8 26 25 21.9 25 16.8C25 14 23.7 11.5 21.7 9.9" stroke="url(#g0)" stroke-width="3.4" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-word">swich</span>
+    </div>
+    <div class="h1" style="font-size:28px; margin-bottom:8px;">SoftPOS Cashier App — Mockups</div>
+    <p class="body-text" style="max-width:640px; font-size:14.5px;">High-fidelity mobile screens per the UI/UX spec, in Swich's brand theme. Each screen is a standalone, clickable HTML file — open one directly, or click through the flow. Every card below lists the internal states you can switch between using the control strip beneath the phone.</p>
+  </div>
+
+  <div class="callout-note">
+    <strong>Design requirements honored:</strong> Idle (4) has no mode toggle — one action, both entry paths always live. ECR interrupt (5) is a full-bleed, flashing, action-first screen. Terminal pairing (3) never shows an IP/MAC address. QR waiting (9) shows the amount above the code with an explicit "safe to cancel" note. Network failure (10) is amber + cloud-icon, never confused with a red card decline.
+  </div>
+
+  <div class="tier-title">1 · Core transaction flow</div>
+  <div class="tier-sub">The highest-frequency path — fast and unambiguous under time pressure. Start here.</div>
+  <div class="grid">
+    <a class="tile" href="screen-04-idle.html"><div class="num">Screen 4</div><div class="name">Idle / Ready</div><div class="states">Connected · Standalone · Disconnected</div></a>
+    <a class="tile" href="screen-07-payment-method.html"><div class="num">Screen 7</div><div class="name">Payment Method Selection</div><div class="states">Manual · From ECR</div></a>
+    <a class="tile" href="screen-08-card-waiting.html"><div class="num">Screen 8</div><div class="name">Card — Waiting</div><div class="states">Waiting · Reading · Processing</div></a>
+    <a class="tile" href="screen-09-qr-waiting.html"><div class="num">Screen 9</div><div class="name">QR — Waiting</div><div class="states">Displayed · Scanned · Expired</div></a>
+    <a class="tile" href="screen-10-result.html"><div class="num">Screen 10</div><div class="name">Transaction Result</div><div class="states">Success · Declined · Network failure</div></a>
+    <a class="tile" href="screen-11-receipt.html"><div class="num">Screen 11</div><div class="name">Receipt</div><div class="states">Entry form · Sent confirmation</div></a>
+  </div>
+
+  <div class="tier-title">2 · Setup flow</div>
+  <div class="tier-sub">One-time / infrequent screens: signing in, binding the device, pairing a terminal.</div>
+  <div class="grid">
+    <a class="tile" href="screen-01-login.html"><div class="num">Screen 1</div><div class="name">Login</div><div class="states">Default · Error · Loading</div></a>
+    <a class="tile" href="screen-02-provisioning.html"><div class="num">Screen 2</div><div class="name">Device Provisioning</div><div class="states">Code entry · Confirmation</div></a>
+    <a class="tile" href="screen-03-terminal-pairing.html"><div class="num">Screen 3</div><div class="name">Terminal Pairing</div><div class="states">Entry · Scanning · Found · No results · Confirm code · Success · Failed</div></a>
+  </div>
+
+  <div class="tier-title">3 · Remaining screens</div>
+  <div class="tier-sub">Interrupts, alternate entry, and back-office visibility.</div>
+  <div class="grid">
+    <a class="tile" href="screen-05-ecr-interrupt.html"><div class="num">Screen 5</div><div class="name">Incoming ECR Request</div><div class="states">Interrupt</div></a>
+    <a class="tile" href="screen-06-manual-amount.html"><div class="num">Screen 6</div><div class="name">Manual Amount Entry</div><div class="states">Keypad</div></a>
+    <a class="tile" href="screen-12-refund-void.html"><div class="num">Screen 12</div><div class="name">Refund / Void</div><div class="states">Select · Confirm · Result</div></a>
+    <a class="tile" href="screen-13-daily-summary.html"><div class="num">Screen 13</div><div class="name">Daily Summary</div><div class="states">Default</div></a>
+    <a class="tile" href="screen-14-shift-handover.html"><div class="num">Screen 14</div><div class="name">Shift Handover</div><div class="states">Confirm sheet</div></a>
+  </div>
+
+  <div class="tier-title">4 · Dashboard &amp; Reporting (addendum)</div>
+  <div class="tier-sub">Adds role-based dashboard, transaction history, and reporting on top of the same login/nav shell — not a separate app. A bottom nav (Process / Dashboard / History) now lives on screen 4, 15, and 16.</div>
+  <div class="callout-note" style="margin-bottom:18px;">
+    <strong>Role model:</strong> Owner (all branches, branch selector shown), Branch Manager (one branch, auto-scoped, no selector), Solo/small-business owner (Dashboard + Process in the same login, no separate account type), Cashier (Process only — Dashboard/History tabs and screens 15/16/18 show an access-restricted state). Every screen in this tier has a role switcher in its mockup controls so you can see the gating react live.
+  </div>
+  <div class="grid">
+    <a class="tile" href="screen-15-dashboard.html"><div class="num">Screen 15</div><div class="name">Dashboard / Home</div><div class="states">Owner · Branch Manager · Solo · Cashier (restricted)</div></a>
+    <a class="tile" href="screen-16-transaction-list.html"><div class="num">Screen 16</div><div class="name">Transaction List</div><div class="states">Populated · Empty · Loading · Filter sheet</div></a>
+    <a class="tile" href="screen-17-transaction-detail.html"><div class="num">Screen 17</div><div class="name">Transaction Detail</div><div class="states">Retail · Online · Refund-eligible · Refunded · Declined</div></a>
+    <a class="tile" href="screen-18-day-end-report.html"><div class="num">Screen 18</div><div class="name">Day-End Closing Report</div><div class="states">Standard day · Custom cutoff</div></a>
+    <a class="tile" href="screen-19-export-share.html"><div class="num">Screen 19</div><div class="name">Export / Share</div><div class="states">From List · From Day-End Report</div></a>
+  </div>
+
+</div>
+</body>
+</html>

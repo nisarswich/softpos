@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 5 — Incoming ECR Request — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <!-- Full-bleed interrupt — deliberately louder than every other screen:
+         flashing ambient glow, blinking live badge, sound-wave cue, and an
+         action-first layout with nothing else competing for attention. -->
+    <div class="screen interrupt-overlay" style="position:relative; inset:auto;">
+      <div class="interrupt-badge">
+        <span class="dot"></span> Incoming request
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px 26px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:18px; color:var(--green);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg>
+          <span style="font-size:12px; font-weight:700; letter-spacing:0.03em;">Ringing counter · from ECR-Counter1</span>
+        </div>
+
+        <div class="badge neutral" style="margin-bottom:14px;">Order #ORD-4821</div>
+
+        <div class="micro-label" style="margin-bottom:8px;">Amount requested</div>
+        <div class="amount-display lg" style="margin-bottom:34px;"><span class="amount-currency">Rs</span>2,450.00</div>
+
+        <div style="width:100%; display:flex; flex-direction:column; gap:12px;">
+          <a href="screen-07-payment-method.html" class="btn primary block" style="font-size:17px; padding:18px;">Accept</a>
+          <a href="screen-04-idle.html" class="btn subtle" style="text-align:center;">Not now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 5</b> — Incoming ECR Request (interrupt)</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Design note</div>
+  <div class="body-text" style="font-size:11.5px; max-width:320px;">Full-bleed green wash + blinking live badge + sound-wave cue distinguish this from a routine notification — a cashier mid-conversation shouldn't be able to miss it.</div>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

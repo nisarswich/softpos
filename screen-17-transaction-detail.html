@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 17 — Transaction Detail — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar">
+        <a href="screen-16-transaction-list.html" class="icon-btn" title="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+        <div class="topbar-title">Transaction</div>
+      </div>
+
+      <div style="flex:1; overflow-y:auto; padding:0 16px 16px;">
+
+        <div style="text-align:center; padding:14px 0 18px;">
+          <div class="amount-display">Rs 2,450.00</div>
+          <div style="margin-top:8px;">
+            <span class="badge green" data-state-group="outcome" data-state-name="eligible" data-active="true">Success</span>
+            <span class="badge green" data-state-group="outcome" data-state-name="refunded" data-active="false">Success</span>
+            <span class="badge red" data-state-group="outcome" data-state-name="declined" data-active="false">Declined</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Reference</span><span class="mono" style="color:#fff; font-size:12.5px;">#TXN-88231</span></div>
+          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Time</span><span style="color:#fff; font-size:13px;">Today, 3:14 PM</span></div>
+          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Branch</span><span style="color:#fff; font-size:13px;">Riverside Outlet</span></div>
+          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Channel</span><span style="color:#fff; font-size:13px;" id="channel-label">Retail</span></div>
+          <div class="card-strip" style="display:flex; justify-content:space-between; border-bottom:none;"><span class="body-text">Method</span><span style="color:#fff; font-size:13px;">Card · **** 4471</span></div>
+        </div>
+
+        <!-- Cashier/device info — retail only -->
+        <div class="card" style="margin-bottom:14px;" data-state-group="channel" data-state-name="retail" data-active="true">
+          <div class="card-strip" style="border-bottom:none;">
+            <div class="micro-label" style="margin-bottom:8px;">Cashier & device</div>
+            <div class="body-text" style="font-size:13px; color:var(--text);">cashier-nisar · Front Counter device</div>
+          </div>
+        </div>
+        <div data-state-group="channel" data-state-name="online" data-active="false" class="banner blue" style="margin-bottom:14px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+          <div>Online transaction — no cashier or device on this order.</div>
+        </div>
+
+        <!-- Linked refund reference -->
+        <div data-state-group="outcome" data-state-name="refunded-ref" data-active="false" class="banner amber" style="margin-bottom:14px;" id="refund-ref-banner">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 106-8.5"/><path d="M3 4v5h5"/></svg>
+          <div>Refunded via <b class="mono" style="font-weight:700;">#RFD-2091</b> — Today, 4:02 PM</div>
+        </div>
+
+        <div data-state-group="outcome" data-state-name="refund-action" data-active="true">
+          <a href="screen-12-refund-void.html" class="btn danger-ghost block">Refund this transaction</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 17</b> — Transaction Detail</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Mockup controls — channel</div>
+  <button data-state-btn-group="channel" data-state-btn="retail" class="active" onclick="showState('channel','retail'); document.getElementById('channel-label').textContent='Retail';">Retail</button>
+  <button data-state-btn-group="channel" data-state-btn="online" onclick="showState('channel','online'); document.getElementById('channel-label').textContent='Online';">Online</button>
+  <div class="tag" style="margin-top:6px;">Outcome</div>
+  <button data-state-btn-group="outcome" data-state-btn="eligible" class="active" onclick="setOutcome('eligible')">Success — refund eligible</button>
+  <button data-state-btn-group="outcome" data-state-btn="refunded" onclick="setOutcome('refunded')">Already refunded</button>
+  <button data-state-btn-group="outcome" data-state-btn="declined" onclick="setOutcome('declined')">Declined</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+  function setOutcome(kind) {
+    showState('outcome', kind); // badge swap
+    const refBanner = document.getElementById('refund-ref-banner');
+    const refAction = document.querySelector('[data-state-group="outcome"][data-state-name="refund-action"]');
+    refBanner.dataset.active = (kind === 'refunded') ? 'true' : 'false';
+    refAction.dataset.active = (kind === 'eligible') ? 'true' : 'false';
+  }
+</script>
+</body>
+</html>
