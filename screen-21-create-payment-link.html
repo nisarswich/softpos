@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 21 — Create Payment Link — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar">
+        <div style="flex:1;">
+          <div class="topbar-title">Payment Link</div>
+        </div>
+        <a href="screen-04-idle.html" class="btn subtle" style="padding:8px 4px;">Cancel</a>
+      </div>
+
+      <div style="text-align:center; padding:6px 20px 4px;">
+        <div class="micro-label" style="margin-bottom:8px;">Amount</div>
+        <div class="amount-display"><span class="amount-currency">Rs</span>2,450<span style="color:var(--text-faint);">.00</span></div>
+      </div>
+
+      <!-- Reference + expiry — scrollable so a custom date/time picker never
+           gets clipped, while amount display and keypad stay pinned. -->
+      <div style="flex:1; overflow-y:auto; padding:12px 20px 4px; min-height:0;">
+
+        <div class="field" style="margin-bottom:16px;">
+          <label>Reference / note (optional)</label>
+          <input type="text" placeholder="e.g. Order #4521 or customer name" />
+        </div>
+
+        <div class="micro-label" style="margin-bottom:8px;">Link expires in</div>
+        <div class="segmented" style="margin-bottom:8px;">
+          <button class="active" onclick="setExpiry(this,'1h')">1 hour</button>
+          <button onclick="setExpiry(this,'24h')">24 hours</button>
+          <button onclick="setExpiry(this,'7d')">7 days</button>
+          <button onclick="setExpiry(this,'custom')">Custom</button>
+        </div>
+
+        <div id="custom-expiry-row" style="display:none; gap:10px; margin-top:8px;">
+          <div style="flex:1;">
+            <label style="display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px;">Date</label>
+            <input type="text" value="Jul 13, 2026" style="width:100%; background:var(--bg-elevated); border:1px solid var(--border); border-radius:12px; padding:11px 14px; font-size:13.5px; color:var(--text); font-family:inherit;" />
+          </div>
+          <div style="flex:1;">
+            <label style="display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px;">Time</label>
+            <input type="text" value="6:00 PM" style="width:100%; background:var(--bg-elevated); border:1px solid var(--border); border-radius:12px; padding:11px 14px; font-size:13.5px; color:var(--text); font-family:inherit;" />
+          </div>
+        </div>
+        <p class="body-text" id="expiry-note" style="font-size:11.5px; margin-top:8px;">Link becomes unpayable after it expires — the amount and reference stay visible in history either way.</p>
+      </div>
+
+      <div style="padding:0 20px 14px;">
+        <a href="screen-22-payment-link-share.html" class="btn primary block">Generate Link</a>
+      </div>
+
+      <div class="keypad">
+        <button>1</button><button>2</button><button>3</button>
+        <button>4</button><button>5</button><button>6</button>
+        <button>7</button><button>8</button><button>9</button>
+        <button class="fn">.00</button><button>0</button>
+        <button class="fn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 002-2V6a2 2 0 00-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg></button>
+      </div>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 21</b> — Create Payment Link</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
+  <div class="tag" style="margin-top:6px;">Available to every role, including Cashier</div>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+  function setExpiry(btn, kind) {
+    document.querySelectorAll('#custom-expiry-row').forEach(() => {});
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const customRow = document.getElementById('custom-expiry-row');
+    const note = document.getElementById('expiry-note');
+    const isCustom = kind === 'custom';
+    customRow.style.display = isCustom ? 'flex' : 'none';
+    const labels = { '1h': 'in 1 hour', '24h': 'in 24 hours', '7d': 'in 7 days', custom: 'at the date/time you set below' };
+    note.textContent = `Link becomes unpayable ${labels[kind]} — the amount and reference stay visible in history either way.`;
+  }
+</script>
+</body>
+</html>

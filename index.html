@@ -86,8 +86,8 @@
   </div>
   <div class="grid">
     <a class="tile" href="screen-15-dashboard.html"><div class="num">Screen 15</div><div class="name">Dashboard / Home</div><div class="states">Owner · Branch Manager · Solo · Cashier (restricted)</div></a>
-    <a class="tile" href="screen-16-transaction-list.html"><div class="num">Screen 16</div><div class="name">Transaction List</div><div class="states">Populated · Empty · Loading · Filter sheet</div></a>
-    <a class="tile" href="screen-17-transaction-detail.html"><div class="num">Screen 17</div><div class="name">Transaction Detail</div><div class="states">Retail · Online · Refund-eligible · Refunded · Declined</div></a>
+    <a class="tile" href="screen-16-transaction-list.html"><div class="num">Screen 16</div><div class="name">Transaction List</div><div class="states">Populated (incl. Link rows) · Empty · Loading · Filter sheet</div></a>
+    <a class="tile" href="screen-17-transaction-detail.html"><div class="num">Screen 17</div><div class="name">Transaction Detail</div><div class="states">Retail · Online · Link · Refund-eligible · Refunded · Declined · Link Pending/Paid/Expired</div></a>
     <a class="tile" href="screen-18-day-end-report.html"><div class="num">Screen 18</div><div class="name">Day-End Closing Report</div><div class="states">Standard day · Custom cutoff</div></a>
     <a class="tile" href="screen-19-export-share.html"><div class="num">Screen 19</div><div class="name">Export / Share</div><div class="states">From List · From Day-End Report</div></a>
   </div>
@@ -99,6 +99,16 @@
   </div>
   <div class="grid">
     <a class="tile" href="screen-20-settings.html"><div class="num">Screen 20</div><div class="name">Settings</div><div class="states">Appearance toggle · Terminal pairing entry · End shift</div></a>
+  </div>
+
+  <div class="tier-title">6 · Payment Link (addendum)</div>
+  <div class="tier-sub">Remote/delivery collection via a shareable link — available to every role, including Cashier, since dashboard access and payment-link access are gated independently. Entry point sits right next to "New Transaction" on Screen 4.</div>
+  <div class="callout-note" style="margin-bottom:18px;">
+    <strong>Renumbered from the source spec:</strong> the addendum called these "Screen 20" and "Screen 21," but 20 was already Settings in this build — renumbered to 21 and 22. Screens 15–17 were also updated in place: Dashboard's channel split and Transaction List's filters now include Link alongside Online/Retail, and Transaction Detail supports the Pending → Paid/Expired link lifecycle with Resend/Cancel actions.
+  </div>
+  <div class="grid">
+    <a class="tile" href="screen-21-create-payment-link.html"><div class="num">Screen 21</div><div class="name">Create Payment Link</div><div class="states">Amount · Reference · Expiry presets · Custom expiry</div></a>
+    <a class="tile" href="screen-22-payment-link-share.html"><div class="num">Screen 22</div><div class="name">Link Generated / Share</div><div class="states">Copy · WhatsApp · Email — all together</div></a>
   </div>
 
 </div>

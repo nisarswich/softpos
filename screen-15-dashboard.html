@@ -60,16 +60,24 @@
           <div class="body-text" style="margin-top:2px;">86 transactions</div>
         </div>
 
-        <div class="summary-grid">
-          <div class="summary-card">
+        <!-- Link is a distinct channel from Online/Retail per the payment-link
+             addendum, even though it's initiated from the same app as retail —
+             kept as its own column in every channel breakdown, not folded in. -->
+        <div class="summary-grid" style="grid-template-columns:repeat(3,1fr); gap:8px;">
+          <div class="summary-card" style="padding:12px 10px;">
             <div class="micro-label">Online</div>
-            <div class="val">Rs 61,240</div>
-            <div class="body-text" style="font-size:11.5px;">31 txns</div>
+            <div class="val" style="font-size:16px;">Rs 48,940</div>
+            <div class="body-text" style="font-size:11px;">24 txns</div>
           </div>
-          <div class="summary-card">
+          <div class="summary-card" style="padding:12px 10px;">
             <div class="micro-label">Retail</div>
-            <div class="val">Rs 81,620</div>
-            <div class="body-text" style="font-size:11.5px;">55 txns</div>
+            <div class="val" style="font-size:16px;">Rs 67,620</div>
+            <div class="body-text" style="font-size:11px;">46 txns</div>
+          </div>
+          <div class="summary-card" style="padding:12px 10px;">
+            <div class="micro-label">Link</div>
+            <div class="val" style="font-size:16px;">Rs 26,300</div>
+            <div class="body-text" style="font-size:11px;">16 txns</div>
           </div>
         </div>
 
