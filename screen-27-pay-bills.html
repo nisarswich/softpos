@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 27 — Pay Bills — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar" id="tb">
+        <a href="screen-23-finance-home.html" class="icon-btn" title="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+        <div class="topbar-title">Pay Bills</div>
+        
+      </div>
+      <div class="access-restricted" data-role-show="cashier">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="h2" style="font-size:15.5px;">Not available for this role</div>
+        <p class="body-text" style="max-width:240px; margin-top:6px;">Cashier accounts process transactions only. Ask an Owner or Branch Manager for access to Finance.</p>
+      </div>
+      <div class="fin-body" data-role-show="owner,branch_manager,solo">
+<div class="fin-state" data-state-group="bill" data-state-name="cats" data-active="true">
+<div class="fin-scroll">
+<div class="field" style="margin:0;"><input id="bq" placeholder="Search biller, e.g. K-Electric, PTCL" oninput="searchBillers()"></div>
+<div id="search-res" class="card" style="display:none;"></div>
+<div id="cat-wrap">
+<div class="micro-label" style="margin:2px 2px 8px;">Categories</div>
+<div class="cat-grid" id="cat-grid"></div>
+<div class="micro-label" style="margin:14px 2px 8px;">Saved bills</div>
+<div class="card" id="saved-list"></div>
+</div>
+</div>
+</div><div class="fin-state" data-state-group="bill" data-state-name="billers" data-active="false">
+<div class="fin-scroll">
+<div class="micro-label" style="margin:2px 2px -6px;" id="bl-title">Billers</div><div class="card" id="biller-list"></div>
+</div>
+</div><div class="fin-state" data-state-group="bill" data-state-name="enter" data-active="false">
+<div class="fin-scroll">
+<div class="card" style="display:flex;align-items:center;gap:12px;padding:14px 16px;">
+  <div class="avatar" style="color:var(--brand-teal);" id="e-ico"></div>
+  <div style="flex:1"><div style="font-weight:700;color:var(--heading);" id="e-name">K-Electric</div><div class="body-text" style="font-size:12px;" id="e-cat">Electricity</div></div>
+  <span class="pill-link" onclick="go_bill('billers')">Change</span>
+</div>
+<div id="nf" class="error-box" style="display:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>No bill found for this number. Check the reference printed on your bill.</span></div>
+<div class="field" style="margin:0;"><label>Consumer / reference number</label><input id="refno" value="0412 7731 6620" oninput="byId('nf').style.display='none'"></div>
+<label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim);"><input type="checkbox" id="savebill" checked> Save this bill for next month</label>
+
+</div><div class="fin-footer">
+<button class="btn primary block" onclick="fetchBill()">Fetch bill</button>
+</div>
+</div><div class="fin-state" data-state-group="bill" data-state-name="bill" data-active="false">
+<div class="fin-scroll">
+<div style="text-align:center;padding:2px 0;">
+  <div class="micro-label">Amount due</div>
+  <div class="amount-display"><span class="amount-currency">Rs</span><span id="b-amt">12,480</span>.00</div>
+  <span class="badge amber" style="margin-top:6px;" id="b-badge">Unpaid · due Nov 12, 2026</span>
+</div>
+<div class="card card-pad" style="padding-top:6px;padding-bottom:6px;">
+  <div class="kv"><span>Biller</span><b id="b-biller">K-Electric</b></div>
+  <div class="kv"><span>Customer</span><b id="b-cust">Ali Hassan Trading</b></div>
+  <div class="kv"><span>Reference</span><b class="mono" style="font-size:12px;" id="b-ref">0412 7731 6620</b></div>
+  <div class="kv"><span>Billing month</span><b id="b-month">Oct 2026</b></div>
+  <div class="kv"><span>After due date</span><b id="b-late">Rs 12,980</b></div>
+</div>
+<div id="b-paidnote" class="banner green" style="display:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><div>This bill is already paid. Nothing to pay right now.</div></div>
+<div id="b-pay" class="card card-pad" style="padding-top:6px;padding-bottom:6px;">
+  <div class="kv"><span>Pay from</span><b id="b-from">Wallet · Rs 184,250</b></div>
+  <div class="kv"><span>Balance after</span><b id="b-after">Rs 171,770</b></div>
+</div>
+<div id="b-over" class="error-box" style="display:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span style="flex:1;">Not enough balance for this bill.</span><a href="screen-29-running-finance.html" class="pill-link" style="color:var(--red);text-decoration:underline;">Pull funds</a></div>
+
+</div><div class="fin-footer">
+<button class="btn primary block" id="pay-btn" onclick="payBill()">Pay Rs 12,480</button><button class="btn ghost block" id="back-btn" style="display:none;" onclick="go_bill('cats')">Back to bills</button>
+</div>
+</div><div class="fin-state" data-state-group="bill" data-state-name="paid" data-active="false">
+<div class="fin-scroll">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding-top:30px;">
+<div class="result-icon success"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+<div class="result-title success" id="">Bill paid</div>
+<div class="result-sub" id="p-sub">Rs 12,480.00 paid to K-Electric. It can take up to 24 hours to reflect on the biller side.</div>
+<div class="card card-pad" style="margin-top:22px;padding-top:6px;padding-bottom:6px;"><div class="kv"><span>Reference</span><b class="mono" style="font-size:12px;" id="p-ref">BP-20261104-30915</b></div><div class="kv"><span>Paid</span><b id="p-time">Today, 11:42 AM</b></div></div>
+</div>
+</div><div class="fin-footer">
+<button class="btn ghost block"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share receipt</button><a href="screen-23-finance-home.html" class="btn primary block">Done</a>
+</div>
+</div>
+      </div>
+
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 27</b> — Bill Payments</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
+  <div class="tag">Demo role (Finance is hidden from Cashier)</div>
+  <div class="role-switcher">
+    <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
+    <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
+    <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
+    <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
+  </div>
+  <div class="tag" style="margin-top:6px;">Jump to step</div>
+  <button data-state-btn-group="bill" data-state-btn="cats" class="active" onclick="go_bill('cats')">Categories</button>
+  <button data-state-btn-group="bill" data-state-btn="billers" onclick="go_bill('billers')">Billers</button>
+  <button data-state-btn-group="bill" data-state-btn="enter" onclick="go_bill('enter')">Enter number</button>
+  <button data-state-btn-group="bill" data-state-btn="bill" onclick="go_bill('bill')">Bill fetched</button>
+  <button data-state-btn-group="bill" data-state-btn="paid" onclick="go_bill('paid')">Paid</button>
+  <button onclick="notFound()">Bill not found</button>
+  <div class="tag" style="margin-top:6px;">Demo data</div>
+  <button onclick="finReset()">↺ Reset finance demo data</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
+<script>
+
+let B = 'kelectric', hist = [];
+const TITLES = { cats: 'Pay Bills', billers: 'Choose Biller', enter: 'Enter Details', bill: 'Bill Details' };
+function go_bill(s){
+  showState('bill', s);
+  byId('nf').style.display = 'none';
+  byId('tb').style.display = s==='paid' ? 'none' : 'flex';
+  byId('tb').querySelector('.topbar-title').textContent = TITLES[s] || 'Pay Bills';
+  cur = s;
+  if (s === 'cats') renderCats();
+  if (s === 'enter') fillEnter();
+  if (s === 'bill') fillBill();
+}
+let cur = 'cats';
+function renderCats(){
+  byId('cat-grid').innerHTML = CATS.map(c => '<button class="action-tile" style="padding:16px 4px;" onclick="openCat(\'' + c[0] + '\')"><span class="ico">' + icn(c[1], 19) + '</span>' + c[0] + '</button>').join('');
+  byId('saved-list').innerHTML = FS.savedBills.map(id => {
+    const b = BILLERS[id], paid = FS.bills[id]==='paid';
+    return '<a class="txn-row" href="#" onclick="B=\'' + id + '\';go_bill(\'bill\');return false;"><div class="chan-icon">' + icn(b.i) + '</div><div class="meta"><div class="amt">' + b.n + '</div><div class="sub">···· ' + b.ref.replace(/\s/g,'').slice(-4) + ' · ' + (paid ? 'Paid' : 'Due ' + b.due.replace(/, \d{4}/,'')) + '</div></div><div style="text-align:right"><div style="font-size:13.5px;font-weight:700;color:var(--heading)">' + rs(b.amt) + '</div>' + (paid ? '<span class="badge green">Paid</span>' : '<span class="badge amber">' + dueLabel(b.due) + '</span>') + '</div></a>';
+  }).join('');
+}
+function listFor(ids){
+  return ids.map(id => { const b = BILLERS[id]; return '<a class="txn-row" href="#" onclick="B=\'' + id + '\';go_bill(\'enter\');return false;"><div class="chan-icon">' + icn(b.i) + '</div><div class="meta"><div class="amt">' + b.n + '</div><div class="sub">' + b.cat + '</div></div>' + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-faint)" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></a>'; }).join('');
+}
+function openCat(c){ byId('bl-title').textContent = c; byId('biller-list').innerHTML = listFor(Object.keys(BILLERS).filter(k => BILLERS[k].cat===c)); go_bill('billers'); byId('tb').querySelector('.topbar-title').textContent = c; }
+function searchBillers(){
+  const q = byId('bq').value.trim().toLowerCase(), r = byId('search-res');
+  byId('cat-wrap').style.display = q ? 'none' : 'block'; r.style.display = q ? 'block' : 'none';
+  if (q) { const ids = Object.keys(BILLERS).filter(k => BILLERS[k].n.toLowerCase().includes(q)); r.innerHTML = ids.length ? listFor(ids) : '<div class="body-text" style="padding:18px;text-align:center;">No billers match “' + q + '”.</div>'; }
+}
+function fillEnter(){
+  const b = BILLERS[B]; byId('e-ico').innerHTML = icn(b.i, 19); byId('e-name').textContent = b.n; byId('e-cat').textContent = b.cat; byId('refno').value = b.ref;
+}
+function fetchBill(){
+  const digits = byId('refno').value.replace(/\D/g,'');
+  if (digits.length < 8) { byId('nf').style.display = 'flex'; return; }
+  go_bill('bill');
+  if (byId('savebill') && byId('savebill').checked && !FS.savedBills.includes(B)) { FS.savedBills.push(B); finSave(); }
+}
+function notFound(){ go_bill('enter'); byId('refno').value = '1234'; byId('nf').style.display = 'flex'; }
+function fillBill(){
+  const b = BILLERS[B], paid = FS.bills[B]==='paid', over = b.amt > FS.balance;
+  byId('b-amt').textContent = num(b.amt); byId('b-biller').textContent = b.n; byId('b-cust').textContent = b.cust; byId('b-ref').textContent = b.ref;
+  byId('b-month').textContent = b.month; byId('b-late').textContent = rs(b.late);
+  const bd = byId('b-badge'); bd.className = 'badge ' + (paid ? 'green' : 'amber'); bd.textContent = paid ? 'Paid · ' + b.month : 'Unpaid · due ' + b.due;
+  byId('b-from').textContent = 'Wallet · ' + rs(FS.balance); byId('b-after').textContent = rs(FS.balance - b.amt);
+  byId('b-paidnote').style.display = paid ? 'flex' : 'none'; byId('b-pay').style.display = paid ? 'none' : 'block';
+  byId('b-over').style.display = (!paid && over) ? 'flex' : 'none';
+  const pb = byId('pay-btn'); pb.style.display = paid ? 'none' : 'inline-flex'; pb.disabled = over; pb.textContent = 'Pay ' + rs(b.amt);
+  byId('back-btn').style.display = paid ? 'inline-flex' : 'none';
+}
+function payBill(){
+  const b = BILLERS[B]; if (b.amt > FS.balance) return;
+  finTx(b.i, b.n + ' bill', 'Bill payment', -b.amt); FS.bills[B] = 'paid'; finSave();
+  byId('p-sub').textContent = rs(b.amt) + '.00 paid to ' + b.n + '. It can take up to 24 hours to reflect on the biller side.';
+  byId('p-ref').textContent = 'BP-20261104-' + (10000 + Math.floor(Math.random()*89999)); byId('p-time').textContent = 'Today, ' + timeNow();
+  go_bill('paid');
+}
+byId('tb').querySelector('.icon-btn').addEventListener('click', e => {
+  const back = { enter: 'billers', billers: 'cats', bill: 'enter' }[cur];
+  if (back) { e.preventDefault(); go_bill(back); }
+});
+renderCats();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 24 — Send Money — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar" id="tb">
+        <a href="screen-23-finance-home.html" class="icon-btn" title="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+        <div class="topbar-title">Send Money</div>
+        
+      </div>
+      <div class="access-restricted" data-role-show="cashier">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="h2" style="font-size:15.5px;">Not available for this role</div>
+        <p class="body-text" style="max-width:240px; margin-top:6px;">Cashier accounts process transactions only. Ask an Owner or Branch Manager for access to Finance.</p>
+      </div>
+      <div class="fin-body" data-role-show="owner,branch_manager,solo">
+<div class="fin-state" data-state-group="x" data-state-name="main" data-active="true">
+<div class="fin-scroll">
+
+<div class="sec-head" style="font-size:12.5px;"><span class="body-text">Available balance</span><b style="color:var(--heading);" id="bal">Rs 184,250.00</b></div>
+<div>
+  <div class="micro-label" style="margin-bottom:8px;">To</div>
+  <a href="screen-26-beneficiaries.html" id="change" class="card" style="display:flex;align-items:center;gap:12px;padding:14px 16px;text-decoration:none;">
+    <div class="avatar" id="b-av">AT</div>
+    <div style="flex:1;min-width:0;"><div id="b-name" style="font-weight:700;color:var(--heading);font-size:14.5px;">Ali Traders</div><div id="b-sub" class="body-text" style="font-size:12px;"></div></div>
+    <span class="pill-link">Change</span>
+  </a>
+</div>
+<div style="text-align:center;">
+  <div class="micro-label">Amount</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;"><span class="amount-currency" style="font-size:20px;margin:0;">Rs</span><input id="amt" class="amount-input" style="width:230px;" value="25,000" inputmode="numeric" oninput="update()"></div>
+  <div id="over" class="error-box" style="display:none;margin-top:8px;text-align:left;font-size:12.5px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span style="flex:1;">More than your available balance.</span><a href="screen-29-running-finance.html" class="pill-link" style="color:var(--red);text-decoration:underline;">Pull from running finance</a></div>
+</div>
+<div>
+  <div class="micro-label" style="margin-bottom:8px;">Transfer method</div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <button class="opt-card selected" id="rail-raast" onclick="pickRail('raast')"><span class="radio"></span><span style="flex:1;"><span class="t">Raast</span> <span class="badge green" style="margin-left:4px;">Instant · 24/7</span><div class="d">Fee Rs 0 · works with account or Raast ID</div></span></button>
+    <button class="opt-card" id="rail-ibft" onclick="pickRail('ibft')"><span class="radio"></span><span style="flex:1;"><span class="t">IBFT</span> <span class="badge neutral" style="margin-left:4px;">Instant</span><div class="d" id="ibft-d">Fee Rs 15 · bank account transfers only</div></span></button>
+  </div>
+</div>
+<div class="field" style="margin:0;"><label>Purpose</label><select id="purpose"><option>Vendor payment</option><option>Salary</option><option>Rent</option><option>Utilities</option><option>Other</option></select></div>
+<div class="field" style="margin:0;"><label>Reference (optional)</label><input id="ref" placeholder="e.g. Invoice #1182" value="Invoice #1182"></div>
+<div class="card card-pad" style="padding-top:6px;padding-bottom:6px;">
+  <div class="kv"><span>Amount</span><b id="s-amt">Rs 25,000</b></div>
+  <div class="kv"><span>Fee</span><b id="s-fee">Rs 0</b></div>
+  <div class="kv"><span>Total debit</span><b id="s-tot">Rs 25,000</b></div>
+</div>
+
+</div><div class="fin-footer">
+<button id="cta" class="btn primary block" onclick="goReview()">Review transfer</button>
+</div>
+</div>
+      </div>
+
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 24</b> — Send Money (IBFT / Raast)</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
+  <div class="tag">Demo role (Finance is hidden from Cashier)</div>
+  <div class="role-switcher">
+    <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
+    <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
+    <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
+    <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
+  </div>
+  <div class="tag" style="margin-top:6px;">Payee type</div>
+  <button id="cb-bank" class="active" onclick="setBene('AT')">Bank account</button>
+  <button id="cb-raast" onclick="setBene('FW')">Raast ID only</button>
+  <div class="tag" style="margin-top:6px;">Amount</div>
+  <button id="ca-ok" class="active" onclick="setAmt('ok')">Within balance</button>
+  <button id="ca-over" onclick="setAmt('over')">Exceeds balance</button>
+  <div class="tag" style="margin-top:6px;">Demo data</div>
+  <button onclick="finReset()">↺ Reset finance demo data</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
+<script>
+
+const Q = new URLSearchParams(location.search);
+let P = payee(Q.get('to')) || payee('AT'), rail = Q.get('rail') === 'ibft' ? 'ibft' : 'raast';
+function pickRail(r){
+  if (byId('rail-'+r).classList.contains('disabled')) return;
+  rail = r;
+  ['raast','ibft'].forEach(x => byId('rail-'+x).classList.toggle('selected', x===r));
+  update();
+}
+function applyPayee(){
+  byId('b-av').textContent = P.av; byId('b-name').textContent = P.n;
+  byId('b-sub').textContent = P.s + (P.t==='bank' ? ' · title verified' : '');
+  const ib = byId('rail-ibft');
+  ib.classList.toggle('disabled', P.t==='raast');
+  byId('ibft-d').textContent = P.t==='raast' ? 'Not available — this payee has only a Raast ID' : 'Fee Rs 15 · bank account transfers only';
+  if (P.t==='raast') { rail = 'raast'; ['raast','ibft'].forEach(x => byId('rail-'+x).classList.toggle('selected', x==='raast')); }
+  byId('cb-bank').classList.toggle('active', P.t==='bank' && P.id==='AT'); byId('cb-raast').classList.toggle('active', P.id==='FW');
+}
+function update(){
+  const a = intOf('amt'), fee = rail==='ibft' ? 15 : 0, tot = a + fee, over = tot > FS.balance;
+  byId('bal').textContent = rs(FS.balance) + '.00';
+  byId('s-amt').textContent = rs(a); byId('s-fee').textContent = rs(fee); byId('s-tot').textContent = rs(tot);
+  byId('over').style.display = over ? 'flex' : 'none';
+  byId('cta').disabled = (a <= 0 || over);
+  byId('change').href = 'screen-26-beneficiaries.html?pick=1&to=' + P.id + '&amt=' + a + '&rail=' + rail;
+}
+function setBene(id){ P = payee(id); applyPayee(); update(); }
+function setAmt(k){
+  byId('ca-ok').classList.toggle('active', k==='ok'); byId('ca-over').classList.toggle('active', k==='over');
+  byId('amt').value = num(k==='over' ? FS.balance + 50000 : 25000); update();
+}
+function goReview(){
+  location.href = 'screen-25-send-confirm.html?to=' + P.id + '&amt=' + intOf('amt') + '&rail=' + rail +
+    '&purpose=' + encodeURIComponent(byId('purpose').value) + '&ref=' + encodeURIComponent(byId('ref').value);
+}
+if (Q.get('amt')) byId('amt').value = num(parseInt(Q.get('amt')));
+applyPayee(); update();
+
+</script>
+</body>
+</html>

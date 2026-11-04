@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 31 — My Loans — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar" id="tb">
+        <a href="screen-23-finance-home.html" class="icon-btn" title="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+        <div class="topbar-title">My Loans</div>
+        
+      </div>
+      <div class="access-restricted" data-role-show="cashier">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="h2" style="font-size:15.5px;">Not available for this role</div>
+        <p class="body-text" style="max-width:240px; margin-top:6px;">Cashier accounts process transactions only. Ask an Owner or Branch Manager for access to Finance.</p>
+      </div>
+      <div class="fin-body" data-role-show="owner,branch_manager,solo">
+<div class="fin-state" data-state-group="v" data-state-name="main" data-active="true">
+<div class="fin-scroll">
+<div class="balance-card" id="sum-card">
+  <div class="micro-label">Total outstanding</div>
+  <div class="amount-display" style="margin:6px 0 10px;"><span class="amount-currency">Rs</span><span id="out">112,000</span></div>
+  <div class="meter"><i id="prog" style="width:33%"></i></div>
+  <div class="body-text" style="font-size:12px;margin-top:8px;display:flex;justify-content:space-between;"><span id="prog-t">2 of 6 installments paid</span><span id="next-t">Next: <b style="color:var(--heading)">Rs 28,000 · Nov 15</b></span></div>
+</div>
+<div id="due-soon" class="banner amber" style="display:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div id="due-soon-t"></div></div>
+<div id="due-over" class="error-box" style="display:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span style="flex:1;" id="due-over-t"></span><a id="due-over-a" href="screen-32-loan-detail.html" class="pill-link" style="color:var(--red);text-decoration:underline;">Pay now</a></div>
+<div class="segmented"><button class="active" data-state-btn-group="ltab" data-state-btn="active" onclick="go_ltab('active')">Active</button><button data-state-btn-group="ltab" data-state-btn="pending" onclick="go_ltab('pending')">Applications</button><button data-state-btn-group="ltab" data-state-btn="closed" onclick="go_ltab('closed')">Closed</button></div>
+<div data-state-group="ltab" data-state-name="active" data-active="true"><div class="card" id="act-list"></div></div>
+<div data-state-group="ltab" data-state-name="pending" data-active="false"><div class="card" id="app-list"></div><div class="body-text" style="font-size:12px;margin-top:10px;">Reviews usually take under 1 business day. You'll be notified when there's a decision.</div></div>
+<div data-state-group="ltab" data-state-name="closed" data-active="false"><div class="card" id="clo-list"></div></div>
+
+</div><div class="fin-footer">
+<a href="screen-30-request-loan.html" class="btn primary block"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Request a loan</a>
+</div>
+</div>
+      </div>
+
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 31</b> — Current Loans</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
+  <div class="tag">Demo role (Finance is hidden from Cashier)</div>
+  <div class="role-switcher">
+    <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
+    <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
+    <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
+    <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
+  </div>
+  <div class="tag" style="margin-top:6px;">Installment status</div>
+  <button class="active" id="dz-n" onclick="setDue('n')">On track</button><button id="dz-s" onclick="setDue('s')">Due soon</button><button id="dz-o" onclick="setDue('o')">Overdue</button>
+  <div class="tag" style="margin-top:6px;">Lender decision (demo)</div>
+  <button onclick="decide('approved')">Approve open application</button><button onclick="decide('rejected')">Decline open application</button>
+  <div class="tag" style="margin-top:6px;">Demo data</div>
+  <button onclick="finReset()">↺ Reset finance demo data</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
+<script>
+
+let dz = 'n';
+function go_ltab(t){ showState('ltab', t); document.querySelectorAll('.segmented button[data-state-btn-group="ltab"]').forEach(b => b.classList.toggle('active', b.dataset.stateBtn===t)); }
+function setDue(k){
+  dz = k; ['n','s','o'].forEach(x => byId('dz-'+x).classList.toggle('active', x===k));
+  const nx = nextInstallment();
+  byId('due-soon').style.display = (k==='s' && nx) ? 'flex' : 'none'; byId('due-over').style.display = (k==='o' && nx) ? 'flex' : 'none';
+  if (nx) {
+    byId('due-soon-t').innerHTML = 'Installment of <strong>' + rs(nx.amt) + '</strong> is due in 2 days. Keep it in your wallet balance.';
+    byId('due-over-t').textContent = 'Installment of ' + rs(nx.amt) + ' is 3 days overdue.';
+    byId('due-over-a').href = 'screen-32-loan-detail.html?loan=' + nx.loan;
+  }
+  render();
+}
+function badgeFor(l){
+  if (l.status === 'closed') return '<span class="badge neutral">Closed</span>';
+  const s = l.schedule.find(x => x.st==='due');
+  if (dz==='o') return '<span class="badge red">Overdue</span>';
+  if (dz==='s') return '<span class="badge amber">Due in 2 days</span>';
+  return '<span class="badge blue">' + dueLabel(s.d) + '</span>';
+}
+function loanRow(l){
+  const c = loanCalc(l), s = l.schedule.find(x => x.st==='due');
+  return '<a class="txn-row" href="screen-32-loan-detail.html?loan=' + l.id + '"><div class="chan-icon">' + icn('layers') + '</div><div class="meta"><div class="amt">' + rs(l.principal) + ' · ' + l.tenure + ' months</div><div class="sub">' + l.id + ' · ' + (l.status==='active' ? rs(c.outstanding) + ' left' : l.disbursed) + '</div></div><div style="text-align:right">' + badgeFor(l) + '<div class="sub" style="margin-top:3px;font-size:11.5px;color:var(--text-faint)">' + (l.status==='active' ? 'Next ' + s.d.replace(/, \d{4}/,'') : 'Closed ' + l.closedOn) + '</div></div></a>';
+}
+function appRow(a){
+  const b = a.status==='review' ? '<span class="badge blue">Under review</span>' : (a.status==='approved' ? '<span class="badge green">Approved</span>' : '<span class="badge red">Declined</span>');
+  const sub = a.status==='approved' ? 'Paid to wallet' : (a.status==='rejected' ? 'Not eligible' : a.date.replace(/, \d{4}/,''));
+  const href = a.status==='approved' ? ' href="screen-32-loan-detail.html?loan=' + a.id + '"' : '';
+  return '<a class="txn-row"' + href + '><div class="chan-icon">' + icn('layers') + '</div><div class="meta"><div class="amt">' + rs(a.amount) + ' · ' + a.tenure + ' months</div><div class="sub">' + a.id + ' · ' + sub + '</div></div>' + b + '</a>';
+}
+function empty(t){ return '<div class="body-text" style="padding:20px;text-align:center;font-size:13px;">' + t + '</div>'; }
+function decide(st){
+  const a = FS.apps.find(x => x.status==='review'); if (!a) return;
+  a.status = st;
+  if (st==='approved') { FS.balance += a.amount; FS.acts.unshift({ i:'layers', t:'Loan disbursed · ' + a.id, s:'Credited to wallet · Today, ' + timeNow(), a:a.amount }); }
+  finSave(); location.hash = st==='approved' ? 'active' : 'pending'; location.reload();
+}
+function render(){
+  const act = activeLoans(), nx = nextInstallment();
+  byId('out').textContent = num(totalOutstanding());
+  const tot = act.reduce((s,l) => s + l.tenure, 0), paid = act.reduce((s,l) => s + loanCalc(l).paidCount, 0);
+  byId('prog').style.width = (tot ? paid/tot*100 : 0) + '%';
+  byId('prog-t').textContent = act.length ? paid + ' of ' + tot + ' installments paid' : 'No active loans';
+  byId('next-t').innerHTML = nx ? 'Next: <b style="color:var(--heading)">' + rs(nx.amt) + ' · ' + nx.d.replace(/, \d{4}/,'') + '</b>' : '';
+  byId('act-list').innerHTML = act.map(loanRow).join('') || empty('No active loans. Request one below.');
+  byId('app-list').innerHTML = FS.apps.slice().reverse().map(appRow).join('') || empty('No applications.');
+  const cl = Object.values(LOANS).filter(l => l.status==='closed');
+  byId('clo-list').innerHTML = cl.map(loanRow).join('') || empty('No closed loans yet.');
+}
+render();
+if (location.hash === '#pending') go_ltab('pending'); else if (location.hash === '#closed') go_ltab('closed');
+
+</script>
+</body>
+</html>

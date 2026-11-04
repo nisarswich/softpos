@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 28 — Send Airtime — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar" id="tb">
+        <a href="screen-23-finance-home.html" class="icon-btn" title="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+        <div class="topbar-title">Send Airtime</div>
+        
+      </div>
+      <div class="access-restricted" data-role-show="cashier">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="h2" style="font-size:15.5px;">Not available for this role</div>
+        <p class="body-text" style="max-width:240px; margin-top:6px;">Cashier accounts process transactions only. Ask an Owner or Branch Manager for access to Finance.</p>
+      </div>
+      <div class="fin-body" data-role-show="owner,branch_manager,solo">
+<div class="fin-state" data-state-group="step" data-state-name="form" data-active="true">
+<div class="fin-scroll">
+<div class="sec-head" style="font-size:12.5px;"><span class="body-text">Available balance</span><b style="color:var(--heading);" id="bal">Rs 184,250.00</b></div>
+<div class="segmented"><button class="active" onclick="seg(this,'Prepaid')">Prepaid</button><button onclick="seg(this,'Postpaid')">Postpaid</button></div>
+<div><div class="micro-label" style="margin-bottom:8px;">Operator</div><div class="action-grid"><button class="action-tile selected" id="op-Jazz" onclick="pickOp('Jazz')"><span class="ico" style="font-weight:800;">J</span>Jazz</button><button class="action-tile" id="op-Zong" onclick="pickOp('Zong')"><span class="ico" style="font-weight:800;">Z</span>Zong</button><button class="action-tile" id="op-Ufone" onclick="pickOp('Ufone')"><span class="ico" style="font-weight:800;">U</span>Ufone</button><button class="action-tile" id="op-SCOM" onclick="pickOp('SCOM')"><span class="ico" style="font-weight:800;">S</span>SCOM</button></div></div>
+<div class="field" style="margin:0;"><label>Mobile number</label><input id="mob" value="0300 1234567" inputmode="tel" oninput="upd()"></div>
+<div id="mob-err" class="error-box" style="display:none;font-size:12.5px;margin-top:-6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Enter an 11-digit mobile number.</span></div>
+<div>
+  <div class="micro-label" style="margin-bottom:8px;">Amount</div>
+  <div class="filter-option-row" id="chips">
+    <span class="filter-option" onclick="pickAmt(100,this)">Rs 100</span><span class="filter-option" onclick="pickAmt(200,this)">Rs 200</span>
+    <span class="filter-option selected" onclick="pickAmt(500,this)">Rs 500</span><span class="filter-option" onclick="pickAmt(1000,this)">Rs 1,000</span>
+  </div>
+  <div class="field" style="margin:12px 0 0;"><input id="amt" value="500" inputmode="numeric" oninput="upd()" placeholder="Or enter amount"></div>
+  <div id="amt-err" class="error-box" style="display:none;font-size:12.5px;margin-top:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="amt-err-t"></span></div>
+</div>
+<div class="card card-pad" style="padding-top:6px;padding-bottom:6px;">
+  <div class="kv"><span>Load amount</span><b id="s-amt">Rs 500</b></div>
+  <div class="kv"><span>Balance after</span><b id="s-bal">Rs 183,750</b></div>
+</div>
+<div class="body-text" style="font-size:11.5px;">Government taxes may be deducted by the operator. Rs 10 – Rs 25,000 per top-up.</div>
+
+</div><div class="fin-footer">
+<button class="btn primary block" id="cta" onclick="send()">Send Rs 500 airtime</button>
+</div>
+</div><div class="fin-state" data-state-group="step" data-state-name="done" data-active="false">
+<div class="fin-scroll">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding-top:30px;">
+<div class="result-icon success"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+<div class="result-title success" id="">Airtime sent</div>
+<div class="result-sub" id="d-sub">Rs 500 was loaded to 0300 1234567 on Jazz (prepaid).</div>
+<div class="card card-pad" style="margin-top:22px;padding-top:6px;padding-bottom:6px;"><div class="kv"><span>Reference</span><b class="mono" style="font-size:12px;" id="d-ref">AT-20261104-55120</b></div><div class="kv"><span>Time</span><b id="d-time">Today, 11:50 AM</b></div></div>
+</div>
+</div><div class="fin-footer">
+<a href="screen-28-airtime.html" class="btn ghost block">Send another</a><a href="screen-23-finance-home.html" class="btn primary block">Done</a>
+</div>
+</div>
+      </div>
+
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 28</b> — Airtime Top-up</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
+  <div class="tag">Demo role (Finance is hidden from Cashier)</div>
+  <div class="role-switcher">
+    <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
+    <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
+    <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
+    <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
+  </div>
+  <div class="tag" style="margin-top:6px;">State</div>
+  <button data-state-btn-group="step" data-state-btn="form" class="active" onclick="go_step('form')">Form</button>
+  <button data-state-btn-group="step" data-state-btn="done" onclick="go_step('done')">Sent</button>
+  <div class="tag" style="margin-top:6px;">Demo data</div>
+  <button onclick="finReset()">↺ Reset finance demo data</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
+<script>
+
+let op = 'Jazz', kind = 'Prepaid';
+function go_step(s){ showState('step', s); byId('tb').style.display = s==='done' ? 'none' : 'flex'; }
+function seg(b, k){ kind = k; b.parentNode.querySelectorAll('button').forEach(x => x.classList.toggle('active', x===b)); }
+function pickOp(n){ op = n; document.querySelectorAll('[id^="op-"]').forEach(e => e.classList.toggle('selected', e.id==='op-'+n)); }
+function pickAmt(v, el){ byId('amt').value = v; upd(); }
+function upd(){
+  const a = intOf('amt'), digits = byId('mob').value.replace(/\D/g,'');
+  byId('bal').textContent = rs(FS.balance) + '.00';
+  byId('s-amt').textContent = rs(a); byId('s-bal').textContent = rs(FS.balance - a);
+  const badMob = digits.length !== 11, badAmt = a < 10 || a > 25000 || a > FS.balance;
+  byId('mob-err').style.display = badMob && digits.length > 0 ? 'flex' : 'none';
+  byId('amt-err').style.display = badAmt && byId('amt').value ? 'flex' : 'none';
+  byId('amt-err-t').textContent = a > FS.balance ? 'Not enough balance for this top-up.' : 'Amount must be between Rs 10 and Rs 25,000.';
+  const cta = byId('cta'); cta.disabled = badMob || badAmt; cta.textContent = 'Send ' + rs(a) + ' airtime';
+  document.querySelectorAll('#chips .filter-option').forEach(c => c.classList.toggle('selected', parseInt(c.textContent.replace(/\D/g,'')) === a));
+}
+function send(){
+  const a = intOf('amt'), n = byId('mob').value.trim();
+  finTx('phone', op + ' airtime', kind, -a);
+  byId('d-sub').textContent = rs(a) + ' was loaded to ' + n + ' on ' + op + ' (' + kind.toLowerCase() + ').';
+  byId('d-ref').textContent = 'AT-20261104-' + (10000 + Math.floor(Math.random()*89999)); byId('d-time').textContent = 'Today, ' + timeNow();
+  go_step('done');
+}
+upd();
+
+</script>
+</body>
+</html>

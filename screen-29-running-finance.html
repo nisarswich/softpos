@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 29 — Running Finance — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen">
+      <div class="topbar" id="tb">
+        <a href="screen-23-finance-home.html" class="icon-btn" title="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+        <div class="topbar-title">Running Finance</div>
+        
+      </div>
+      <div class="access-restricted" data-role-show="cashier">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="h2" style="font-size:15.5px;">Not available for this role</div>
+        <p class="body-text" style="max-width:240px; margin-top:6px;">Cashier accounts process transactions only. Ask an Owner or Branch Manager for access to Finance.</p>
+      </div>
+      <div class="fin-body" data-role-show="owner,branch_manager,solo">
+<div class="fin-state" style="flex:1;min-height:0;display:flex;flex-direction:column;"><div class="fin-scroll">
+
+<div class="balance-card">
+  <div class="sec-head"><span class="micro-label">Available to pull</span><span class="badge green" id="rf-badge">Active</span></div>
+  <div class="amount-display" style="margin:6px 0 12px;"><span class="amount-currency">Rs</span><span id="r-avail">150,000</span></div>
+  <div class="meter"><i id="meter" style="width:50%"></i></div>
+  <div class="body-text" style="font-size:12px;margin-top:8px;display:flex;justify-content:space-between;"><span>Used <b style="color:var(--heading)" id="r-used">Rs 150,000</b></span><span>Limit <b style="color:var(--heading)">Rs 300,000</b></span></div>
+</div>
+<div id="exh" class="banner amber" style="display:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><div>Your limit is fully used. Repay any amount to free it up again.</div></div>
+<div id="none" class="banner blue" style="display:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div>Nothing drawn yet. Pull funds whenever you need them.</div></div>
+<button class="btn ghost block" id="repay-btn" onclick="openRepay()"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg> Repay</button>
+<div class="card card-pad" style="padding-top:6px;padding-bottom:6px;">
+  <div class="kv"><span>Wallet balance</span><b id="r-bal">Rs 184,250</b></div>
+  <div class="kv"><span>Markup accrued</span><b>Rs 1,840</b></div>
+  <div class="kv"><span>Limit valid till</span><b>Mar 31, 2027</b></div>
+</div>
+<div class="banner blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div>Markup is charged only on the amount you pull, from the day you pull it. Nothing is charged on unused limit.</div></div>
+<div>
+  <div class="micro-label" style="margin:2px 2px 8px;">Recent activity</div>
+  <div class="card" id="rf-acts"></div>
+</div>
+
+</div><div class="fin-footer">
+<button class="btn primary block" id="pull-cta" onclick="openPull()">Pull funds to balance</button>
+</div></div>
+      </div>
+
+    </div>
+<div class="sheet-overlay" data-state-group="rfsheet" data-state-name="pull" data-active="false"><div class="sheet"><div class="sheet-handle"></div>
+<div class="sec-head" style="margin-bottom:10px;"><span class="h2">Pull to balance</span><button class="pill-link" onclick="closeSheet()">Cancel</button></div>
+<div style="text-align:center;">
+  <div style="display:flex;align-items:center;justify-content:center;gap:6px;"><span class="amount-currency" style="font-size:20px;margin:0;">Rs</span><input id="pull-amt" class="amount-input" style="width:230px;" value="50,000" oninput="updPull()"></div>
+  <div id="pull-err" class="error-box" style="display:none;margin-top:6px;text-align:left;font-size:12.5px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Above your available limit.</span></div>
+</div>
+<div class="filter-option-row" style="justify-content:center;margin:12px 0;"><span class="filter-option" onclick="setPull(.25)">25%</span><span class="filter-option" onclick="setPull(.5)">50%</span><span class="filter-option" onclick="setPull(1)">Max</span></div>
+<div class="card card-pad" style="padding-top:6px;padding-bottom:6px;margin-bottom:14px;">
+  <div class="kv"><span>New wallet balance</span><b id="p-bal">Rs 234,250</b></div>
+  <div class="kv"><span>Remaining limit</span><b id="p-rem">Rs 100,000</b></div>
+</div>
+<button class="btn primary block" id="pull-go" onclick="doPull()">Pull funds</button></div></div><div class="sheet-overlay" data-state-group="rfsheet" data-state-name="pulled" data-active="false"><div class="sheet"><div class="sheet-handle"></div><div style="text-align:center;padding:10px 0 18px;"><div class="result-icon success" style="width:72px;height:72px;margin-bottom:14px;"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+<div class="result-title success" id="pulled-title">Rs 50,000 added</div><div class="result-sub">The funds are in your wallet balance and ready to use.</div></div>
+<button class="btn primary block" onclick="closeSheet()">Done</button></div></div><div class="sheet-overlay" data-state-group="rfsheet" data-state-name="repay" data-active="false"><div class="sheet"><div class="sheet-handle"></div>
+<div class="sec-head" style="margin-bottom:10px;"><span class="h2">Repay from balance</span><button class="pill-link" onclick="closeSheet()">Cancel</button></div>
+<div style="text-align:center;">
+  <div style="display:flex;align-items:center;justify-content:center;gap:6px;"><span class="amount-currency" style="font-size:20px;margin:0;">Rs</span><input id="rep-amt" class="amount-input" style="width:230px;" value="50,000" oninput="updRep()"></div>
+  <div id="rep-err" class="error-box" style="display:none;margin-top:6px;text-align:left;font-size:12.5px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="rep-err-t"></span></div>
+</div>
+<div class="filter-option-row" style="justify-content:center;margin:12px 0;"><span class="filter-option" onclick="setRep(.25)">25%</span><span class="filter-option" onclick="setRep(.5)">50%</span><span class="filter-option" onclick="setRep(1)">All used</span></div>
+<div class="card card-pad" style="padding-top:6px;padding-bottom:6px;margin-bottom:14px;">
+  <div class="kv"><span>Limit restored</span><b id="rp-lim">+ Rs 50,000</b></div>
+  <div class="kv"><span>New wallet balance</span><b id="rp-bal">Rs 134,250</b></div>
+</div>
+<button class="btn primary block" id="rep-go" onclick="doRepay()">Repay</button></div></div><div class="sheet-overlay" data-state-group="rfsheet" data-state-name="repaid" data-active="false"><div class="sheet"><div class="sheet-handle"></div><div style="text-align:center;padding:10px 0 18px;"><div class="result-icon success" style="width:72px;height:72px;margin-bottom:14px;"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+<div class="result-title success" id="repaid-title">Repaid</div><div class="result-sub">Your available limit has been updated.</div></div>
+<button class="btn primary block" onclick="closeSheet()">Done</button></div></div>
+    <div class="home-indicator"></div>
+  </div>
+  <div class="frame-caption"><b>Screen 29</b> — Running Finance</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
+  <div class="tag">Demo role (Finance is hidden from Cashier)</div>
+  <div class="role-switcher">
+    <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
+    <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
+    <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
+    <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
+  </div>
+  <div class="tag" style="margin-top:6px;">Limit state</div>
+  <button onclick="preset(150000)">Partly used</button><button onclick="preset(300000)">Fully used</button><button onclick="preset(0)">Unused</button>
+  <div class="tag" style="margin-top:6px;">Demo data</div>
+  <button onclick="finReset()">↺ Reset finance demo data</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
+<script>
+
+const LIMIT = 300000;
+function render(){
+  const avail = LIMIT - FS.used;
+  byId('r-avail').textContent = num(avail); byId('r-used').textContent = rs(FS.used); byId('r-bal').textContent = rs(FS.balance);
+  byId('meter').style.width = (FS.used/LIMIT*100) + '%';
+  byId('exh').style.display = avail === 0 ? 'flex' : 'none'; byId('none').style.display = FS.used === 0 ? 'flex' : 'none';
+  byId('pull-cta').disabled = avail === 0; byId('repay-btn').disabled = FS.used === 0;
+  byId('repay-btn').style.opacity = FS.used === 0 ? .5 : 1;
+  const b = byId('rf-badge'); b.className = 'badge ' + (avail === 0 ? 'amber' : 'green'); b.textContent = avail === 0 ? 'Fully used' : 'Active';
+  byId('rf-acts').innerHTML = FS.acts.filter(a => a.t.startsWith('Running finance')).slice(0,5).map(actRow).join('');
+}
+function preset(u){ FS.used = u; finSave(); render(); }
+function openPull(){ if (LIMIT - FS.used === 0) return; byId('pull-amt').value = num(Math.min(50000, LIMIT-FS.used)); updPull(); showState('rfsheet','pull'); }
+function setPull(p){ const avail = LIMIT - FS.used; byId('pull-amt').value = num(p === 1 ? avail : Math.floor(avail*p/1000)*1000 || avail); updPull(); }
+function updPull(){
+  const a = intOf('pull-amt'), avail = LIMIT - FS.used;
+  byId('p-bal').textContent = rs(FS.balance + a); byId('p-rem').textContent = rs(Math.max(0, avail - a));
+  byId('pull-err').style.display = a > avail ? 'flex' : 'none';
+  byId('pull-go').disabled = a <= 0 || a > avail; byId('pull-go').textContent = 'Pull ' + rs(a);
+}
+function doPull(){
+  const a = intOf('pull-amt'); if (a <= 0 || a > LIMIT - FS.used) return;
+  FS.used += a; finTx('loop', 'Running finance pulled', 'Pulled to balance', a);
+  byId('pulled-title').textContent = rs(a) + ' added'; showState('rfsheet','pulled'); render();
+}
+function openRepay(){ if (FS.used === 0) return; byId('rep-amt').value = num(Math.min(50000, FS.used)); updRep(); showState('rfsheet','repay'); }
+function setRep(p){ byId('rep-amt').value = num(p === 1 ? FS.used : Math.floor(FS.used*p/1000)*1000 || FS.used); updRep(); }
+function updRep(){
+  const a = intOf('rep-amt');
+  byId('rp-lim').textContent = '+ ' + rs(a); byId('rp-bal').textContent = rs(FS.balance - a);
+  const bad = a > FS.used || a > FS.balance;
+  byId('rep-err').style.display = (bad && a > 0) ? 'flex' : 'none';
+  byId('rep-err-t').textContent = a > FS.used ? 'More than you have used.' : 'Not enough wallet balance — repay a smaller amount.';
+  byId('rep-go').disabled = a <= 0 || bad; byId('rep-go').textContent = 'Repay ' + rs(a);
+}
+function doRepay(){
+  const a = intOf('rep-amt'); if (a <= 0 || a > FS.used || a > FS.balance) return;
+  FS.used -= a; finTx('loop', 'Running finance repaid', 'Repaid from balance', -a);
+  byId('repaid-title').textContent = rs(a) + ' repaid'; showState('rfsheet','repaid'); render();
+}
+function closeSheet(){ showState('rfsheet','none'); render(); }
+render();
+
+</script>
+</body>
+</html>
