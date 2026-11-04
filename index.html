@@ -42,92 +42,71 @@
       </svg>
       <span class="logo-word">swich</span>
     </div>
-    <div class="h1" style="font-size:28px; margin-bottom:8px;">SoftPOS Cashier App — Mockups</div>
-    <p class="body-text" style="max-width:640px; font-size:14.5px;">High-fidelity mobile screens per the UI/UX spec, in Swich's brand theme. Each screen is a standalone, clickable HTML file — open one directly, or click through the flow. Every card below lists the internal states you can switch between using the control strip beneath the phone.</p>
+    <div class="h1" style="font-size:28px; margin-bottom:8px;">Swich — Collect &amp; Pay Mockups</div>
+    <p class="body-text" style="max-width:640px; font-size:14.5px;">One app for merchants: collect payments, hold one balance, pay out and borrow. Each screen is a standalone, clickable HTML file — open one directly, or click through the flow. Every card below lists the internal states you can switch between using the control strip beneath the phone.</p>
   </div>
 
   <div class="callout-note">
-    <strong>Design requirements honored:</strong> Idle (4) has no mode toggle — one action, both entry paths always live. ECR interrupt (5) is a full-bleed, flashing, action-first screen. Terminal pairing (3) never shows an IP/MAC address. QR waiting (9) shows the amount above the code with an explicit "safe to cancel" note. Network failure (10) is amber + cloud-icon, never confused with a red card decline.
+    <strong>One app, one balance.</strong> Money you collect and money you pay out live in the same wallet and the same Activity list. Five tabs: <strong>Home · Activity · Collect · Pay · Credit</strong>. Activity has an All / Money in / Money out toggle. Cashiers see only Collect and their own sales.
   </div>
 
-  <div class="tier-title">1 · Core transaction flow</div>
-  <div class="tier-sub">The highest-frequency path — fast and unambiguous under time pressure. Start here.</div>
+  <div class="tier-title">1 · The five tabs</div>
+  <div class="tier-sub">Start here. Every tab is a root screen with the same bottom bar.</div>
+  <div class="callout-note" style="margin-bottom:18px;"><strong>Try this loop:</strong> Collect a payment (Collect → amount → Card → result), open Home and see it in Activity and in "pending settlement"; tap <em>Simulate settlement</em> on Home to move it into the balance; then Pay a vendor and watch the balance and Activity update. Use "Reset finance demo data" in any control strip to start over. Role switcher: Owner / Branch Manager / Solo see all five tabs; Cashier sees Collect + My Sales.</div>
   <div class="grid">
-    <a class="tile" href="screen-04-idle.html"><div class="num">Screen 4</div><div class="name">Idle / Ready</div><div class="states">Connected · Standalone · Disconnected</div></a>
-    <a class="tile" href="screen-07-payment-method.html"><div class="num">Screen 7</div><div class="name">Payment Method Selection</div><div class="states">Manual · From ECR</div></a>
+    <a class="tile" href="screen-15-dashboard.html"><div class="num">Screen 15</div><div class="name">Home</div><div class="states">Balance · Collect / Pay · collected vs paid today · credit · recent activity</div></a>
+    <a class="tile" href="screen-16-transaction-list.html"><div class="num">Screen 16</div><div class="name">Activity</div><div class="states">All / Money in / Money out · search · day groups · chips</div></a>
+    <a class="tile" href="screen-04-idle.html"><div class="num">Screen 4</div><div class="name">Collect</div><div class="states">Ready for payment · New Transaction · Payment Link</div></a>
+    <a class="tile" href="screen-23-pay.html"><div class="num">Screen 23</div><div class="name">Pay</div><div class="states">Send money · Bills · Airtime · Payees · recent payments</div></a>
+    <a class="tile" href="screen-33-credit.html"><div class="num">Screen 33</div><div class="name">Credit</div><div class="states">Running finance · Loans · credit activity</div></a>
+  </div>
+
+  <div class="tier-title">2 · Collect flow</div>
+  <div class="tier-sub">Fastest path for the counter. The amount you type carries through every screen and lands in Activity.</div>
+  <div class="grid">
+    <a class="tile" href="screen-06-manual-amount.html"><div class="num">Screen 6</div><div class="name">Manual Amount</div><div class="states">Working keypad</div></a>
+    <a class="tile" href="screen-07-payment-method.html"><div class="num">Screen 7</div><div class="name">Payment Method</div><div class="states">Card · QR</div></a>
     <a class="tile" href="screen-08-card-waiting.html"><div class="num">Screen 8</div><div class="name">Card — Waiting</div><div class="states">Waiting · Reading · Processing</div></a>
     <a class="tile" href="screen-09-qr-waiting.html"><div class="num">Screen 9</div><div class="name">QR — Waiting</div><div class="states">Displayed · Scanned · Expired</div></a>
-    <a class="tile" href="screen-10-result.html"><div class="num">Screen 10</div><div class="name">Transaction Result</div><div class="states">Success · Declined · Network failure</div></a>
-    <a class="tile" href="screen-11-receipt.html"><div class="num">Screen 11</div><div class="name">Receipt</div><div class="states">Entry form · Sent confirmation</div></a>
-  </div>
-
-  <div class="tier-title">2 · Setup flow</div>
-  <div class="tier-sub">One-time / infrequent screens: signing in, binding the device, pairing a terminal.</div>
-  <div class="grid">
-    <a class="tile" href="screen-01-login.html"><div class="num">Screen 1</div><div class="name">Login</div><div class="states">Default · Error · Loading</div></a>
-    <a class="tile" href="screen-02-provisioning.html"><div class="num">Screen 2</div><div class="name">Device Provisioning</div><div class="states">Code entry · Confirmation</div></a>
-    <a class="tile" href="screen-03-terminal-pairing.html"><div class="num">Screen 3</div><div class="name">Terminal Pairing</div><div class="states">Entry · Scanning · Found · No results · Confirm code · Success · Failed</div></a>
-  </div>
-
-  <div class="tier-title">3 · Remaining screens</div>
-  <div class="tier-sub">Interrupts, alternate entry, and back-office visibility.</div>
-  <div class="grid">
+    <a class="tile" href="screen-10-result.html"><div class="num">Screen 10</div><div class="name">Result</div><div class="states">Success · Declined · Network failure (each is logged)</div></a>
+    <a class="tile" href="screen-11-receipt.html"><div class="num">Screen 11</div><div class="name">Receipt</div><div class="states">Entry · Sent</div></a>
     <a class="tile" href="screen-05-ecr-interrupt.html"><div class="num">Screen 5</div><div class="name">Incoming ECR Request</div><div class="states">Interrupt</div></a>
-    <a class="tile" href="screen-06-manual-amount.html"><div class="num">Screen 6</div><div class="name">Manual Amount Entry</div><div class="states">Keypad</div></a>
+    <a class="tile" href="screen-21-create-payment-link.html"><div class="num">Screen 21</div><div class="name">Create Payment Link</div><div class="states">Working keypad · reference · expiry</div></a>
+    <a class="tile" href="screen-22-payment-link-share.html"><div class="num">Screen 22</div><div class="name">Link Ready to Share</div><div class="states">Copy · WhatsApp · Email</div></a>
     <a class="tile" href="screen-12-refund-void.html"><div class="num">Screen 12</div><div class="name">Refund / Void</div><div class="states">Select · Confirm · Result</div></a>
-    <a class="tile" href="screen-13-daily-summary.html"><div class="num">Screen 13</div><div class="name">Daily Summary</div><div class="states">Default</div></a>
+    <a class="tile" href="screen-17-transaction-detail.html"><div class="num">Screen 17</div><div class="name">Transaction Detail</div><div class="states">Any type: sale · link · transfer · bill · airtime · credit · settlement</div></a>
+  </div>
+
+  <div class="tier-title">3 · Pay flow</div>
+  <div class="tier-sub">Pay vendors, bills and airtime from the same balance.</div>
+  <div class="grid">
+    <a class="tile" href="screen-24-send-money.html"><div class="num">Screen 24</div><div class="name">Send Money</div><div class="states">Raast / IBFT · payee types · over balance</div></a>
+    <a class="tile" href="screen-25-send-confirm.html"><div class="num">Screen 25</div><div class="name">Confirm & Result</div><div class="states">Review · PIN · success · failed · pending</div></a>
+    <a class="tile" href="screen-26-beneficiaries.html"><div class="num">Screen 26</div><div class="name">Payees</div><div class="states">List · search · add &amp; verify · saved</div></a>
+    <a class="tile" href="screen-27-pay-bills.html"><div class="num">Screen 27</div><div class="name">Pay Bills</div><div class="states">Categories · billers · fetch · pay</div></a>
+    <a class="tile" href="screen-28-airtime.html"><div class="num">Screen 28</div><div class="name">Send Airtime</div><div class="states">Operator · number · amount</div></a>
+  </div>
+
+  <div class="tier-title">4 · Credit flow</div>
+  <div class="tier-sub">Pull your running-finance limit any time, or borrow with a loan.</div>
+  <div class="grid">
+    <a class="tile" href="screen-29-running-finance.html"><div class="num">Screen 29</div><div class="name">Running Finance</div><div class="states">Pull funds · repay · limit states</div></a>
+    <a class="tile" href="screen-30-request-loan.html"><div class="num">Screen 30</div><div class="name">Request a Loan</div><div class="states">Amount · term · repayment method · reapply</div></a>
+    <a class="tile" href="screen-31-my-loans.html"><div class="num">Screen 31</div><div class="name">My Loans</div><div class="states">Active · Applications · Closed</div></a>
+    <a class="tile" href="screen-32-loan-detail.html"><div class="num">Screen 32</div><div class="name">Loan Detail</div><div class="states">Schedule · Repayments · Ledger · Pay installment</div></a>
+  </div>
+
+  <div class="tier-title">5 · Reports, settings &amp; setup</div>
+  <div class="tier-sub">Back-office and one-time screens.</div>
+  <div class="grid">
+    <a class="tile" href="screen-18-day-end-report.html"><div class="num">Screen 18</div><div class="name">Day-End Report</div><div class="states">Standard · custom cutoff</div></a>
+    <a class="tile" href="screen-19-export-share.html"><div class="num">Screen 19</div><div class="name">Export / Share</div><div class="states">From Activity · From report</div></a>
+    <a class="tile" href="screen-13-daily-summary.html"><div class="num">Screen 13</div><div class="name">Daily Summary</div><div class="states">Cashier shift summary</div></a>
     <a class="tile" href="screen-14-shift-handover.html"><div class="num">Screen 14</div><div class="name">Shift Handover</div><div class="states">Confirm sheet</div></a>
-  </div>
-
-  <div class="tier-title">4 · Dashboard &amp; Reporting (addendum)</div>
-  <div class="tier-sub">Adds role-based dashboard, transaction history, and reporting on top of the same login/nav shell — not a separate app. A bottom nav (Process / Dashboard / History) now lives on screen 4, 15, and 16.</div>
-  <div class="callout-note" style="margin-bottom:18px;">
-    <strong>Role model:</strong> Owner (all branches, branch selector shown), Branch Manager (one branch, auto-scoped, no selector), Solo/small-business owner (Dashboard + Process in the same login, no separate account type), Cashier (Process only — Dashboard/History tabs and screens 15/16/18 show an access-restricted state). Every screen in this tier has a role switcher in its mockup controls so you can see the gating react live.
-  </div>
-  <div class="grid">
-    <a class="tile" href="screen-15-dashboard.html"><div class="num">Screen 15</div><div class="name">Dashboard / Home</div><div class="states">Owner · Branch Manager · Solo · Cashier (restricted)</div></a>
-    <a class="tile" href="screen-16-transaction-list.html"><div class="num">Screen 16</div><div class="name">Transaction List</div><div class="states">Populated (incl. Link rows) · Empty · Loading · Filter sheet</div></a>
-    <a class="tile" href="screen-17-transaction-detail.html"><div class="num">Screen 17</div><div class="name">Transaction Detail</div><div class="states">Retail · Online · Link · Refund-eligible · Refunded · Declined · Link Pending/Paid/Expired</div></a>
-    <a class="tile" href="screen-18-day-end-report.html"><div class="num">Screen 18</div><div class="name">Day-End Closing Report</div><div class="states">Standard day · Custom cutoff</div></a>
-    <a class="tile" href="screen-19-export-share.html"><div class="num">Screen 19</div><div class="name">Export / Share</div><div class="states">From List · From Day-End Report</div></a>
-  </div>
-
-  <div class="tier-title">5 · Settings &amp; Appearance</div>
-  <div class="tier-sub">App-wide light/dark toggle, plus the terminal-pairing and shift entry points consolidated in one place.</div>
-  <div class="callout-note" style="margin-bottom:18px;">
-    <strong>Theming:</strong> dark is the default everywhere. Toggling to light only inverts backgrounds, surfaces, and text/icon contrast — the brand gradient, logo mark, and every status color (success/decline/connectivity-failure) keep the same hue identity, re-balanced for contrast on white. Every screen's mockup controls include a quick Dark/Light switch so you can review any screen in either theme without visiting Settings first.
-  </div>
-  <div class="grid">
-    <a class="tile" href="screen-20-settings.html"><div class="num">Screen 20</div><div class="name">Settings</div><div class="states">Appearance toggle · Terminal pairing entry · End shift</div></a>
-  </div>
-
-  <div class="tier-title">6 · Payment Link (addendum)</div>
-  <div class="tier-sub">Remote/delivery collection via a shareable link — available to every role, including Cashier, since dashboard access and payment-link access are gated independently. Entry point sits right next to "New Transaction" on Screen 4.</div>
-  <div class="callout-note" style="margin-bottom:18px;">
-    <strong>Renumbered from the source spec:</strong> the addendum called these "Screen 20" and "Screen 21," but 20 was already Settings in this build — renumbered to 21 and 22. Screens 15–17 were also updated in place: Dashboard's channel split and Transaction List's filters now include Link alongside Online/Retail, and Transaction Detail supports the Pending → Paid/Expired link lifecycle with Resend/Cancel actions.
-  </div>
-  <div class="grid">
-    <a class="tile" href="screen-21-create-payment-link.html"><div class="num">Screen 21</div><div class="name">Create Payment Link</div><div class="states">Amount · Reference · Expiry presets · Custom expiry</div></a>
-    <a class="tile" href="screen-22-payment-link-share.html"><div class="num">Screen 22</div><div class="name">Link Generated / Share</div><div class="states">Copy · WhatsApp · Email — all together</div></a>
-  </div>
-
-  <div class="tier-title">7 · Finance — Send Money, Bills, Credit (addendum)</div>
-  <div class="tier-sub">Lets non-cashier users spend collected funds: pay vendors over Raast or IBFT, pay bills, send airtime, draw on a running-finance limit and manage loans. A fourth bottom-nav tab, "Finance", appears on screens 4, 15, 16 and 23.</div>
-  <div class="callout-note" style="margin-bottom:18px;">
-    <strong>Role gating:</strong> Owner, Branch Manager and Solo see Finance; Cashier accounts never get the tab, and every Finance screen shows the access-restricted state if reached directly. Loan figures are illustrative (flat 2%/month markup) so the schedule, repayments and ledger reconcile — real pricing comes from the lending partner.<br><br>
-    <strong>Working end to end:</strong> balance, recent activity, payees, paid bills, running-finance limit, loan applications and installments all persist between screens (browser storage), so a transfer, bill or installment you make shows up everywhere. Use "Reset finance demo data" in any control strip to start over; on Loans, "Approve / Decline open application" simulates the lender's decision.
-  </div>
-  <div class="grid">
-    <a class="tile" href="screen-23-finance-home.html"><div class="num">Screen 23</div><div class="name">Finance Home</div><div class="states">Balance · Quick actions · Running finance · Loans · Recent activity</div></a>
-    <a class="tile" href="screen-24-send-money.html"><div class="num">Screen 24</div><div class="name">Send Money</div><div class="states">Raast / IBFT · Bank vs Raast-ID payee · Exceeds balance</div></a>
-    <a class="tile" href="screen-25-send-confirm.html"><div class="num">Screen 25</div><div class="name">Confirm &amp; Result</div><div class="states">Review · PIN · Success · Failed · Pending</div></a>
-    <a class="tile" href="screen-26-beneficiaries.html"><div class="num">Screen 26</div><div class="name">Beneficiaries</div><div class="states">List · Empty · Add (bank / Raast ID, verify title) · Saved</div></a>
-    <a class="tile" href="screen-27-pay-bills.html"><div class="num">Screen 27</div><div class="name">Pay Bills</div><div class="states">Categories &amp; saved bills · Enter number · Bill fetched · Paid · Not found</div></a>
-    <a class="tile" href="screen-28-airtime.html"><div class="num">Screen 28</div><div class="name">Send Airtime</div><div class="states">Form · Sent</div></a>
-    <a class="tile" href="screen-29-running-finance.html"><div class="num">Screen 29</div><div class="name">Running Finance</div><div class="states">Partly used · Fully used · Unused · Pull sheet · Repay sheet</div></a>
-    <a class="tile" href="screen-30-request-loan.html"><div class="num">Screen 30</div><div class="name">Request a Loan</div><div class="states">Form · Reapply previous · Submitted · Over limit</div></a>
-    <a class="tile" href="screen-31-my-loans.html"><div class="num">Screen 31</div><div class="name">My Loans</div><div class="states">Active · Applications · Closed · On track / Due soon / Overdue</div></a>
-    <a class="tile" href="screen-32-loan-detail.html"><div class="num">Screen 32</div><div class="name">Loan Detail</div><div class="states">Schedule · Repayment history · Ledger · Active / Closed</div></a>
+    <a class="tile" href="screen-20-settings.html"><div class="num">Screen 20</div><div class="name">Settings</div><div class="states">Appearance · terminal · end shift</div></a>
+    <a class="tile" href="screen-01-login.html"><div class="num">Screen 1</div><div class="name">Login</div><div class="states">Default · error · loading</div></a>
+    <a class="tile" href="screen-02-provisioning.html"><div class="num">Screen 2</div><div class="name">Device Provisioning</div><div class="states">Code · confirmation</div></a>
+    <a class="tile" href="screen-03-terminal-pairing.html"><div class="num">Screen 3</div><div class="name">Terminal Pairing</div><div class="states">7 states</div></a>
   </div>
 
 </div>

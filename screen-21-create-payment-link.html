@@ -36,7 +36,7 @@
 
         <div class="field" style="margin-bottom:16px;">
           <label>Reference / note (optional)</label>
-          <input type="text" placeholder="e.g. Order #4521 or customer name" />
+          <input type="text" id="link-ref" placeholder="e.g. Order #4521 or customer name" />
         </div>
 
         <div class="micro-label" style="margin-bottom:8px;">Link expires in</div>
@@ -61,7 +61,7 @@
       </div>
 
       <div style="padding:0 20px 14px;">
-        <a href="screen-22-payment-link-share.html" class="btn primary block">Generate Link</a>
+        <a href="screen-22-payment-link-share.html" id="gen-link" class="btn primary block">Generate Link</a>
       </div>
 
       <div class="keypad">
@@ -90,6 +90,7 @@
 </div>
 
 <script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
 <script>
   function setExpiry(btn, kind) {
     document.querySelectorAll('#custom-expiry-row').forEach(() => {});
@@ -102,6 +103,13 @@
     const labels = { '1h': 'in 1 hour', '24h': 'in 24 hours', '7d': 'in 7 days', custom: 'at the date/time you set below' };
     note.textContent = `Link becomes unpayable ${labels[kind]} — the amount and reference stay visible in history either way.`;
   }
+</script>
+<script>
+  const getLinkAmt = initAmountKeypad(2450, v => { const b = document.getElementById('gen-link'); b.style.opacity = v ? 1 : .4; b.style.pointerEvents = v ? 'auto' : 'none'; });
+  document.getElementById('gen-link').addEventListener('click', () => {
+    const exp = document.querySelector('.segmented button.active'); 
+    FS.draft = { amt: getLinkAmt(), method: null, txid: null, link: { amt: getLinkAmt(), ref: document.getElementById('link-ref').value.trim(), expiry: (exp ? exp.textContent.trim().toLowerCase() : '24 hours') } }; finSave();
+  });
 </script>
 </body>
 </html>

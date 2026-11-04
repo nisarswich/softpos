@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#070707"/>
-<title>Screen 15 — Dashboard — Swich SoftPOS</title>
+<title>Screen 15 — Home — Swich SoftPOS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,101 +18,56 @@
     <div class="statusbar" data-statusbar></div>
 
     <div class="screen has-nav">
-      <div class="topbar">
-        <div>
-          <div class="topbar-title">Dashboard</div>
-          <div class="body-text" style="font-size:12px;" data-role-label>Owner</div>
-        </div>
-        <a href="screen-20-settings.html" class="icon-btn" title="Settings">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        </a>
+      <div class="topbar" id="tb">
+        
+        <div class="topbar-title">Home</div>
+        <div class="body-text" style="font-size:12px;margin-right:2px;" data-role-label>Owner</div><a href="screen-20-settings.html" class="icon-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></a>
       </div>
-
-      <!-- Cashier-only accounts never reach this tab — shown here so the
-           role-gating rule is demonstrable, not just described. -->
       <div class="access-restricted" data-role-show="cashier">
-        <div class="icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        </div>
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
         <div class="h2" style="font-size:15.5px;">Not available for this role</div>
-        <p class="body-text" style="max-width:230px; margin-top:6px;">Cashier accounts process transactions only. Ask an Owner or Branch Manager for dashboard access.</p>
+        <p class="body-text" style="max-width:240px; margin-top:6px;">Cashier accounts process transactions only. Ask an Owner or Branch Manager for access to Finance.</p>
       </div>
+      <div class="fin-body" data-role-show="owner,branch_manager,solo">
+<div class="fin-scroll">
 
-      <div data-role-show="owner,branch_manager,solo" style="flex:1; overflow-y:auto; padding:0 16px 16px; display:flex; flex-direction:column; gap:14px;">
-
-        <!-- Branch selector — Owner only. Hidden entirely for Branch Manager
-             (auto-scoped) and single-outlet Solo accounts (nothing to pick). -->
-        <div data-role-show="owner" class="select-pill">
-          <span id="branch-label">All Branches</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </div>
-
-        <div class="segmented">
-          <button class="active" onclick="setDateRange(this,'Today')">Today</button>
-          <button onclick="setDateRange(this,'This Week')">This Week</button>
-          <button onclick="setDateRange(this,'This Month')">This Month</button>
-          <button onclick="setDateRange(this,'Custom')">Custom</button>
-        </div>
-
-        <div style="text-align:center; padding:6px 0 0;">
-          <div class="micro-label" style="margin-bottom:6px;">Total sales · <span id="range-label">Today</span></div>
-          <div class="amount-display"><span class="amount-currency">Rs</span>142,860.00</div>
-          <div class="body-text" style="margin-top:2px;">86 transactions</div>
-        </div>
-
-        <!-- Link is a distinct channel from Online/Retail per the payment-link
-             addendum, even though it's initiated from the same app as retail —
-             kept as its own column in every channel breakdown, not folded in. -->
-        <div class="summary-grid" style="grid-template-columns:repeat(3,1fr); gap:8px;">
-          <div class="summary-card" style="padding:12px 10px;">
-            <div class="micro-label">Online</div>
-            <div class="val" style="font-size:16px;">Rs 48,940</div>
-            <div class="body-text" style="font-size:11px;">24 txns</div>
-          </div>
-          <div class="summary-card" style="padding:12px 10px;">
-            <div class="micro-label">Retail</div>
-            <div class="val" style="font-size:16px;">Rs 67,620</div>
-            <div class="body-text" style="font-size:11px;">46 txns</div>
-          </div>
-          <div class="summary-card" style="padding:12px 10px;">
-            <div class="micro-label">Link</div>
-            <div class="val" style="font-size:16px;">Rs 26,300</div>
-            <div class="body-text" style="font-size:11px;">16 txns</div>
-          </div>
-        </div>
-
-        <div class="card card-pad">
-          <div class="micro-label" style="margin-bottom:10px;">Payment method split</div>
-          <div class="split-row"><span>Card</span><b>Rs 88,100 · 52 txns</b></div>
-          <div class="split-row"><span>QR</span><b>Rs 41,960 · 27 txns</b></div>
-          <div class="split-row"><span>Wallet</span><b>Rs 12,800 · 7 txns</b></div>
-        </div>
-
-        <a href="screen-16-transaction-list.html" class="btn ghost block">View all transactions</a>
-        <a href="screen-18-day-end-report.html" class="btn ghost block" style="margin-top:-4px;">Day-End Report</a>
-      </div>
-
-      <div class="bottom-nav">
-        <a href="screen-04-idle.html" class="nav-tab">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          Process
-        </a>
-        <a href="screen-15-dashboard.html" class="nav-tab active" data-role-show="owner,branch_manager,solo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Dashboard
-        </a>
-        <a href="screen-16-transaction-list.html" class="nav-tab" data-role-show="owner,branch_manager,solo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          History
-        </a>
-        <a href="screen-23-finance-home.html" class="nav-tab" data-role-show="owner,branch_manager,solo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="3"/><path d="M2 10h20"/><circle cx="17" cy="15" r="1.2"/></svg>
-          Finance
-        </a>
-      </div>
-    </div>
+<div data-role-show="owner" class="select-pill"><span>All Branches</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+<div class="balance-card">
+  <div class="micro-label">Available balance</div>
+  <div class="amount-display" style="margin:6px 0 2px;"><span class="amount-currency">Rs</span><span id="bal">184,250</span>.00</div>
+  <div class="body-text" style="font-size:12px;" id="pend">Rs 44,460 settling to your balance soon</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;">
+    <a href="screen-04-idle.html" class="btn primary"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg> Collect</a>
+    <a href="screen-23-pay.html" class="btn ghost"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg> Pay</a>
   </div>
-  <div class="frame-caption"><b>Screen 15</b> — Dashboard / Home</div>
+</div>
+<div class="in-out">
+  <a class="tile" href="screen-18-day-end-report.html"><div class="micro-label">Collected today</div><div class="v" id="coll">Rs 142,860</div><div class="s" id="coll-n">86 sales · view report</div></a>
+  <a class="tile" href="screen-16-transaction-list.html?dir=out&when=today"><div class="micro-label">Paid out today</div><div class="v" id="paid">Rs 25,000</div><div class="s">see payments</div></a>
+</div>
+<a href="screen-33-credit.html" class="card" style="display:flex;align-items:center;gap:12px;padding:14px 16px;text-decoration:none;color:var(--text-dim);">
+  <span class="avatar sm" style="color:var(--brand-teal);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+  <span style="flex:1;"><span style="display:block;font-weight:700;color:var(--heading);font-size:13.5px;" id="cr-1">Rs 150,000 credit available</span><span class="body-text" style="font-size:11.5px;" id="cr-2">Next installment Rs 28,000 · Nov 15</span></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+</a>
+<div>
+  <div class="sec-head" style="margin:2px 2px 8px;"><span class="micro-label">Recent activity</span><a href="screen-16-transaction-list.html" class="pill-link">See all</a></div>
+  <div class="card" id="acts"></div>
+</div>
+
+</div>
+      </div>
+<div class="bottom-nav">
+  <a href="screen-15-dashboard.html" class="nav-tab active" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1h-5v-7H9v7H4a1 1 0 01-1-1z"/></svg> Home</a>
+  <a href="screen-16-transaction-list.html" class="nav-tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Activity</a>
+  <a href="screen-04-idle.html" class="nav-tab collect"><span class="fab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Collect</a>
+  <a href="screen-23-pay.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg> Pay</a>
+  <a href="screen-33-credit.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Credit</a>
+</div>
+    </div>
+
+
+  </div>
+  <div class="frame-caption"><b>Screen 15</b> — Home — balance, collect &amp; pay</div>
 </div>
 </div>
 
@@ -122,23 +77,36 @@
     <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
     <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
   </div>
-  <div class="tag">Demo role (branch selector + access gate react)</div>
+  <div class="tag">Demo role (Cashier sees Collect + own Activity only)</div>
   <div class="role-switcher">
     <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
     <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
     <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
     <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
   </div>
+  <div class="tag" style="margin-top:6px;">Demo</div>
+  <button onclick="settleNow();render()">Simulate settlement</button>
+  <div class="tag" style="margin-top:6px;">Demo data</div>
+  <button onclick="finReset()">↺ Reset finance demo data</button>
   <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
 </div>
 
 <script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
 <script>
-  function setDateRange(btn, label) {
-    document.querySelectorAll('.segmented button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('range-label').textContent = label;
-  }
+
+function render(){
+  byId('bal').textContent = num(FS.balance);
+  byId('pend').textContent = FS.pending > 0 ? rs(FS.pending) + ' settling to your balance soon' : 'Everything you collected has settled';
+  byId('coll').textContent = rs(FS.sales); byId('coll-n').textContent = FS.salesCount + ' sales · view report';
+  byId('paid').textContent = rs(FS.acts.filter(t => t.d===0 && t.a<0 && (t.st==='success' || t.st==='pending')).reduce((s,t) => s - t.a, 0));
+  const nx = nextInstallment();
+  byId('cr-1').textContent = rs(300000 - FS.used) + ' credit available';
+  byId('cr-2').textContent = nx ? 'Next installment ' + rs(nx.amt) + ' · ' + nx.d.replace(/, \d{4}/,'') : 'No loan installments due';
+  byId('acts').innerHTML = FS.acts.slice(0,5).map(actRow).join('');
+}
+render();
+
 </script>
 </body>
 </html>

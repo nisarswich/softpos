@@ -74,7 +74,7 @@
 </div>
 </div>
 </div><div class="fin-footer">
-<button class="btn ghost block"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share receipt</button><a href="screen-23-finance-home.html" class="btn primary block">Done</a>
+<button class="btn ghost block"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share receipt</button><a href="screen-23-pay.html" class="btn primary block">Done</a>
 </div>
 </div><div class="fin-state" data-state-group="step" data-state-name="failed" data-active="false">
 <div class="fin-scroll">
@@ -85,7 +85,7 @@
 <div class="banner red" style="margin-top:22px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><div>Reason: account closed or inactive. Confirm the details with your vendor.</div></div>
 </div>
 </div><div class="fin-footer">
-<a href="screen-24-send-money.html" id="retry" class="btn primary block">Edit &amp; try again</a><a href="screen-23-finance-home.html" class="btn subtle block">Back to Finance</a>
+<a href="screen-24-send-money.html" id="retry" class="btn primary block">Edit &amp; try again</a><a href="screen-23-pay.html" class="btn subtle block">Back to Pay</a>
 </div>
 </div><div class="fin-state" data-state-group="step" data-state-name="pending" data-active="false">
 <div class="fin-scroll">
@@ -96,7 +96,7 @@
 <div class="banner amber" style="margin-top:22px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div id="pend-note">Rs 25,000 is on hold in your balance. Don't resend — it will be released automatically if the transfer fails.</div></div>
 </div>
 </div><div class="fin-footer">
-<a href="screen-23-finance-home.html" class="btn primary block">Back to Finance</a>
+<a href="screen-23-pay.html" class="btn primary block">Back to Pay</a>
 </div>
 </div>
       </div>
@@ -115,7 +115,7 @@
     <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
     <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
   </div>
-  <div class="tag">Demo role (Finance is hidden from Cashier)</div>
+  <div class="tag">Demo role (Cashier sees Collect + own Activity only)</div>
   <div class="role-switcher">
     <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
     <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
@@ -144,6 +144,7 @@ const P = payee(Q.get('to')) || payee('AT');
 const AMT = parseInt(Q.get('amt')) || 25000, RAIL = Q.get('rail') === 'ibft' ? 'ibft' : 'raast';
 const FEE = RAIL === 'ibft' ? 15 : 0, TOT = AMT + FEE, RAILN = RAIL === 'ibft' ? 'IBFT' : 'Raast';
 const REF = (RAIL==='ibft' ? 'IBF' : 'RST') + '-20261104-' + (10000 + Math.floor(Math.random()*89999));
+const TXX = { to: P.n, acct: P.s, rail: RAILN, purpose: Q.get('purpose') || 'Vendor payment', note: Q.get('ref') || '', ref: REF, fee: FEE, payee: P.id, amt: AMT, railKey: RAIL };
 let pinLen = 0, outcome = 'success', settled = false, wrongPin = false, wrongCount = 0;
 byId('r-amt').textContent = num(AMT);
 byId('r-to').textContent = P.n; byId('r-acct').textContent = P.s;
@@ -160,8 +161,8 @@ if (TOT > FS.balance) { byId('r-over').style.display = 'flex'; byId('confirm').d
 function setOutcome(o){ outcome = o; ['success','failed','pending'].forEach(x => byId('oc-'+x).classList.toggle('active', x===o)); }
 function settle(kind){
   if (settled) return; settled = true;
-  if (kind === 'success') finTx('send', P.n, RAILN, -TOT);
-  if (kind === 'pending') finTx('send', P.n, 'Pending · ' + RAILN, -TOT);
+  if (kind === 'success') finTx('send', P.n, RAILN, -TOT, 'transfer', TXX);
+  if (kind === 'pending') finTx('send', P.n, RAILN, -TOT, 'transfer', TXX, 'pending');
 }
 function go_step(s){
   if (s === 'success' || s === 'pending') settle(s);

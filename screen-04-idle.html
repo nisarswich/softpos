@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/theme.css">
 </head>
-<body>
+<body data-fresh>
 <div class="frame-stage">
 <div>
   <div class="phone">
@@ -65,23 +65,12 @@
       </div>
 
       <div class="bottom-nav">
-        <a href="screen-04-idle.html" class="nav-tab active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          Process
-        </a>
-        <a href="screen-15-dashboard.html" class="nav-tab" data-role-show="owner,branch_manager,solo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Dashboard
-        </a>
-        <a href="screen-16-transaction-list.html" class="nav-tab" data-role-show="owner,branch_manager,solo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          History
-        </a>
-        <a href="screen-23-finance-home.html" class="nav-tab" data-role-show="owner,branch_manager,solo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="3"/><path d="M2 10h20"/><circle cx="17" cy="15" r="1.2"/></svg>
-          Finance
-        </a>
-      </div>
+  <a href="screen-15-dashboard.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1h-5v-7H9v7H4a1 1 0 01-1-1z"/></svg> Home</a>
+  <a href="screen-16-transaction-list.html" class="nav-tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Activity</a>
+  <a href="screen-04-idle.html" class="nav-tab collect active"><span class="fab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Collect</a>
+  <a href="screen-23-pay.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg> Pay</a>
+  <a href="screen-33-credit.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Credit</a>
+</div>
     </div>
   </div>
   <div class="frame-caption"><b>Screen 4</b> — Idle / Ready</div>
@@ -111,5 +100,6 @@
 </div>
 
 <script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
 </body>
 </html>

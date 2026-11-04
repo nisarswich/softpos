@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#070707"/>
-<title>Screen 17 — Transaction Detail — Swich SoftPOS</title>
+<title>Screen 17 — Transaction — Swich SoftPOS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,83 +18,32 @@
     <div class="statusbar" data-statusbar></div>
 
     <div class="screen">
-      <div class="topbar">
-        <a href="screen-16-transaction-list.html" class="icon-btn" title="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+      <div class="topbar" id="tb">
+        <a href="screen-16-transaction-list.html" class="icon-btn" title="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
         <div class="topbar-title">Transaction</div>
+        
       </div>
 
-      <div style="flex:1; overflow-y:auto; padding:0 16px 20px;">
+      <div class="fin-body">
+<div class="fin-scroll">
 
-        <div style="text-align:center; padding:14px 0 18px;">
-          <div class="amount-display" id="detail-amount">Rs 2,450.00</div>
-          <div style="margin-top:8px;">
-            <span class="badge green" data-state-group="outcome" data-state-name="eligible" data-active="true">Success</span>
-            <span class="badge green" data-state-group="outcome" data-state-name="refunded" data-active="false">Success</span>
-            <span class="badge red" data-state-group="outcome" data-state-name="declined" data-active="false">Declined</span>
-            <span class="badge blue" data-state-group="outcome" data-state-name="link_pending" data-active="false">Pending</span>
-            <span class="badge green" data-state-group="outcome" data-state-name="link_paid" data-active="false">Paid</span>
-            <span class="badge neutral" data-state-group="outcome" data-state-name="link_expired" data-active="false">Expired</span>
-          </div>
-        </div>
+<div style="text-align:center;padding:6px 0 0;">
+  <div class="avatar" id="d-ico" style="margin:0 auto 10px;width:52px;height:52px;"></div>
+  <div class="micro-label" id="d-title">Card sale</div>
+  <div class="amount-display" id="d-amt" style="margin:4px 0 6px;">Rs 2,450</div>
+  <div id="d-badge"></div>
+</div>
+<div id="d-banner"></div>
+<div class="card card-pad" style="padding-top:6px;padding-bottom:6px;" id="d-kv"></div>
 
-        <div class="card" style="margin-bottom:14px;">
-          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Reference</span><span class="mono" style="color:var(--heading); font-size:12.5px;" id="detail-ref">#TXN-88231</span></div>
-          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Time</span><span style="color:var(--heading); font-size:13px;" id="detail-time">Today, 3:14 PM</span></div>
-          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Branch</span><span style="color:var(--heading); font-size:13px;">Riverside Outlet</span></div>
-          <div class="card-strip" style="display:flex; justify-content:space-between;"><span class="body-text">Channel</span><span style="color:var(--heading); font-size:13px;" id="channel-label">Retail</span></div>
-          <div class="card-strip" style="display:flex; justify-content:space-between; border-bottom:none;"><span class="body-text">Method</span><span style="color:var(--heading); font-size:13px;" id="detail-method">Card · **** 4471</span></div>
-        </div>
-
-        <!-- Cashier/device info — retail only -->
-        <div class="card" style="margin-bottom:14px;" data-state-group="channel" data-state-name="retail" data-active="true">
-          <div class="card-strip" style="border-bottom:none;">
-            <div class="micro-label" style="margin-bottom:8px;">Cashier & device</div>
-            <div class="body-text" style="font-size:13px; color:var(--text);">cashier-nisar · Front Counter device</div>
-          </div>
-        </div>
-        <div data-state-group="channel" data-state-name="online" data-active="false" class="banner blue" style="margin-bottom:14px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
-          <div>Online transaction — no cashier or device on this order.</div>
-        </div>
-        <!-- Creator info — payment links, per spec: "cashier/creator name and
-             creation time, alongside the existing detail fields." -->
-        <div class="card" style="margin-bottom:14px;" data-state-group="channel" data-state-name="link" data-active="false">
-          <div class="card-strip" style="border-bottom:none;">
-            <div class="micro-label" style="margin-bottom:8px;">Created by</div>
-            <div class="body-text" style="font-size:13px; color:var(--text);" id="link-creator">cashier-nisar · Today, 10:05 AM</div>
-          </div>
-        </div>
-
-        <!-- Linked refund reference -->
-        <div data-state-group="outcome" data-state-name="refunded-ref" data-active="false" class="banner amber" style="margin-bottom:14px;" id="refund-ref-banner">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 106-8.5"/><path d="M3 4v5h5"/></svg>
-          <div>Refunded via <b class="mono" style="font-weight:700;">#RFD-2091</b> — Today, 4:02 PM</div>
-        </div>
-
-        <!-- Expired-link note -->
-        <div id="expired-note" class="banner" style="display:none; margin-bottom:14px; color:var(--text-dim);">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          <div>This link expired without payment and can no longer be paid.</div>
-        </div>
-
-        <!-- Actions: refund (regular success), resend+cancel (pending link),
-             or create-a-new-link (expired link). -->
-        <div data-state-group="outcome" data-state-name="refund-action" data-active="true">
-          <a href="screen-12-refund-void.html" class="btn danger-ghost block">Refund this transaction</a>
-        </div>
-        <div id="link-pending-actions" style="display:none; flex-direction:column; gap:10px;">
-          <a href="screen-22-payment-link-share.html" class="btn ghost block">Resend link</a>
-          <button class="btn danger-ghost block" onclick="cancelLink()">Cancel this link</button>
-        </div>
-        <div id="link-expired-actions" style="display:none;">
-          <a href="screen-21-create-payment-link.html" class="btn ghost block">Create a new link</a>
-        </div>
+</div><div class="fin-footer" id="d-foot"></div>
       </div>
+
     </div>
 
     <div class="home-indicator"></div>
   </div>
-  <div class="frame-caption"><b>Screen 17</b> — Transaction Detail</div>
+  <div class="frame-caption"><b>Screen 17</b> — Transaction Detail — any type</div>
 </div>
 </div>
 
@@ -104,55 +53,74 @@
     <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
     <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
   </div>
-  <div class="tag">Mockup controls — channel</div>
-  <button data-state-btn-group="channel" data-state-btn="retail" class="active" onclick="setChannel('retail')">Retail</button>
-  <button data-state-btn-group="channel" data-state-btn="online" onclick="setChannel('online')">Online</button>
-  <button data-state-btn-group="channel" data-state-btn="link" onclick="setChannel('link')">Link</button>
-  <div class="tag" style="margin-top:6px;">Outcome</div>
-  <button data-state-btn-group="outcome" data-state-btn="eligible" class="active" onclick="setOutcome('eligible')">Success — refund eligible</button>
-  <button data-state-btn-group="outcome" data-state-btn="refunded" onclick="setOutcome('refunded')">Already refunded</button>
-  <button data-state-btn-group="outcome" data-state-btn="declined" onclick="setOutcome('declined')">Declined</button>
-  <button data-state-btn-group="outcome" data-state-btn="link_pending" onclick="setOutcome('link_pending')">Link — Pending</button>
-  <button data-state-btn-group="outcome" data-state-btn="link_paid" onclick="setOutcome('link_paid')">Link — Paid</button>
-  <button data-state-btn-group="outcome" data-state-btn="link_expired" onclick="setOutcome('link_expired')">Link — Expired</button>
+  <div class="tag">Demo role (Cashier sees Collect + own Activity only)</div>
+  <div class="role-switcher">
+    <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
+    <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
+    <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
+    <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
+  </div>
+  <div class="tag" style="margin-top:6px;">Jump to a sample</div>
+  <button onclick="location.search='?id=TXN-88231'">Card sale</button><button onclick="location.search='?id=LNK-4521'">Link pending</button><button onclick="location.search='?id=LNK-219'">Link expired</button><button onclick="location.search='?id=TXN-88074'">Declined</button>
+  <button onclick="location.search='?id=TX-0901'">Transfer</button><button onclick="location.search='?id=TX-0904'">Bill</button><button onclick="location.search='?id=TX-0902'">Airtime</button><button onclick="location.search='?id=TX-0903'">Credit pull</button><button onclick="location.search='?id=STL-1103'">Settlement</button>
+  <div class="tag" style="margin-top:6px;">Demo</div><button id="paybtn" style="display:none" onclick="markLinkPaid(T.id);render()">Customer pays the link</button>
+  <div class="tag" style="margin-top:6px;">Demo data</div>
+  <button onclick="finReset()">↺ Reset finance demo data</button>
   <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
 </div>
 
 <script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
 <script>
-  function setChannel(kind) {
-    showState('channel', kind);
-    document.getElementById('channel-label').textContent = kind === 'link' ? 'Link' : (kind === 'online' ? 'Online' : 'Retail');
-    document.getElementById('detail-method').textContent = kind === 'link' ? 'Payment Link' : (kind === 'online' ? 'Wallet' : 'Card · **** 4471');
+
+const Q = new URLSearchParams(location.search);
+let T = txById(Q.get('id')) || FS.acts[0];
+const STN = { success: 'Completed', pending: 'Pending', expired: 'Expired', declined: 'Declined', failed: 'Not completed' };
+const STC = { success: 'green', pending: 'blue', expired: 'neutral', declined: 'red', failed: 'amber' };
+const kv = (k, v) => '<div class="kv"><span>' + k + '</span><b>' + v + '</b></div>';
+const btn = (cls, label, href, onclick) => href ? '<a class="btn ' + cls + ' block" href="' + href + '">' + label + '</a>' : '<button class="btn ' + cls + ' block" onclick="' + onclick + '">' + label + '</button>';
+const LABEL = { sale: 'Sale', link: 'Payment link', settlement: 'Settlement', transfer: 'Money sent', bill: 'Bill payment', airtime: 'Airtime', credit: 'Credit' };
+function render(){
+  T = txById(T.id); const x = T.x || {}, pos = T.a > 0, ok = T.st === 'success';
+  byId('d-ico').innerHTML = icn(T.i, 22); byId('d-ico').style.color = 'var(--brand-teal)';
+  byId('d-title').textContent = T.t;
+  const a = byId('d-amt'); a.textContent = (pos ? '+ ' : '− ') + rs(Math.abs(T.a)); a.style.color = (['declined','failed','expired'].includes(T.st) ? 'var(--text-faint)' : (pos && ok ? 'var(--green)' : 'var(--heading)'));
+  byId('d-badge').innerHTML = '<span class="badge ' + STC[T.st] + '">' + STN[T.st] + '</span>';
+  let rows = kv('Type', LABEL[T.type] + (T.ch ? ' · ' + ({retail:'In-store',online:'Online',link:'Link'}[T.ch]) : '')) + kv('When', T.time) + kv('Reference', '<span class="mono" style="font-size:12px">' + (x.ref || T.id) + '</span>');
+  let banner = '', foot = '';
+  if (T.type === 'sale') {
+    rows += kv('Method', T.s.replace('Retail · ', '').replace('Online · ', ''));
+    if (T.ch === 'retail') rows += kv('Taken by', (T.by || '—') + ' · ' + (x.device || 'Front Counter'));
+    rows += kv('Branch', 'Riverside Outlet');
+    if (T.st === 'declined' || T.st === 'failed') banner = '<div class="banner ' + (T.st==='declined' ? 'red' : 'amber') + '"><div>' + (x.reason || 'Payment not completed') + '. No money was collected.</div></div>';
+    if (ok) foot = btn('danger-ghost', 'Refund this payment', 'screen-12-refund-void.html') + btn('ghost', 'Share receipt', '', '');
+    else foot = btn('primary', 'Try again', 'screen-06-manual-amount.html');
   }
-
-  function setOutcome(kind) {
-    showState('outcome', kind); // badge swap
-
-    const refBanner = document.getElementById('refund-ref-banner');
-    const refAction = document.querySelector('[data-state-group="outcome"][data-state-name="refund-action"]');
-    const expiredNote = document.getElementById('expired-note');
-    const pendingActions = document.getElementById('link-pending-actions');
-    const expiredActions = document.getElementById('link-expired-actions');
-
-    refBanner.dataset.active = (kind === 'refunded') ? 'true' : 'false';
-    refAction.dataset.active = (kind === 'eligible' || kind === 'link_paid') ? 'true' : 'false';
-    expiredNote.style.display = (kind === 'link_expired') ? 'flex' : 'none';
-    pendingActions.style.display = (kind === 'link_pending') ? 'flex' : 'none';
-    expiredActions.style.display = (kind === 'link_expired') ? 'block' : 'none';
-
-    // Payment-link outcomes imply the Link channel — flip the channel demo
-    // control + fields to match, since a link txn can't be Retail/Online.
-    if (kind.startsWith('link_')) {
-      setChannel('link');
-      document.querySelectorAll('[data-state-btn-group="channel"]').forEach(b => b.classList.toggle('active', b.dataset.stateBtn === 'link'));
-    }
+  if (T.type === 'link') {
+    rows += kv('Created by', (T.by || '—')) + kv('Link expiry', x.expiry || '24 hours') + kv('Note', T.s);
+    if (T.st === 'pending') { foot = btn('ghost', 'Resend link', 'screen-22-payment-link-share.html') + btn('danger-ghost', 'Cancel this link', '', 'cancelLink()'); byId('paybtn').style.display = 'inline-block'; }
+    if (T.st === 'expired') { banner = '<div class="banner"><div style="color:var(--text-dim)">' + (x.cancelled ? 'Cancelled by ' + x.cancelled + ' — this link can no longer be paid.' : 'This link expired without payment and can no longer be paid.') + '</div></div>'; foot = btn('ghost', 'Create a new link', 'screen-21-create-payment-link.html'); }
+    if (ok) foot = btn('danger-ghost', 'Refund this payment', 'screen-12-refund-void.html') + btn('ghost', 'Share receipt', '', '');
   }
-
-  function cancelLink() {
-    setOutcome('link_expired');
-    document.getElementById('expired-note').innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><div>Cancelled by cashier-nisar — this link can no longer be paid.</div>';
+  if (T.type === 'transfer') {
+    rows = kv('To', x.to) + kv('Account', x.acct) + kv('Method', (x.rail || 'Raast') + ' · Instant') + kv('Purpose', x.purpose || '—') + (x.note ? kv('Note', x.note) : '') + kv('Fee', rs(x.fee || 0)) + kv('When', T.time) + kv('Reference', '<span class="mono" style="font-size:12px">' + (x.ref || T.id) + '</span>');
+    if (T.st === 'pending') banner = '<div class="banner amber">' + '<div>The receiving bank is still confirming. This amount is on hold and returns to your balance if it fails.</div></div>';
+    foot = btn('primary', 'Pay again', 'screen-24-send-money.html?to=' + (x.payee || 'AT') + '&amt=' + (Math.abs(T.a) - (x.fee || 0)) + '&rail=' + (x.railKey || 'raast')) + btn('ghost', 'Share receipt', '', '');
   }
+  if (T.type === 'bill') { rows = kv('Biller', x.biller) + kv('Consumer no.', x.refno) + kv('When', T.time) + kv('Reference', '<span class="mono" style="font-size:12px">' + (x.ref || T.id) + '</span>'); foot = btn('primary', 'Pay a bill again', 'screen-27-pay-bills.html') + btn('ghost', 'Share receipt', '', ''); }
+  if (T.type === 'airtime') { rows = kv('Operator', x.op + ' · ' + (x.kind || 'Prepaid')) + kv('Number', x.num) + kv('When', T.time) + kv('Reference', '<span class="mono" style="font-size:12px">' + (x.ref || T.id) + '</span>'); foot = btn('primary', 'Send airtime again', 'screen-28-airtime.html') + btn('ghost', 'Share receipt', '', ''); }
+  if (T.type === 'settlement') { rows = kv('Payments settled', (x.count || 12) + ' sales') + kv('Credited to', 'Wallet balance') + kv('When', T.time) + kv('Reference', '<span class="mono" style="font-size:12px">' + T.id + '</span>'); foot = btn('primary', 'View day-end report', 'screen-18-day-end-report.html'); }
+  if (T.type === 'credit') {
+    const loan = x.kind === 'loan';
+    rows = kv('Product', loan ? 'Loan ' + x.loan : 'Running finance') + kv('Direction', pos ? 'Added to your balance' : 'Paid from your balance') + kv('When', T.time) + kv('Reference', '<span class="mono" style="font-size:12px">' + T.id + '</span>');
+    foot = btn('primary', loan ? 'View loan' : 'Open running finance', loan ? 'screen-32-loan-detail.html?loan=' + x.loan : 'screen-29-running-finance.html');
+  }
+  byId('d-kv').innerHTML = rows; byId('d-banner').innerHTML = banner; byId('d-foot').innerHTML = foot;
+  if (T.type === 'link' && T.st !== 'pending') byId('paybtn').style.display = 'none';
+}
+function cancelLink(){ T.st = 'expired'; T.x.cancelled = 'cashier-nisar'; finSave(); render(); }
+render();
+
 </script>
 </body>
 </html>

@@ -30,7 +30,7 @@
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
           </div>
           <div class="h1" style="font-size:19px;">Link ready to share</div>
-          <div class="body-text" style="font-size:13px; margin-top:4px;">Rs 2,450.00 · Order #4521 · Expires in 24 hours</div>
+          <div class="body-text" style="font-size:13px; margin-top:4px;" id="link-sum">Rs 2,450.00 · Order #4521 · Expires in 24 hours</div>
         </div>
 
         <div class="card card-pad" style="margin-bottom:18px; text-align:center;">
@@ -84,6 +84,7 @@
 </div>
 
 <script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
 <script>
   function showConfirm(text) {
     document.getElementById('share-confirm-text').textContent = text;
@@ -97,6 +98,12 @@
   }
   function sendWhatsapp() { showConfirm('Opening WhatsApp with the link pre-filled…'); }
   function sendEmail() { showConfirm('Link emailed.'); }
+</script>
+<script>
+  if (FS.draft && FS.draft.link) {
+    recordLink(); const l = FS.draft.link;
+    document.getElementById('link-sum').textContent = rs(l.amt) + '.00' + (l.ref ? ' · ' + l.ref : '') + ' · Expires in ' + l.expiry;
+  }
 </script>
 </body>
 </html>

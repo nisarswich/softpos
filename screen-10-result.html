@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/theme.css">
 </head>
-<body>
+<body data-draft>
 <div class="frame-stage">
 <div>
   <div class="phone">
@@ -84,9 +84,9 @@
     <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
   </div>
   <div class="tag">Mockup controls — outcome</div>
-  <button data-state-btn-group="result" data-state-btn="success" class="active" onclick="showState('result','success')">Success</button>
-  <button data-state-btn-group="result" data-state-btn="declined" onclick="showState('result','declined')">Declined</button>
-  <button data-state-btn-group="result" data-state-btn="network" onclick="showState('result','network')">Network failure</button>
+  <button data-state-btn-group="result" data-state-btn="success" class="active" onclick="showState('result','success');recordSale('success')">Success</button>
+  <button data-state-btn-group="result" data-state-btn="declined" onclick="showState('result','declined');recordSale('declined')">Declined</button>
+  <button data-state-btn-group="result" data-state-btn="network" onclick="showState('result','network');recordSale('network')">Network failure</button>
   <div class="tag" style="margin-top:6px;">Origin (success only)</div>
   <button data-state-btn-group="origin2" data-state-btn="manual" class="active" onclick="showState('origin2','manual')">Manual</button>
   <button data-state-btn-group="origin2" data-state-btn="ecr" onclick="showState('origin2','ecr')">From ECR</button>
@@ -94,5 +94,7 @@
 </div>
 
 <script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
+<script>recordSale('success');</script>
 </body>
 </html>

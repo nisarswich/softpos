@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#070707"/>
-<title>Screen 16 — Transaction List — Swich SoftPOS</title>
+<title>Screen 16 — Activity — Swich SoftPOS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,191 +17,40 @@
     <div data-notch></div>
     <div class="statusbar" data-statusbar></div>
 
-    <div class="screen has-nav" style="position:relative;">
-      <div class="topbar">
-        <div class="topbar-title">Transactions</div>
-        <button class="icon-btn" title="Sort" onclick="toggleSort()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
-        </button>
-        <button class="icon-btn" title="Filters" onclick="openFilters()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-        </button>
+    <div class="screen has-nav">
+      <div class="topbar" id="tb">
+        
+        <div class="topbar-title">Activity</div>
+        <a href="screen-19-export-share.html" class="icon-btn" title="Export" data-role-show="owner,branch_manager,solo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></a>
       </div>
 
-      <!-- Cashier access-restricted state -->
-      <div class="access-restricted" data-role-show="cashier">
-        <div class="icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        </div>
-        <div class="h2" style="font-size:15.5px;">Not available for this role</div>
-        <p class="body-text" style="max-width:230px; margin-top:6px;">Cashier accounts process transactions only. Ask an Owner or Branch Manager for history access.</p>
+      <div class="fin-body">
+<div class="fin-scroll">
+
+<div id="dir-wrap" class="segmented"><button data-d="all" class="active" onclick="setDir('all')">All</button><button data-d="in" onclick="setDir('in')">Money in</button><button data-d="out" onclick="setDir('out')">Money out</button></div>
+<div id="mine" class="banner blue" style="display:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div>Showing sales you took on this device.</div></div>
+<div style="display:flex;gap:8px;">
+  <div class="field" style="margin:0;flex:1;"><input id="q" placeholder="Search activity" oninput="render()"></div>
+  <button class="select-pill" id="when-btn" style="flex-shrink:0;border:1px solid var(--border);font-family:var(--sans);" onclick="cycleWhen()"><span id="when-t">Any time</span></button>
+</div>
+<div id="chips" class="filter-chip-row" style="padding:0;"></div>
+<div class="card card-pad" style="padding:10px 16px;"><div style="display:flex;justify-content:space-between;font-size:12.5px;"><span class="body-text" id="sum-l" style="font-size:12.5px;">In <b style="color:var(--green)">Rs 0</b></span><span class="body-text" id="sum-r" style="font-size:12.5px;">Out <b style="color:var(--heading)">Rs 0</b></span></div></div>
+<div id="list"></div>
+
+</div>
       </div>
-
-      <div data-role-show="owner,branch_manager,solo" style="flex:1; min-height:0; display:flex; flex-direction:column;">
-
-        <div class="filter-chip-row" style="padding-top:4px;">
-          <div class="filter-chip set" onclick="openFilters()">Today</div>
-          <div class="filter-chip set" data-role-show="owner" onclick="openFilters()">All Branches</div>
-          <div class="filter-chip" onclick="openFilters()">Status: Any</div>
-          <div class="filter-chip" onclick="openFilters()">Channel: Any</div>
-          <div class="filter-chip" onclick="openFilters()">Method: Any</div>
-        </div>
-
-        <!-- Populated -->
-        <div data-state-group="list" data-state-name="populated" data-active="true" style="flex:1; overflow-y:auto;">
-          <a href="screen-17-transaction-detail.html" class="txn-row">
-            <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
-            <div class="meta"><div class="amt">Rs 2,450.00</div><div class="sub">3:14 PM · Riverside Outlet · Retail · Card</div></div>
-            <span class="badge green">Success</span>
-          </a>
-          <a href="screen-17-transaction-detail.html" class="txn-row">
-            <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
-            <div class="meta"><div class="amt">Rs 890.00</div><div class="sub">2:52 PM · Riverside Outlet · Retail · QR</div></div>
-            <span class="badge green">Success</span>
-          </a>
-          <a href="screen-17-transaction-detail.html" class="txn-row">
-            <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg></div>
-            <div class="meta"><div class="amt">Rs 5,120.00</div><div class="sub">2:31 PM · Gulberg Outlet · Online · Wallet</div></div>
-            <span class="badge green">Success</span>
-          </a>
-          <a href="screen-17-transaction-detail.html" class="txn-row">
-            <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
-            <div class="meta"><div class="amt">Rs 1,200.00</div><div class="sub">1:40 PM · Riverside Outlet · Retail · Card</div></div>
-            <span class="badge red">Declined</span>
-          </a>
-          <a href="screen-17-transaction-detail.html" class="txn-row">
-            <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
-            <div class="meta"><div class="amt">Rs 3,600.00</div><div class="sub">12:58 PM · Gulberg Outlet · Retail · QR</div></div>
-            <span class="badge green">Success</span>
-          </a>
-          <a href="screen-17-transaction-detail.html" class="txn-row">
-            <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
-            <div class="meta"><div class="amt">Rs 540.00</div><div class="sub">12:11 PM · Riverside Outlet · Retail · Card</div></div>
-            <span class="badge amber">Refunded</span>
-          </a>
-          <a href="screen-17-transaction-detail.html" class="txn-row">
-            <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg></div>
-            <div class="meta"><div class="amt">Rs 7,900.00</div><div class="sub">11:20 AM · Gulberg Outlet · Online · Wallet</div></div>
-            <span class="badge blue">Pending</span>
-          </a>
-          <a href="screen-17-transaction-detail.html" class="txn-row">
-            <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div>
-            <div class="meta"><div class="amt">Rs 4,300.00</div><div class="sub">10:05 AM · Riverside Outlet · Link · Order #4521</div></div>
-            <span class="badge blue">Pending</span>
-          </a>
-          <a href="screen-17-transaction-detail.html" class="txn-row">
-            <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div>
-            <div class="meta"><div class="amt">Rs 1,650.00</div><div class="sub">Yesterday · Riverside Outlet · Link · Delivery #219</div></div>
-            <span class="badge neutral">Expired</span>
-          </a>
-        </div>
-
-        <!-- Empty -->
-        <div data-state-group="list" data-state-name="empty" data-active="false" class="access-restricted">
-          <div class="icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </div>
-          <div class="h2" style="font-size:15.5px;">No transactions match these filters</div>
-          <p class="body-text" style="max-width:230px; margin:6px 0 18px;">Try widening the date range or clearing a filter.</p>
-          <button class="btn ghost sm" onclick="clearFilters()">Clear filters</button>
-        </div>
-
-        <!-- Loading -->
-        <div data-state-group="list" data-state-name="loading" data-active="false" style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px; color:var(--text-dim); font-size:13.5px;">
-          <span class="spinner"></span> Loading transactions…
-        </div>
-      </div>
-
-      <div class="bottom-nav">
-        <a href="screen-04-idle.html" class="nav-tab">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          Process
-        </a>
-        <a href="screen-15-dashboard.html" class="nav-tab" data-role-show="owner,branch_manager,solo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Dashboard
-        </a>
-        <a href="screen-16-transaction-list.html" class="nav-tab active" data-role-show="owner,branch_manager,solo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          History
-        </a>
-        <a href="screen-23-finance-home.html" class="nav-tab" data-role-show="owner,branch_manager,solo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="3"/><path d="M2 10h20"/><circle cx="17" cy="15" r="1.2"/></svg>
-          Finance
-        </a>
-      </div>
-
-      <!-- Filter sheet -->
-      <div class="sheet-overlay" id="filter-sheet" style="display:none;">
-        <div class="sheet" style="max-height:80%; overflow-y:auto;">
-          <div class="sheet-handle"></div>
-          <div class="h2" style="margin-bottom:16px;">Filters</div>
-
-          <div class="filter-group">
-            <div class="micro-label">Date range</div>
-            <div class="filter-option-row">
-              <div class="filter-option selected">Today</div>
-              <div class="filter-option">This Week</div>
-              <div class="filter-option">This Month</div>
-              <div class="filter-option">Custom…</div>
-            </div>
-          </div>
-
-          <div class="filter-group" data-role-show="owner">
-            <div class="micro-label">Branch</div>
-            <div class="filter-option-row">
-              <div class="filter-option selected">All Branches</div>
-              <div class="filter-option">Riverside Outlet</div>
-              <div class="filter-option">Gulberg Outlet</div>
-            </div>
-          </div>
-
-          <div class="filter-group">
-            <div class="micro-label">Status</div>
-            <div class="filter-option-row">
-              <div class="filter-option selected">Any</div>
-              <div class="filter-option">Success</div>
-              <div class="filter-option">Failed</div>
-              <div class="filter-option">Refunded</div>
-              <div class="filter-option">Pending</div>
-              <div class="filter-option">Expired</div>
-            </div>
-          </div>
-
-          <div class="filter-group">
-            <div class="micro-label">Channel</div>
-            <div class="filter-option-row">
-              <div class="filter-option selected">Any</div>
-              <div class="filter-option">Online</div>
-              <div class="filter-option">Retail</div>
-              <div class="filter-option">Link</div>
-            </div>
-          </div>
-
-          <div class="filter-group">
-            <div class="micro-label">Payment method</div>
-            <div class="filter-option-row">
-              <div class="filter-option selected">Any</div>
-              <div class="filter-option">Card</div>
-              <div class="filter-option">QR</div>
-              <div class="filter-option">Wallet</div>
-            </div>
-          </div>
-
-          <div class="filter-group">
-            <div class="micro-label">Amount range</div>
-            <div style="display:flex; gap:10px;">
-              <input type="text" placeholder="Min" style="flex:1; background:var(--bg-elevated); border:1px solid var(--border); border-radius:999px; padding:10px 14px; font-size:13px; color:var(--text); font-family:inherit;" />
-              <input type="text" placeholder="Max" style="flex:1; background:var(--bg-elevated); border:1px solid var(--border); border-radius:999px; padding:10px 14px; font-size:13px; color:var(--text); font-family:inherit;" />
-            </div>
-          </div>
-
-          <button class="btn primary block" onclick="closeFilters()">Apply filters</button>
-        </div>
-      </div>
+<div class="bottom-nav">
+  <a href="screen-15-dashboard.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1h-5v-7H9v7H4a1 1 0 01-1-1z"/></svg> Home</a>
+  <a href="screen-16-transaction-list.html" class="nav-tab active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Activity</a>
+  <a href="screen-04-idle.html" class="nav-tab collect"><span class="fab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Collect</a>
+  <a href="screen-23-pay.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg> Pay</a>
+  <a href="screen-33-credit.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Credit</a>
+</div>
     </div>
+
+
   </div>
-  <div class="frame-caption"><b>Screen 16</b> — Transaction List</div>
+  <div class="frame-caption"><b>Screen 16</b> — Activity — all money in &amp; out</div>
 </div>
 </div>
 
@@ -211,33 +60,64 @@
     <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
     <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
   </div>
-  <div class="tag">Mockup controls — list state</div>
-  <button data-state-btn-group="list" data-state-btn="populated" class="active" onclick="showState('list','populated')">Populated</button>
-  <button data-state-btn-group="list" data-state-btn="empty" onclick="showState('list','empty')">Empty</button>
-  <button data-state-btn-group="list" data-state-btn="loading" onclick="showState('list','loading')">Loading</button>
-  <div class="tag" style="margin-top:6px;">Demo role</div>
+  <div class="tag">Demo role (Cashier sees Collect + own Activity only)</div>
   <div class="role-switcher">
     <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
     <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
     <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
     <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
   </div>
-  <a href="screen-19-export-share.html" class="btn ghost sm" style="margin-top:6px;">Export/Share this view →</a>
+  <div class="tag" style="margin-top:6px;">Demo data</div>
+  <button onclick="finReset()">↺ Reset finance demo data</button>
   <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
 </div>
 
 <script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
 <script>
-  function openFilters() { document.getElementById('filter-sheet').style.display = 'flex'; }
-  function closeFilters() { document.getElementById('filter-sheet').style.display = 'none'; }
-  function toggleSort() { /* mockup only */ }
-  function clearFilters() { showState('list', 'populated'); }
-  document.querySelectorAll('.filter-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      opt.parentElement.querySelectorAll('.filter-option').forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
-    });
+
+const Q = new URLSearchParams(location.search);
+let dir = ['in','out'].includes(Q.get('dir')) ? Q.get('dir') : 'all', typ = 'all', when = Q.get('when') === 'today' ? 1 : 0;
+const WHEN = ['Any time', 'Today', 'Last 7 days'];
+const GROUPS = {
+  all: [['all','All'],['attn','Needs attention'],['sale','Sales'],['transfer','Transfers'],['bill','Bills & airtime'],['credit','Credit']],
+  in:  [['all','All'],['sale','Sales'],['link','Links'],['settlement','Settlements'],['credit','Credit']],
+  out: [['all','All'],['transfer','Transfers'],['bill','Bills & airtime'],['credit','Loans & credit']],
+};
+const matchType = (t, k) => k==='all' || (k==='attn' ? t.st!=='success' : (k==='bill' ? (t.type==='bill' || t.type==='airtime') : (k==='sale' ? (t.type==='sale' || t.type==='link') : t.type===k)));
+function cashier(){ return getRole() === 'cashier'; }
+function setDir(d){ dir = d; typ = 'all'; render(); }
+function setTyp(k){ typ = k; render(); }
+function cycleWhen(){ when = (when + 1) % 3; render(); }
+function render(){
+  const c = cashier();
+  byId('dir-wrap').style.display = c ? 'none' : 'flex'; byId('mine').style.display = c ? 'flex' : 'none';
+  byId('chips').style.display = c ? 'none' : 'flex';
+  byId('tb').querySelector('.topbar-title').textContent = c ? 'My Sales' : 'Activity';
+  document.querySelectorAll('#dir-wrap button').forEach(b => b.classList.toggle('active', b.dataset.d === dir));
+  byId('chips').innerHTML = GROUPS[dir].map(g => '<span class="filter-chip' + (g[0]===typ ? ' set' : '') + '" style="cursor:pointer" onclick="setTyp(\'' + g[0] + '\')">' + g[1] + '</span>').join('');
+  byId('when-t').textContent = WHEN[when];
+  const q = (byId('q').value || '').toLowerCase();
+  let rows = FS.acts.filter(t => {
+    if (c) return (t.type==='sale' || t.type==='link') && t.by === 'cashier-nisar';
+    if (dir==='in' && t.a < 0) return false; if (dir==='out' && t.a > 0) return false;
+    return matchType(t, typ);
+  }).filter(t => when===0 || (when===1 ? t.d===0 : t.d<=7)).filter(t => !q || (t.t + ' ' + t.s).toLowerCase().includes(q));
+  const ok = t => t.st === 'success', inn = rows.filter(t => t.a>0 && ok(t)).reduce((s,t) => s + t.a, 0), out = rows.filter(t => t.a<0 && (ok(t) || t.st==='pending')).reduce((s,t) => s - t.a, 0);
+  byId('sum-l').innerHTML = (c ? 'Collected ' : 'In ') + '<b style="color:var(--green)">' + rs(inn) + '</b>';
+  byId('sum-r').innerHTML = c ? rows.length + ' sales' : 'Out <b style="color:var(--heading)">' + rs(out) + '</b>';
+  let html = '', last = null;
+  rows.forEach(t => {
+    const g = t.d===0 ? 'Today' : (t.d===1 ? 'Yesterday' : 'Earlier');
+    if (g !== last) { if (last) html += '</div>'; html += '<div class="day-head">' + g + '</div><div class="card">'; last = g; }
+    html += actRow(t);
   });
+  if (last) html += '</div>';
+  byId('list').innerHTML = html || '<div class="access-restricted" style="padding:40px 20px;"><div class="h2" style="font-size:15px;">Nothing here</div><p class="body-text" style="margin-top:6px;">No activity matches these filters.</p></div>';
+}
+const _sr = setRole; setRole = function(r){ _sr(r); render(); };
+render();
+
 </script>
 </body>
 </html>
