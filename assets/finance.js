@@ -5,21 +5,40 @@
 // Markup is an ILLUSTRATIVE flat 2%/month so schedule, repayments and ledger
 // reconcile; real pricing comes from the lending partner (see handoff notes).
 
-const FKEY = 'swich_demo_fin';
+const FKEY = 'swich_demo_fin2';
 const TODAY = new Date('Nov 4, 2026');
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
+// One activity list for everything: sales/links/settlements (money in),
+// transfers/bills/airtime/installments (money out), credit pulls (money in).
+// Fields: id, i(icon), t(title), s(sub), time, d(days ago), a(signed Rs),
+// type(sale|link|settlement|transfer|bill|airtime|credit), ch(retail|online|link),
+// st(success|pending|expired|declined|failed), by, x(extra details).
+function mk(id, i, t, s, time, d, a, type, o) { return Object.assign({ id: id, i: i, t: t, s: s, time: time, d: d, a: a, type: type, ch: null, st: 'success', by: null, x: {} }, o || {}); }
 const SEED = {
   balance: 184250,
+  pending: 44460,        // collected, not yet settled to the wallet
+  sales: 142860, salesCount: 86,   // today's collections (all channels)
   used: 150000,
+  seq: 0,
+  draft: null,
   acts: [
-    { i: 'send', t: 'Ali Traders', s: 'Raast · Today, 11:20 AM', a: -25000 },
-    { i: 'down', t: 'Sales settlement', s: 'Today, 9:00 AM', a: 98400 },
-    { i: 'phone', t: 'Jazz airtime', s: 'Nov 2, 6:05 PM', a: -500 },
-    { i: 'loop', t: 'Running finance pulled', s: 'Nov 1, 10:30 AM', a: 50000 },
-    { i: 'flame', t: 'SSGC bill', s: 'Oct 28, 2:10 PM', a: -3240 },
-    { i: 'loop', t: 'Running finance pulled', s: 'Oct 22, 2:15 PM', a: 100000 },
-    { i: 'loop', t: 'Running finance repaid', s: 'Oct 10, 5:40 PM', a: -60000 },
+    mk('TXN-88231', 'card', 'Card sale', 'Retail · Card ···· 4471', 'Today, 10:52 AM', 0, 2450, 'sale', { ch: 'retail', by: 'cashier-nisar', x: { device: 'Front Counter' } }),
+    mk('TXN-88229', 'card', 'QR sale', 'Retail · QR', 'Today, 10:31 AM', 0, 1200, 'sale', { ch: 'retail', by: 'cashier-nisar', x: { device: 'Front Counter' } }),
+    mk('LNK-4521', 'link', 'Payment link', 'Order #4521', 'Today, 10:05 AM', 0, 4300, 'link', { ch: 'link', st: 'pending', by: 'cashier-nisar', x: { expiry: '24 hours' } }),
+    mk('TX-0901', 'send', 'Ali Traders', 'Raast', 'Today, 9:40 AM', 0, -25000, 'transfer', { x: { to: 'Ali Traders', acct: 'HBL · ···· 4521', rail: 'Raast', purpose: 'Vendor payment', ref: 'RST-20261104-77213', note: 'Invoice #1182', fee: 0, payee: 'AT' } }),
+    mk('STL-1103', 'down', 'Sales settlement', 'Yesterday\'s sales · 38 payments', 'Today, 9:00 AM', 0, 98400, 'settlement', { x: { count: 38 } }),
+    mk('TXN-88102', 'card', 'Online order', 'Online · Wallet', 'Yesterday, 8:12 PM', 1, 3800, 'sale', { ch: 'online' }),
+    mk('LNK-219', 'link', 'Payment link', 'Delivery #219', 'Yesterday, 4:20 PM', 1, 1650, 'link', { ch: 'link', st: 'expired', by: 'cashier-nisar', x: { expiry: '1 hour' } }),
+    mk('TXN-88074', 'card', 'Card sale', 'Retail · Card ···· 0912', 'Yesterday, 2:47 PM', 1, 5600, 'sale', { ch: 'retail', st: 'declined', by: 'cashier-nisar', x: { device: 'Front Counter', reason: 'Insufficient funds' } }),
+    mk('TX-0902', 'phone', 'Jazz airtime', 'Prepaid', 'Nov 2, 6:05 PM', 2, -500, 'airtime', { x: { op: 'Jazz', num: '0300 1234567', kind: 'Prepaid', ref: 'AT-20261102-41820' } }),
+    mk('TX-0903', 'loop', 'Running finance pulled', 'Pulled to balance', 'Nov 1, 10:30 AM', 3, 50000, 'credit', { x: { kind: 'rf' } }),
+    mk('TX-0904', 'flame', 'SSGC bill', 'Bill payment', 'Oct 28, 2:10 PM', 7, -3240, 'bill', { x: { biller: 'SSGC', refno: '2204 5518 03', ref: 'BP-20261028-22011', billerId: 'ssgc' } }),
+    mk('TX-0905', 'loop', 'Running finance pulled', 'Pulled to balance', 'Oct 22, 2:15 PM', 13, 100000, 'credit', { x: { kind: 'rf' } }),
+    mk('TX-0907', 'layers', 'Loan installment · L-2048', 'Installment 2 of 6', 'Oct 15, 9:00 AM', 20, -28000, 'credit', { x: { kind: 'loan', loan: 'L-2048' } }),
+    mk('TX-0906', 'loop', 'Running finance repaid', 'Repaid from balance', 'Oct 10, 5:40 PM', 25, -60000, 'credit', { x: { kind: 'rf' } }),
+    mk('TX-0908', 'layers', 'Loan installment · L-2048', 'Installment 1 of 6', 'Sep 15, 9:00 AM', 50, -28000, 'credit', { x: { kind: 'loan', loan: 'L-2048' } }),
+    mk('TX-0909', 'layers', 'Loan disbursed · L-2048', 'Credited to wallet', 'Aug 15, 11:20 AM', 81, 150000, 'credit', { x: { kind: 'loan', loan: 'L-2048' } }),
   ],
   payees: [],
   bills: { ssgc: 'paid' },
@@ -36,12 +55,78 @@ let FS = finLoad();
 function finSave() { try { localStorage.setItem(FKEY, JSON.stringify(FS)); } catch (e) {} }
 function finReset() { try { localStorage.removeItem(FKEY); } catch (e) {} location.reload(); }
 function timeNow() { const d = new Date(); let h = d.getHours(); const m = d.getMinutes(); const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; return h + ':' + String(m).padStart(2, '0') + ' ' + ap; }
-// Record a wallet movement (signed amount) and add it to recent activity.
-function finTx(icon, title, sub, amt) {
+function nextSeq() { FS.seq = (FS.seq || 0) + 1; return FS.seq; }
+
+// Money out / credit movement: changes the wallet balance AND lands in Activity.
+function finTx(icon, title, sub, amt, type, x, st) {
+  const id = 'TX-' + (1000 + nextSeq());
   FS.balance += amt;
-  FS.acts.unshift({ i: icon, t: title, s: sub + ' · Today, ' + timeNow(), a: amt });
+  FS.acts.unshift(mk(id, icon, title, sub, 'Today, ' + timeNow(), 0, amt, type || 'credit', { x: x || {}, st: st || 'success' }));
+  finSave();
+  return id;
+}
+function txById(id) { return FS.acts.find(t => t.id === id); }
+
+// Collect flow: screen 10 records the sale in Activity; successful sales add to
+// "pending settlement" until funds settle into the wallet.
+function recordSale(status) {
+  if (!FS.draft) FS.draft = { amt: 2450, method: 'card', txid: null };
+  const d = FS.draft; let a = d.txid && txById(d.txid);
+  if (!a) {
+    d.txid = 'TXN-' + (88300 + nextSeq());
+    const qr = d.method === 'qr';
+    a = mk(d.txid, 'card', qr ? 'QR sale' : 'Card sale', qr ? 'Retail · QR' : 'Retail · Card ···· 4471', 'Today, ' + timeNow(), 0, d.amt, 'sale', { ch: 'retail', st: 'none', by: 'cashier-nisar', x: { device: 'Front Counter' } });
+    FS.acts.unshift(a);
+  }
+  const st = status === 'success' ? 'success' : (status === 'declined' ? 'declined' : 'failed');
+  if (a.st === 'success' && st !== 'success') { FS.pending -= a.a; FS.sales -= a.a; FS.salesCount--; }
+  if (a.st !== 'success' && st === 'success') { FS.pending += a.a; FS.sales += a.a; FS.salesCount++; }
+  a.st = st; a.x.reason = st === 'declined' ? 'Insufficient funds' : (st === 'failed' ? 'Network unavailable' : '');
   finSave();
 }
+function recordLink() {
+  const d = FS.draft; if (!d || !d.link || d.linkId) return;
+  d.linkId = 'LNK-' + (4600 + nextSeq());
+  FS.acts.unshift(mk(d.linkId, 'link', 'Payment link', d.link.ref || 'No reference', 'Today, ' + timeNow(), 0, d.link.amt, 'link', { ch: 'link', st: 'pending', by: 'cashier-nisar', x: { expiry: d.link.expiry } }));
+  finSave();
+}
+function markLinkPaid(id) {
+  const a = txById(id); if (!a || a.st === 'success') return;
+  a.st = 'success'; FS.pending += a.a; FS.sales += a.a; FS.salesCount++; finSave();
+}
+function settleNow() {
+  if (FS.pending <= 0) return;
+  const amt = FS.pending; FS.pending = 0;
+  finTx('down', 'Sales settlement', 'Collected payments', amt, 'settlement', { count: 12 });
+}
+
+// Collect-flow draft amount: keypad on screens 6/21, then every later screen
+// swaps the sample "2,450" for what was actually typed.
+function initAmountKeypad(start, onChange) {
+  let digits = String(start), fresh = true;
+  const disp = document.querySelector('.amount-display'); const tn = [...disp.childNodes].find(n => n.nodeType === 3);
+  const val = () => parseInt(digits || '0') || 0;
+  const paint = () => { tn.nodeValue = num(val()); if (onChange) onChange(val()); };
+  document.querySelectorAll('.keypad button').forEach(b => {
+    const t = b.textContent.trim();
+    b.addEventListener('click', () => {
+      if (/^\d$/.test(t)) digits = fresh || digits === '0' ? t : digits + t;
+      else if (t === '.00') digits = (fresh ? '0' : digits) + '00';
+      else digits = digits.slice(0, -1) || '0';
+      fresh = false; digits = String(parseInt(digits || '0')).slice(0, 7); paint();
+    });
+  });
+  paint(); return val;
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const b = document.body;
+  if (b.hasAttribute('data-fresh')) { FS.draft = null; finSave(); }
+  if (b.dataset.method && FS.draft) { FS.draft.method = b.dataset.method; finSave(); }
+  if (b.hasAttribute('data-draft') && FS.draft) {
+    const w = document.createTreeWalker(document.querySelector('.phone'), NodeFilter.SHOW_TEXT);
+    let n; while ((n = w.nextNode())) if (n.nodeValue.includes('2,450')) n.nodeValue = n.nodeValue.replace('2,450', num(FS.draft.amt));
+  }
+});
 
 function rs(n) { return 'Rs ' + Math.round(n).toLocaleString('en-US'); }
 function num(n) { return Math.round(n).toLocaleString('en-US'); }
@@ -61,13 +146,23 @@ const FICON_PATHS = {
   wifi: '<path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>',
   book: '<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>',
   bill: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+  link: '<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>',
+  card: '<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
 };
 function icn(name, s) { s = s || 17; return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (FICON_PATHS[name] || FICON_PATHS.bill) + '</svg>'; }
-function actRow(a) {
-  const pos = a.a > 0;
-  return '<div class="txn-row"><div class="chan-icon">' + icn(a.i) + '</div><div class="meta"><div class="amt">' + a.t + '</div><div class="sub">' + a.s + '</div></div>' +
-    '<div style="font-size:13.5px;font-weight:700;color:' + (pos ? 'var(--green)' : 'var(--heading)') + '">' + (pos ? '+ ' : '− ') + rs(Math.abs(a.a)) + '</div></div>';
+
+const ST_BADGE = {
+  pending: '<span class="badge blue">Pending</span>', expired: '<span class="badge neutral">Expired</span>',
+  declined: '<span class="badge red">Declined</span>', failed: '<span class="badge amber">Not completed</span>',
+};
+// One row style for every kind of money movement.
+function actRow(t) {
+  const pos = t.a > 0, muted = ['declined', 'failed', 'expired'].includes(t.st);
+  const col = muted ? 'var(--text-faint)' : (pos && t.st === 'success' ? 'var(--green)' : 'var(--heading)');
+  return '<a class="txn-row" href="screen-17-transaction-detail.html?id=' + t.id + '"><div class="chan-icon">' + icn(t.i) + '</div><div class="meta"><div class="amt">' + t.t + '</div><div class="sub">' + t.s + ' · ' + t.time + '</div></div>' +
+    '<div style="text-align:right"><div style="font-size:13.5px;font-weight:700;color:' + col + '">' + (pos ? '+ ' : '− ') + rs(Math.abs(t.a)) + '</div>' + (ST_BADGE[t.st] || '') + '</div></a>';
 }
+function isOut(t) { return t.a < 0; }
 
 // ---------------------------------------------------------------- payees
 const PAYEES0 = [

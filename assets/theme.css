@@ -770,6 +770,27 @@ body {
 .ledger-row .dr { color: var(--heading); font-weight: 700; }
 .ledger-row .bl { color: var(--text-dim); font-weight: 600; }
 
+
+/* =====================================================================
+   Unified app (v2): five-tab bar with raised Collect, day groups,
+   direction toggle.
+   ===================================================================== */
+.nav-tab.collect { position: relative; }
+.nav-tab.collect .fab { width: 52px; height: 52px; border-radius: 50%; background: var(--brand-gradient); color: #04140f; display: flex; align-items: center; justify-content: center; margin-top: -26px; border: 4px solid var(--bg-elevated); }
+.nav-tab.collect .fab svg { width: 22px; height: 22px; }
+.nav-tab.collect.active { color: var(--brand-teal); }
+.nav-tab.collect { padding-top: 6px; }
+.day-head { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-faint); padding: 14px 4px 6px; }
+.day-head:first-child { padding-top: 2px; }
+.in-out { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.in-out .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; text-decoration: none; display: block; }
+.in-out .tile .v { font-size: 16px; font-weight: 800; color: var(--heading); margin-top: 3px; }
+.in-out .tile .s { font-size: 11.5px; color: var(--text-dim); margin-top: 1px; }
+.quick-payees { display: flex; gap: 14px; overflow-x: auto; padding: 2px 2px 4px; }
+.quick-payees::-webkit-scrollbar { display: none; }
+.quick-payees a { display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; color: var(--text-dim); font-size: 11px; font-weight: 600; flex-shrink: 0; width: 56px; text-align: center; }
+.quick-payees .avatar { width: 48px; height: 48px; }
+
 @media (max-width: 460px) {
   .phone { width: 100vw; height: 100vh; border-radius: 0; border-width: 0; }
   .frame-stage { padding: 0; }
