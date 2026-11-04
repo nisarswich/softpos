@@ -699,6 +699,77 @@ body {
 .chevron-row .value { font-size: 12.5px; color: var(--text-faint); }
 .chevron-row svg.chev { color: var(--text-faint); flex-shrink: 0; }
 
+/* =====================================================================
+   Finance addendum (Screens 23–32) — money-out, bills, airtime, running
+   finance, loans. Same discipline as the rest: borders over shadows,
+   gradient only on the single primary CTA / active segment, status hues
+   unchanged (green=success/paid, red=failed/overdue, amber=pending/
+   attention, blue=info/active).
+   ===================================================================== */
+.fin-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.fin-state { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.fin-scroll { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: 0 16px 16px; display: flex; flex-direction: column; gap: 14px; }
+.fin-scroll::-webkit-scrollbar { display: none; }
+.fin-scroll > * { flex-shrink: 0; }
+.fin-footer { flex-shrink: 0; padding: 12px 16px; border-top: 1px solid var(--border); background: var(--bg); display: flex; flex-direction: column; gap: 8px; }
+
+.banner.green { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+.banner.red { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
+
+.balance-card { position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 20px; padding: 18px 18px 16px; }
+.balance-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 100% 0%, rgba(34,211,201,0.14), transparent 62%); pointer-events: none; }
+.balance-card > * { position: relative; }
+.stat-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+.stat-pair .v { font-size: 15px; font-weight: 800; color: var(--heading); margin-top: 3px; }
+
+.action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.action-tile { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 12px 2px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; text-decoration: none; color: var(--text); font-size: 11.5px; font-weight: 700; text-align: center; cursor: pointer; font-family: var(--sans); }
+.action-tile:hover { background: var(--surface-2); }
+.action-tile .ico { width: 38px; height: 38px; border-radius: 50%; background: var(--accent-dim); color: var(--accent-text); display: flex; align-items: center; justify-content: center; }
+.action-tile.selected { border-color: rgba(47,111,237,0.5); background: var(--accent-dim); }
+
+.meter { height: 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); overflow: hidden; }
+.meter > i { display: block; height: 100%; background: var(--brand-blue); border-radius: 999px; transition: width 0.3s; }
+
+.avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; color: var(--heading); flex-shrink: 0; }
+.avatar.sm { width: 34px; height: 34px; font-size: 12px; }
+
+.opt-card { display: flex; gap: 12px; align-items: flex-start; padding: 14px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); cursor: pointer; text-align: left; font-family: var(--sans); color: var(--text); width: 100%; }
+.opt-card .radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border-strong); flex-shrink: 0; margin-top: 2px; }
+.opt-card.selected { border-color: rgba(47,111,237,0.55); background: var(--accent-dim); }
+.opt-card.selected .radio { border-color: var(--brand-blue); background: var(--brand-blue); box-shadow: inset 0 0 0 3px var(--bg); }
+.opt-card.disabled { opacity: 0.5; cursor: not-allowed; }
+.opt-card .t { font-size: 14px; font-weight: 700; color: var(--heading); }
+.opt-card .d { font-size: 12px; color: var(--text-dim); margin-top: 2px; line-height: 1.45; }
+
+.amount-input { width: 100%; background: transparent; border: none; text-align: center; font-size: 40px; font-weight: 800; color: var(--heading); font-family: var(--sans); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.amount-input:focus { outline: none; }
+.field select { width: 100%; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; font-size: 15px; color: var(--text); font-family: inherit; appearance: none; }
+.field select:focus { outline: none; border-color: var(--brand-teal); }
+
+.kv { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.kv:last-child { border-bottom: none; }
+.kv span { color: var(--text-dim); }
+.kv b { color: var(--heading); font-weight: 700; text-align: right; }
+.pill-link { color: var(--accent-text); font-weight: 700; font-size: 12.5px; text-decoration: none; cursor: pointer; background: none; border: none; font-family: var(--sans); }
+.sec-head { display: flex; justify-content: space-between; align-items: center; }
+
+.pin-dots { display: flex; gap: 16px; justify-content: center; margin: 18px 0; }
+.pin-dots span { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border-strong); }
+.pin-dots span.on { background: var(--heading); border-color: var(--heading); }
+
+.cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.ledger-head, .ledger-row { display: grid; grid-template-columns: 52px 1fr 70px 76px; gap: 8px; align-items: center; padding: 11px 14px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.ledger-head { padding: 9px 14px; }
+.ledger-row:last-child { border-bottom: none; }
+.ledger-row .r, .ledger-head .r { text-align: right; }
+.ledger-row .dt { color: var(--text-faint); font-size: 11px; }
+.ledger-row .ds { color: var(--heading); font-weight: 600; }
+.ledger-row .ds small { display: block; color: var(--text-faint); font-weight: 500; font-size: 10.5px; }
+.ledger-row .cr { color: var(--green); font-weight: 700; }
+.ledger-row .dr { color: var(--heading); font-weight: 700; }
+.ledger-row .bl { color: var(--text-dim); font-weight: 600; }
+
 @media (max-width: 460px) {
   .phone { width: 100vw; height: 100vh; border-radius: 0; border-width: 0; }
   .frame-stage { padding: 0; }
