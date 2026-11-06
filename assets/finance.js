@@ -20,6 +20,8 @@ const SEED = {
   pending: 44460,        // collected, not yet settled to the wallet
   sales: 142860, salesCount: 86,   // today's collections (all channels)
   used: 150000,
+  auto: { on: false, below: 25000, amt: 50000 },
+  flash: null,
   seq: 0,
   draft: null,
   acts: [
@@ -36,6 +38,7 @@ const SEED = {
     mk('TX-0904', 'flame', 'SSGC bill', 'Bill payment', 'Oct 28, 2:10 PM', 7, -3240, 'bill', { x: { biller: 'SSGC', refno: '2204 5518 03', ref: 'BP-20261028-22011', billerId: 'ssgc' } }),
     mk('TX-0905', 'loop', 'Running finance pulled', 'Pulled to balance', 'Oct 22, 2:15 PM', 13, 100000, 'credit', { x: { kind: 'rf' } }),
     mk('TX-0907', 'layers', 'Loan installment · L-2048', 'Installment 2 of 6', 'Oct 15, 9:00 AM', 20, -28000, 'credit', { x: { kind: 'loan', loan: 'L-2048' } }),
+    mk('TU-0801', 'plus', 'Balance top-up', 'Bank deposit · slip verified', 'Oct 26, 11:05 AM', 9, 20000, 'topup', { x: { kind: 'balance', amt: 20000, slip: 'slip-oct26.jpg' } }),
     mk('TX-0906', 'loop', 'Running finance repaid', 'Repaid from balance', 'Oct 10, 5:40 PM', 25, -60000, 'credit', { x: { kind: 'rf' } }),
     mk('TX-0908', 'layers', 'Loan installment · L-2048', 'Installment 1 of 6', 'Sep 15, 9:00 AM', 50, -28000, 'credit', { x: { kind: 'loan', loan: 'L-2048' } }),
     mk('TX-0909', 'layers', 'Loan disbursed · L-2048', 'Credited to wallet', 'Aug 15, 11:20 AM', 81, 150000, 'credit', { x: { kind: 'loan', loan: 'L-2048' } }),
@@ -62,10 +65,44 @@ function finTx(icon, title, sub, amt, type, x, st) {
   const id = 'TX-' + (1000 + nextSeq());
   FS.balance += amt;
   FS.acts.unshift(mk(id, icon, title, sub, 'Today, ' + timeNow(), 0, amt, type || 'credit', { x: x || {}, st: st || 'success' }));
+  autoPullCheck(amt);
   finSave();
   return id;
 }
 function txById(id) { return FS.acts.find(t => t.id === id); }
+
+
+// Auto-pull: when on, a payment that drops the balance below the chosen floor
+// pulls from running finance automatically.
+function autoPullCheck(delta) {
+  const A = FS.auto; if (!A || !A.on || delta >= 0) return;
+  const avail = 300000 - FS.used; if (FS.balance >= A.below || avail <= 0) return;
+  const amt = Math.min(A.amt, avail);
+  FS.used += amt; FS.balance += amt;
+  FS.acts.unshift(mk('TX-' + (1000 + nextSeq()), 'loop', 'Auto-pull · Running finance', 'Balance fell below ' + rs(A.below), 'Today, ' + timeNow(), 0, amt, 'credit', { x: { kind: 'rf', auto: true } }));
+  FS.flash = 'Auto-pulled ' + rs(amt) + ' from running finance';
+}
+// Top-up / repay-by-deposit requests: user uploads a slip, ops confirms later.
+function addTopup(kind, amt, title, x) {
+  const id = 'TU-' + (2000 + nextSeq()), bal = kind === 'balance';
+  FS.acts.unshift(mk(id, 'plus', title, bal ? 'Bank deposit · slip attached' : 'Repayment by deposit · slip attached', 'Today, ' + timeNow(), 0, bal ? amt : -amt, 'topup', { st: 'pending', x: Object.assign({ kind: kind, amt: amt }, x || {}) }));
+  finSave(); return id;
+}
+function decideTopup(id, approve) {
+  const a = txById(id); if (!a || a.st !== 'pending') return false;
+  const x = a.x;
+  if (!approve) { a.st = 'declined'; x.reason = 'Slip could not be verified'; finSave(); return true; }
+  a.st = 'success'; a.s = a.s.replace('slip attached', 'confirmed');
+  if (x.kind === 'balance') FS.balance += x.amt;
+  else if (x.kind === 'rf') FS.used = Math.max(0, FS.used - x.amt);
+  else FS.paid[x.loan] = (FS.paid[x.loan] || 0) + (x.count || 1);
+  finSave(); return true;
+}
+function pendingTopups() { return FS.acts.filter(t => t.type === 'topup' && t.st === 'pending'); }
+function showToast(msg) {
+  const ph = document.querySelector('.phone'); if (!ph) return;
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; ph.appendChild(t); setTimeout(() => t.remove(), 4500);
+}
 
 // Collect flow: screen 10 records the sale in Activity; successful sales add to
 // "pending settlement" until funds settle into the wallet.
@@ -120,6 +157,7 @@ function initAmountKeypad(start, onChange) {
 }
 document.addEventListener('DOMContentLoaded', () => {
   const b = document.body;
+  if (FS.flash) { showToast(FS.flash); FS.flash = null; finSave(); }
   if (b.hasAttribute('data-fresh')) { FS.draft = null; finSave(); }
   if (b.dataset.method && FS.draft) { FS.draft.method = b.dataset.method; finSave(); }
   if (b.hasAttribute('data-draft') && FS.draft) {
@@ -147,6 +185,9 @@ const FICON_PATHS = {
   book: '<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>',
   bill: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
   link: '<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>',
+  plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  upload: '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
+  copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',
   card: '<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
 };
 function icn(name, s) { s = s || 17; return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (FICON_PATHS[name] || FICON_PATHS.bill) + '</svg>'; }
