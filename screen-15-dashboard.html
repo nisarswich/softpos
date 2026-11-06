@@ -33,7 +33,7 @@
 
 <div data-role-show="owner" class="select-pill"><span>All Branches</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
 <div class="balance-card">
-  <div class="micro-label">Available balance</div>
+  <div class="sec-head"><span class="micro-label">Available balance</span><a href="screen-34-topup.html?for=balance" class="topup-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Top up</a></div>
   <div class="amount-display" style="margin:6px 0 2px;"><span class="amount-currency">Rs</span><span id="bal">184,250</span>.00</div>
   <div class="body-text" style="font-size:12px;" id="pend">Rs 44,460 settling to your balance soon</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;">
@@ -45,7 +45,7 @@
   <a class="tile" href="screen-18-day-end-report.html"><div class="micro-label">Collected today</div><div class="v" id="coll">Rs 142,860</div><div class="s" id="coll-n">86 sales · view report</div></a>
   <a class="tile" href="screen-16-transaction-list.html?dir=out&when=today"><div class="micro-label">Paid out today</div><div class="v" id="paid">Rs 25,000</div><div class="s">see payments</div></a>
 </div>
-<a href="screen-33-credit.html" class="card" style="display:flex;align-items:center;gap:12px;padding:14px 16px;text-decoration:none;color:var(--text-dim);">
+<a href="screen-33-financing.html" class="card" style="display:flex;align-items:center;gap:12px;padding:14px 16px;text-decoration:none;color:var(--text-dim);">
   <span class="avatar sm" style="color:var(--brand-teal);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
   <span style="flex:1;"><span style="display:block;font-weight:700;color:var(--heading);font-size:13.5px;" id="cr-1">Rs 150,000 credit available</span><span class="body-text" style="font-size:11.5px;" id="cr-2">Next installment Rs 28,000 · Nov 15</span></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
 </a>
@@ -61,7 +61,7 @@
   <a href="screen-16-transaction-list.html" class="nav-tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Activity</a>
   <a href="screen-04-idle.html" class="nav-tab collect"><span class="fab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Collect</a>
   <a href="screen-23-pay.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg> Pay</a>
-  <a href="screen-33-credit.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Credit</a>
+  <a href="screen-33-financing.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Financing</a>
 </div>
     </div>
 
@@ -101,7 +101,7 @@ function render(){
   byId('coll').textContent = rs(FS.sales); byId('coll-n').textContent = FS.salesCount + ' sales · view report';
   byId('paid').textContent = rs(FS.acts.filter(t => t.d===0 && t.a<0 && (t.st==='success' || t.st==='pending')).reduce((s,t) => s - t.a, 0));
   const nx = nextInstallment();
-  byId('cr-1').textContent = rs(300000 - FS.used) + ' credit available';
+  byId('cr-1').textContent = rs(300000 - FS.used) + ' available to pull';
   byId('cr-2').textContent = nx ? 'Next installment ' + rs(nx.amt) + ' · ' + nx.d.replace(/, \d{4}/,'') : 'No loan installments due';
   byId('acts').innerHTML = FS.acts.slice(0,5).map(actRow).join('');
 }

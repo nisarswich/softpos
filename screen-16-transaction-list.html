@@ -44,7 +44,7 @@
   <a href="screen-16-transaction-list.html" class="nav-tab active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Activity</a>
   <a href="screen-04-idle.html" class="nav-tab collect"><span class="fab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Collect</a>
   <a href="screen-23-pay.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg> Pay</a>
-  <a href="screen-33-credit.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Credit</a>
+  <a href="screen-33-financing.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Financing</a>
 </div>
     </div>
 
@@ -80,9 +80,9 @@ const Q = new URLSearchParams(location.search);
 let dir = ['in','out'].includes(Q.get('dir')) ? Q.get('dir') : 'all', typ = 'all', when = Q.get('when') === 'today' ? 1 : 0;
 const WHEN = ['Any time', 'Today', 'Last 7 days'];
 const GROUPS = {
-  all: [['all','All'],['attn','Needs attention'],['sale','Sales'],['transfer','Transfers'],['bill','Bills & airtime'],['credit','Credit']],
-  in:  [['all','All'],['sale','Sales'],['link','Links'],['settlement','Settlements'],['credit','Credit']],
-  out: [['all','All'],['transfer','Transfers'],['bill','Bills & airtime'],['credit','Loans & credit']],
+  all: [['all','All'],['attn','Needs attention'],['sale','Sales'],['transfer','Transfers'],['bill','Bills & airtime'],['topup','Top-ups'],['credit','Financing']],
+  in:  [['all','All'],['sale','Sales'],['link','Links'],['settlement','Settlements'],['topup','Top-ups'],['credit','Financing']],
+  out: [['all','All'],['transfer','Transfers'],['bill','Bills & airtime'],['topup','Repayments'],['credit','Financing']],
 };
 const matchType = (t, k) => k==='all' || (k==='attn' ? t.st!=='success' : (k==='bill' ? (t.type==='bill' || t.type==='airtime') : (k==='sale' ? (t.type==='sale' || t.type==='link') : t.type===k)));
 function cashier(){ return getRole() === 'cashier'; }

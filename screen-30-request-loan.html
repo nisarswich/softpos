@@ -19,7 +19,7 @@
 
     <div class="screen">
       <div class="topbar" id="tb">
-        <a href="screen-33-credit.html" class="icon-btn" title="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+        <a href="screen-33-financing.html" class="icon-btn" title="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></a>
         <div class="topbar-title">Request a Loan</div>
         
       </div>
@@ -83,7 +83,7 @@
 <div class="card card-pad" style="margin-top:22px;padding-top:6px;padding-bottom:6px;"><div class="kv"><span>Application</span><b class="mono" style="font-size:12px;" id="sub-id">L-2062</b></div><div class="kv"><span>Amount</span><b id="sub-amt">Rs 120,000</b></div><div class="kv"><span>Term</span><b id="sub-ten">6 months</b></div><div class="kv"><span>Repayment</span><b id="sub-met">Monthly from balance</b></div><div class="kv"><span>Status</span><b><span class="badge blue">Under review</span></b></div></div>
 </div>
 </div><div class="fin-footer">
-<a href="screen-31-my-loans.html" class="btn primary block">View my loans</a><a href="screen-33-credit.html" class="btn subtle block">Back to Credit</a>
+<a href="screen-31-my-loans.html" class="btn primary block">View my loans</a><a href="screen-33-financing.html" class="btn subtle block">Back to Financing</a>
 </div>
 </div>
       </div>
@@ -167,6 +167,7 @@ function prefill(id){
     '<a class="txn-row" href="#" onclick="prefill(\'' + l.id + '\');return false;"><div class="meta"><div class="amt">' + rs(l.principal) + ' · ' + l.tenure + ' months</div><div class="sub">' + l.id + ' · closed ' + l.closedOn + ' · ' + METHOD_LABEL[l.methodKey] + '</div></div><span class="pill-link">Reapply</span></a>').join('');
   if (pendingApp) { byId('pending-app').style.display = 'flex'; byId('pending-t').innerHTML = 'You already have an application under review (<b>' + pendingApp.id + '</b>, ' + rs(pendingApp.amount) + '). You can still send another request.'; }
   upd();
+  if (params.get('amt')) setAmt(parseInt(params.get('amt')));
   if (params.get('reapply') && LOANS[params.get('reapply')]) prefill(params.get('reapply'));
 })();
 

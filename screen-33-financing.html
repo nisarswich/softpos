@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#070707"/>
+<title>Screen 33 — Financing — Swich SoftPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="frame-stage">
+<div>
+  <div class="phone">
+    <div data-notch></div>
+    <div class="statusbar" data-statusbar></div>
+
+    <div class="screen has-nav">
+      <div class="topbar" id="tb">
+        
+        <div class="topbar-title">Financing</div>
+        <div class="body-text" style="font-size:12px;" data-role-label>Owner</div>
+      </div>
+      <div class="access-restricted" data-role-show="cashier">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="h2" style="font-size:15.5px;">Not available for this role</div>
+        <p class="body-text" style="max-width:240px; margin-top:6px;">Cashier accounts process transactions only. Ask an Owner or Branch Manager for access to Finance.</p>
+      </div>
+      <div class="fin-body" data-role-show="owner,branch_manager,solo">
+<div class="fin-scroll">
+
+<div id="pend-note" class="banner blue" style="display:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div style="flex:1;" id="pend-t"></div><a href="screen-16-transaction-list.html" class="pill-link">View</a></div>
+<div class="balance-card">
+  <div class="sec-head"><span class="micro-label">Running finance · available</span><span class="badge green" id="rf-badge">Active</span></div>
+  <div class="amount-display" style="margin:6px 0 12px;"><span class="amount-currency">Rs</span><span id="rf-avail">150,000</span></div>
+  <div class="meter"><i id="rf-meter" style="width:50%"></i></div>
+  <div class="body-text" style="font-size:12px;margin:8px 0 14px;display:flex;justify-content:space-between;"><span id="rf-used">Used Rs 150,000</span><span>Limit Rs 300,000</span></div>
+  <a href="screen-29-running-finance.html" class="btn primary block" id="pull-btn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg> Pull funds to balance</a>
+</div>
+<div class="card card-pad">
+  <div class="sec-head"><div><div class="h2" style="font-size:15px;">Auto-pull</div><div class="body-text" style="font-size:12px;margin-top:2px;">Never run short: top up from your limit automatically</div></div><button class="switch" id="auto-sw" onclick="toggleAuto()" aria-label="Auto-pull"></button></div>
+  <div id="auto-opts" style="display:none;margin-top:14px;">
+    <div class="micro-label" style="margin-bottom:8px;">When balance falls below</div>
+    <div class="filter-option-row" id="auto-below"></div>
+    <div class="micro-label" style="margin:14px 0 8px;">Pull</div>
+    <div class="filter-option-row" id="auto-amt"></div>
+  </div>
+</div>
+<div class="card card-pad">
+  <div class="sec-head" style="margin-bottom:6px;">
+    <div style="display:flex;align-items:center;gap:10px;"><span class="avatar sm" style="color:var(--brand-teal);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span><span class="h2" style="font-size:15px;">Loans</span></div>
+    <a href="screen-31-my-loans.html" class="pill-link" id="loan-badge">1 active</a>
+  </div>
+  <div id="loan-kv"></div>
+  <div class="micro-label" style="margin:14px 0 8px;">Need a loan? How much</div>
+  <div style="display:flex;gap:8px;"><div class="field" style="margin:0;flex:1;"><input id="loan-amt" value="100,000" inputmode="numeric" oninput="byId('loan-go').href='screen-30-request-loan.html?amt='+intOf('loan-amt')"></div><a class="btn ghost" id="loan-go" href="screen-30-request-loan.html?amt=100000">Request</a></div>
+  <div id="app-note" class="banner blue" style="display:none;margin-top:10px;"></div>
+</div>
+<div class="card card-pad">
+  <div class="micro-label" style="margin-bottom:10px;">Pay money in</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+    <a href="screen-34-topup.html?for=balance&from=fin" class="btn ghost sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Top up balance</a>
+    <a href="screen-34-topup.html?for=repay&from=fin" class="btn ghost sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg> Repay</a>
+  </div>
+  <div class="body-text" style="font-size:11.5px;margin-top:10px;">Deposit to your Swich account, upload the slip, and we credit it once confirmed.</div>
+</div>
+<div>
+  <div class="micro-label" style="margin:2px 2px 8px;">Financing activity</div>
+  <div class="card" id="acts"></div>
+</div>
+
+</div>
+      </div>
+<div class="bottom-nav">
+  <a href="screen-15-dashboard.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1h-5v-7H9v7H4a1 1 0 01-1-1z"/></svg> Home</a>
+  <a href="screen-16-transaction-list.html" class="nav-tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Activity</a>
+  <a href="screen-04-idle.html" class="nav-tab collect"><span class="fab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Collect</a>
+  <a href="screen-23-pay.html" class="nav-tab" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg> Pay</a>
+  <a href="screen-33-financing.html" class="nav-tab active" data-role-show="owner,branch_manager,solo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Financing</a>
+</div>
+    </div>
+
+
+  </div>
+  <div class="frame-caption"><b>Screen 33</b> — Financing — pull, borrow, top up &amp; repay</div>
+</div>
+</div>
+
+<div class="mockup-controls">
+  <div class="tag">Appearance</div>
+  <div class="theme-switcher">
+    <button data-theme-btn="dark" class="active" onclick="setTheme('dark')">Dark</button>
+    <button data-theme-btn="light" onclick="setTheme('light')">Light</button>
+  </div>
+  <div class="tag">Demo role (Cashier sees Collect + own Activity only)</div>
+  <div class="role-switcher">
+    <button data-role-btn="owner" onclick="setRole('owner')">Owner</button>
+    <button data-role-btn="branch_manager" onclick="setRole('branch_manager')">Branch Manager</button>
+    <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
+    <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
+  </div>
+  <div class="tag" style="margin-top:6px;">Demo: lender / ops decision</div>
+  <button onclick="decideTopup((pendingTopups()[0]||{}).id,true);render()">Approve latest top-up</button><button onclick="decideTopup((pendingTopups()[0]||{}).id,false);render()">Decline latest top-up</button>
+  <div class="tag" style="margin-top:6px;">Demo data</div>
+  <button onclick="finReset()">↺ Reset finance demo data</button>
+  <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script src="assets/finance.js"></script>
+<script>
+
+const BELOW = [10000, 25000, 50000], PULL = [25000, 50000, 100000];
+function chips(id, arr, cur, fn){ byId(id).innerHTML = arr.map(v => '<span class="filter-option' + (v===cur ? ' selected' : '') + '" onclick="' + fn + '(' + v + ')">' + rs(v) + '</span>').join(''); }
+function toggleAuto(){ FS.auto.on = !FS.auto.on; finSave(); render(); }
+function setBelow(v){ FS.auto.below = v; finSave(); render(); }
+function setPullAmt(v){ FS.auto.amt = v; finSave(); render(); }
+function render(){
+  const avail = 300000 - FS.used;
+  byId('rf-avail').textContent = num(avail); byId('rf-used').textContent = 'Used ' + rs(FS.used);
+  byId('rf-meter').style.width = (FS.used/300000*100) + '%';
+  const b = byId('rf-badge'); b.className = 'badge ' + (avail===0 ? 'amber' : 'green'); b.textContent = avail===0 ? 'Fully used' : 'Active';
+  byId('pull-btn').style.opacity = avail===0 ? .5 : 1;
+  byId('auto-sw').classList.toggle('on', FS.auto.on); byId('auto-opts').style.display = FS.auto.on ? 'block' : 'none';
+  chips('auto-below', BELOW, FS.auto.below, 'setBelow'); chips('auto-amt', PULL, FS.auto.amt, 'setPullAmt');
+  const act = activeLoans(), nx = nextInstallment();
+  byId('loan-badge').textContent = act.length + ' active · view';
+  byId('loan-kv').innerHTML = act.length
+    ? '<div class="kv"><span>Next installment</span><b>' + rs(nx.amt) + ' · ' + nx.d.replace(/, \d{4}/,'') + '</b></div><div class="kv"><span>Outstanding</span><b>' + rs(totalOutstanding()) + '</b></div>'
+    : '<div class="body-text" style="font-size:13px;">No active loans.</div>';
+  const rev = FS.apps.filter(a => a.status==='review');
+  const n = byId('app-note'); n.style.display = rev.length ? 'flex' : 'none';
+  if (rev.length) n.innerHTML = '<div>' + rev.length + ' loan application' + (rev.length>1?'s':'') + ' under review · <a href="screen-31-my-loans.html#pending" class="pill-link">track</a></div>';
+  const pt = pendingTopups(), pn = byId('pend-note'); pn.style.display = pt.length ? 'flex' : 'none';
+  if (pt.length) byId('pend-t').textContent = pt.length + ' deposit request' + (pt.length>1?'s':'') + ' under review';
+  byId('acts').innerHTML = FS.acts.filter(t => t.type==='credit' || t.type==='topup').slice(0,4).map(actRow).join('');
+}
+render();
+
+</script>
+</body>
+</html>

@@ -39,13 +39,14 @@
 <div class="card card-pad" style="padding-top:6px;padding-bottom:6px;">
   <div class="kv"><span>To</span><b id="r-to">Ali Traders</b></div>
   <div class="kv"><span>Account</span><b id="r-acct">HBL · ···· 4521</b></div>
+  <div class="kv" id="r-onetime" style="display:none;"><span>Recipient</span><b id="r-onetime-v"></b></div>
   <div class="kv"><span>Method</span><b id="r-rail">Raast · Instant</b></div>
   <div class="kv"><span>Purpose</span><b id="r-purpose">Vendor payment</b></div>
   <div class="kv"><span>Reference</span><b id="r-ref">Invoice #1182</b></div>
   <div class="kv"><span>Fee</span><b id="r-fee">Rs 0</b></div>
   <div class="kv"><span>Total debit</span><b id="r-tot">Rs 25,000.00</b></div>
 </div>
-<div id="r-over" class="error-box" style="display:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span style="flex:1;">Balance is now lower than this transfer.</span><a href="screen-29-running-finance.html" class="pill-link" style="color:var(--red);text-decoration:underline;">Pull funds</a></div>
+<div id="r-over" class="error-box" style="display:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span style="flex:1;">Balance is now lower than this transfer.</span><a href="screen-33-financing.html" class="pill-link" style="color:var(--red);text-decoration:underline;">Add funds</a></div>
 <div class="banner blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div>Instant transfers can't be reversed. Check the account title before you confirm.</div></div>
 
 </div><div class="fin-footer">
@@ -140,11 +141,14 @@
 <script>
 
 const Q = new URLSearchParams(location.search);
-const P = payee(Q.get('to')) || payee('AT');
+const ONE = Q.get('to') === 'ONE' || (Q.get('name') && Q.get('s'));
+const P = ONE ? { id: Q.get('pid') || 'ONE', n: Q.get('name'), s: Q.get('s'), t: Q.get('type') || 'bank', av: '' } : (payee(Q.get('to')) || payee('AT'));
+const SAVE = Q.get('save') === '1';
+const RECIP = ONE ? 'to=' + Q.get('to') + '&pid=' + (Q.get('pid')||'') + '&name=' + encodeURIComponent(Q.get('name')) + '&s=' + encodeURIComponent(Q.get('s')) + '&type=' + P.t + '&save=' + (SAVE?1:0) : 'to=' + P.id;
 const AMT = parseInt(Q.get('amt')) || 25000, RAIL = Q.get('rail') === 'ibft' ? 'ibft' : 'raast';
 const FEE = RAIL === 'ibft' ? 15 : 0, TOT = AMT + FEE, RAILN = RAIL === 'ibft' ? 'IBFT' : 'Raast';
 const REF = (RAIL==='ibft' ? 'IBF' : 'RST') + '-20261104-' + (10000 + Math.floor(Math.random()*89999));
-const TXX = { to: P.n, acct: P.s, rail: RAILN, purpose: Q.get('purpose') || 'Vendor payment', note: Q.get('ref') || '', ref: REF, fee: FEE, payee: P.id, amt: AMT, railKey: RAIL };
+const TXX = { onetime: (ONE && !SAVE) ? { n: P.n, s: P.s, t: P.t } : null, to: P.n, acct: P.s, rail: RAILN, purpose: Q.get('purpose') || 'Vendor payment', note: Q.get('ref') || '', ref: REF, fee: FEE, payee: (ONE && !SAVE) ? 'ONE' : P.id, amt: AMT, railKey: RAIL };
 let pinLen = 0, outcome = 'success', settled = false, wrongPin = false, wrongCount = 0;
 byId('r-amt').textContent = num(AMT);
 byId('r-to').textContent = P.n; byId('r-acct').textContent = P.s;
@@ -154,13 +158,16 @@ byId('r-ref').textContent = Q.get('ref') || '—';
 byId('r-fee').textContent = rs(FEE); byId('r-tot').textContent = rs(TOT) + '.00';
 byId('pin-sub').textContent = 'To send ' + rs(AMT) + ' to ' + P.n;
 const qs = location.search || '';
-byId('edit').href = 'screen-24-send-money.html?to=' + P.id + '&amt=' + AMT + '&rail=' + RAIL;
+byId('edit').href = 'screen-24-send-money.html?' + RECIP + '&amt=' + AMT + '&rail=' + RAIL;
+if (ONE) byId('r-onetime').style.display = 'flex';
+byId('r-onetime-v').textContent = SAVE ? 'New recipient · will be saved to payees' : 'One-time · not saved';
 byId('retry').href = byId('edit').href;
 if (TOT > FS.balance) { byId('r-over').style.display = 'flex'; byId('confirm').disabled = true; }
 
 function setOutcome(o){ outcome = o; ['success','failed','pending'].forEach(x => byId('oc-'+x).classList.toggle('active', x===o)); }
 function settle(kind){
   if (settled) return; settled = true;
+  if (SAVE && kind !== 'failed' && !payee(P.id)) { FS.payees.push({ id: P.id, av: (P.n.split(' ').map(w => w[0]).join('').slice(0,2)).toUpperCase(), n: P.n, s: P.s, t: P.t }); finSave(); }
   if (kind === 'success') finTx('send', P.n, RAILN, -TOT, 'transfer', TXX);
   if (kind === 'pending') finTx('send', P.n, RAILN, -TOT, 'transfer', TXX, 'pending');
 }

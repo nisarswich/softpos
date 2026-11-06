@@ -62,8 +62,9 @@
   </div>
   <div class="tag" style="margin-top:6px;">Jump to a sample</div>
   <button onclick="location.search='?id=TXN-88231'">Card sale</button><button onclick="location.search='?id=LNK-4521'">Link pending</button><button onclick="location.search='?id=LNK-219'">Link expired</button><button onclick="location.search='?id=TXN-88074'">Declined</button>
-  <button onclick="location.search='?id=TX-0901'">Transfer</button><button onclick="location.search='?id=TX-0904'">Bill</button><button onclick="location.search='?id=TX-0902'">Airtime</button><button onclick="location.search='?id=TX-0903'">Credit pull</button><button onclick="location.search='?id=STL-1103'">Settlement</button>
+  <button onclick="location.search='?id=TX-0901'">Transfer</button><button onclick="location.search='?id=TX-0904'">Bill</button><button onclick="location.search='?id=TX-0902'">Airtime</button><button onclick="location.search='?id=TX-0903'">Financing</button><button onclick="location.search='?id=TU-0801'">Top-up</button><button onclick="location.search='?id=STL-1103'">Settlement</button>
   <div class="tag" style="margin-top:6px;">Demo</div><button id="paybtn" style="display:none" onclick="markLinkPaid(T.id);render()">Customer pays the link</button>
+  <span id="tu-demo" style="display:none;"><button onclick="decideTopup(T.id,true);render()">Approve request</button> <button onclick="decideTopup(T.id,false);render()">Decline request</button></span>
   <div class="tag" style="margin-top:6px;">Demo data</div>
   <button onclick="finReset()">↺ Reset finance demo data</button>
   <a href="index.html" class="back" style="width:100%;text-align:center;margin-top:6px;">← All screens</a>
@@ -79,9 +80,9 @@ const STN = { success: 'Completed', pending: 'Pending', expired: 'Expired', decl
 const STC = { success: 'green', pending: 'blue', expired: 'neutral', declined: 'red', failed: 'amber' };
 const kv = (k, v) => '<div class="kv"><span>' + k + '</span><b>' + v + '</b></div>';
 const btn = (cls, label, href, onclick) => href ? '<a class="btn ' + cls + ' block" href="' + href + '">' + label + '</a>' : '<button class="btn ' + cls + ' block" onclick="' + onclick + '">' + label + '</button>';
-const LABEL = { sale: 'Sale', link: 'Payment link', settlement: 'Settlement', transfer: 'Money sent', bill: 'Bill payment', airtime: 'Airtime', credit: 'Credit' };
+const LABEL = { sale: 'Sale', link: 'Payment link', settlement: 'Settlement', transfer: 'Money sent', bill: 'Bill payment', airtime: 'Airtime', credit: 'Financing', topup: 'Deposit request' };
 function render(){
-  T = txById(T.id); const x = T.x || {}, pos = T.a > 0, ok = T.st === 'success';
+  T = txById(T.id); byId('tu-demo').style.display = 'none'; const x = T.x || {}, pos = T.a > 0, ok = T.st === 'success';
   byId('d-ico').innerHTML = icn(T.i, 22); byId('d-ico').style.color = 'var(--brand-teal)';
   byId('d-title').textContent = T.t;
   const a = byId('d-amt'); a.textContent = (pos ? '+ ' : '− ') + rs(Math.abs(T.a)); a.style.color = (['declined','failed','expired'].includes(T.st) ? 'var(--text-faint)' : (pos && ok ? 'var(--green)' : 'var(--heading)'));
@@ -105,7 +106,7 @@ function render(){
   if (T.type === 'transfer') {
     rows = kv('To', x.to) + kv('Account', x.acct) + kv('Method', (x.rail || 'Raast') + ' · Instant') + kv('Purpose', x.purpose || '—') + (x.note ? kv('Note', x.note) : '') + kv('Fee', rs(x.fee || 0)) + kv('When', T.time) + kv('Reference', '<span class="mono" style="font-size:12px">' + (x.ref || T.id) + '</span>');
     if (T.st === 'pending') banner = '<div class="banner amber">' + '<div>The receiving bank is still confirming. This amount is on hold and returns to your balance if it fails.</div></div>';
-    foot = btn('primary', 'Pay again', 'screen-24-send-money.html?to=' + (x.payee || 'AT') + '&amt=' + (Math.abs(T.a) - (x.fee || 0)) + '&rail=' + (x.railKey || 'raast')) + btn('ghost', 'Share receipt', '', '');
+    const ot = x.onetime; foot = btn('primary', 'Pay again', 'screen-24-send-money.html?' + (ot ? 'to=ONE&name=' + encodeURIComponent(ot.n) + '&s=' + encodeURIComponent(ot.s) + '&type=' + ot.t : 'to=' + (x.payee || 'AT')) + '&amt=' + (Math.abs(T.a) - (x.fee || 0)) + '&rail=' + (x.railKey || 'raast')) + btn('ghost', 'Share receipt', '', '');
   }
   if (T.type === 'bill') { rows = kv('Biller', x.biller) + kv('Consumer no.', x.refno) + kv('When', T.time) + kv('Reference', '<span class="mono" style="font-size:12px">' + (x.ref || T.id) + '</span>'); foot = btn('primary', 'Pay a bill again', 'screen-27-pay-bills.html') + btn('ghost', 'Share receipt', '', ''); }
   if (T.type === 'airtime') { rows = kv('Operator', x.op + ' · ' + (x.kind || 'Prepaid')) + kv('Number', x.num) + kv('When', T.time) + kv('Reference', '<span class="mono" style="font-size:12px">' + (x.ref || T.id) + '</span>'); foot = btn('primary', 'Send airtime again', 'screen-28-airtime.html') + btn('ghost', 'Share receipt', '', ''); }
@@ -115,9 +116,19 @@ function render(){
     rows = kv('Product', loan ? 'Loan ' + x.loan : 'Running finance') + kv('Direction', pos ? 'Added to your balance' : 'Paid from your balance') + kv('When', T.time) + kv('Reference', '<span class="mono" style="font-size:12px">' + T.id + '</span>');
     foot = btn('primary', loan ? 'View loan' : 'Open running finance', loan ? 'screen-32-loan-detail.html?loan=' + x.loan : 'screen-29-running-finance.html');
   }
+
+  if (T.type === 'topup') {
+    const forL = x.kind === 'balance' ? 'Add to balance' : (x.kind === 'rf' ? 'Repay running finance' : 'Repay loan ' + x.loan);
+    rows = kv('Request', '<span class="mono" style="font-size:12px">' + T.id + '</span>') + kv('For', forL) + kv('Amount', rs(x.amt)) + kv('Slip', x.slip || 'deposit-slip.jpg') + kv('Submitted', T.time);
+    if (T.st === 'pending') { banner = '<div class="banner blue"><div>Under review — usually within 30 minutes. ' + (x.kind === 'balance' ? 'Your balance is credited as soon as the deposit is confirmed.' : 'The repayment is applied as soon as the deposit is confirmed.') + '</div></div>'; foot = btn('danger-ghost', 'Cancel request', '', 'cancelTopup()'); byId('tu-demo').style.display = 'block'; }
+    if (T.st === 'declined') { banner = '<div class="banner red"><div>' + (x.reason || 'Request declined') + '. Upload a clearer slip and try again.</div></div>'; foot = btn('primary', 'Submit again', 'screen-34-topup.html?for=' + (x.kind === 'balance' ? 'balance' : 'repay')); }
+    if (T.st === 'expired') { banner = '<div class="banner"><div style="color:var(--text-dim)">Cancelled by you.</div></div>'; foot = btn('primary', 'Start a new request', 'screen-34-topup.html?for=balance'); }
+    if (ok) foot = btn('ghost', 'Share receipt', '', '');
+  }
   byId('d-kv').innerHTML = rows; byId('d-banner').innerHTML = banner; byId('d-foot').innerHTML = foot;
   if (T.type === 'link' && T.st !== 'pending') byId('paybtn').style.display = 'none';
 }
+function cancelTopup(){ T.st = 'expired'; finSave(); render(); }
 function cancelLink(){ T.st = 'expired'; T.x.cancelled = 'cashier-nisar'; finSave(); render(); }
 render();
 

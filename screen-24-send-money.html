@@ -33,7 +33,8 @@
 <div class="fin-scroll">
 
 <div class="sec-head" style="font-size:12.5px;"><span class="body-text">Available balance</span><b style="color:var(--heading);" id="bal">Rs 184,250.00</b></div>
-<div>
+<div class="segmented" id="mode-seg"><button class="active" id="m-saved" onclick="setMode('saved')">Saved payee</button><button id="m-new" onclick="setMode('new')">New recipient</button></div>
+<div id="saved-box">
   <div class="micro-label" style="margin-bottom:8px;">To</div>
   <a href="screen-26-beneficiaries.html" id="change" class="card" style="display:flex;align-items:center;gap:12px;padding:14px 16px;text-decoration:none;">
     <div class="avatar" id="b-av">AT</div>
@@ -41,10 +42,20 @@
     <span class="pill-link">Change</span>
   </a>
 </div>
+<div id="new-box" style="display:none;">
+  <div class="micro-label" style="margin-bottom:8px;">Pay to</div>
+  <div class="segmented" style="margin-bottom:12px;"><button class="active" id="ot-bank-t" onclick="setOtType('bank')">Account / IBAN</button><button id="ot-raast-t" onclick="setOtType('raast')">Raast ID</button></div>
+  <div id="ot-bank-f" class="field"><label>Bank</label><select id="ot-bank"><option>HBL</option><option selected>Meezan</option><option>UBL</option><option>Bank Alfalah</option><option>Allied Bank</option></select></div>
+  <div class="field" style="margin:0;"><label id="ot-lbl">Account number or IBAN</label><input id="ot-num" placeholder="PK36 SCBL 0000 0011 2345 6702" value="PK55 MEZN 0001 2345 6789 0987" oninput="otReset()"></div>
+  <div id="ot-err" class="error-box" style="display:none;font-size:12.5px;margin-top:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="ot-err-t"></span></div>
+  <button class="btn ghost block" id="ot-verify" style="margin-top:12px;" onclick="otVerify()">Verify account title</button>
+  <div id="ot-ok" class="banner green" style="display:none;margin-top:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><div><strong style="color:var(--green);" id="ot-name">GREEN VALLEY MART</strong><br><span style="font-size:12px;">Account title found · one-time payment</span></div></div>
+  <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim);margin-top:12px;"><input type="checkbox" id="ot-save"> Save to my payees after sending</label>
+</div>
 <div style="text-align:center;">
   <div class="micro-label">Amount</div>
   <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;"><span class="amount-currency" style="font-size:20px;margin:0;">Rs</span><input id="amt" class="amount-input" style="width:230px;" value="25,000" inputmode="numeric" oninput="update()"></div>
-  <div id="over" class="error-box" style="display:none;margin-top:8px;text-align:left;font-size:12.5px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span style="flex:1;">More than your available balance.</span><a href="screen-29-running-finance.html" class="pill-link" style="color:var(--red);text-decoration:underline;">Pull from running finance</a></div>
+  <div id="over" class="error-box" style="display:none;margin-top:8px;text-align:left;font-size:12.5px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span style="flex:1;">More than your available balance.</span><a href="screen-33-financing.html" class="pill-link" style="color:var(--red);text-decoration:underline;">Add funds</a></div>
 </div>
 <div>
   <div class="micro-label" style="margin-bottom:8px;">Transfer method</div>
@@ -88,9 +99,9 @@
     <button data-role-btn="solo" onclick="setRole('solo')">Solo owner</button>
     <button data-role-btn="cashier" onclick="setRole('cashier')">Cashier only</button>
   </div>
-  <div class="tag" style="margin-top:6px;">Payee type</div>
-  <button id="cb-bank" class="active" onclick="setBene('AT')">Bank account</button>
-  <button id="cb-raast" onclick="setBene('FW')">Raast ID only</button>
+  <div class="tag" style="margin-top:6px;">Payee type (saved mode)</div>
+  <button id="cb-bank" class="active" onclick="setMode('saved');setBene('AT')">Bank account</button>
+  <button id="cb-raast" onclick="setMode('saved');setBene('FW')">Raast ID only</button>
   <div class="tag" style="margin-top:6px;">Amount</div>
   <button id="ca-ok" class="active" onclick="setAmt('ok')">Within balance</button>
   <button id="ca-over" onclick="setAmt('over')">Exceeds balance</button>
@@ -105,27 +116,60 @@
 
 const Q = new URLSearchParams(location.search);
 let P = payee(Q.get('to')) || payee('AT'), rail = Q.get('rail') === 'ibft' ? 'ibft' : 'raast';
+let mode = 'saved', otType = 'bank', otCand = null;
+function recipT(){ return mode==='saved' ? P.t : otType; }
 function pickRail(r){
   if (byId('rail-'+r).classList.contains('disabled')) return;
-  rail = r;
-  ['raast','ibft'].forEach(x => byId('rail-'+x).classList.toggle('selected', x===r));
-  update();
+  rail = r; ['raast','ibft'].forEach(x => byId('rail-'+x).classList.toggle('selected', x===r)); update();
+}
+function applyRail(){
+  const raastOnly = recipT() === 'raast';
+  byId('rail-ibft').classList.toggle('disabled', raastOnly);
+  byId('ibft-d').textContent = raastOnly ? 'Not available — Raast ID recipients only' : 'Fee Rs 15 · bank account transfers only';
+  if (raastOnly) { rail = 'raast'; ['raast','ibft'].forEach(x => byId('rail-'+x).classList.toggle('selected', x==='raast')); }
 }
 function applyPayee(){
   byId('b-av').textContent = P.av; byId('b-name').textContent = P.n;
   byId('b-sub').textContent = P.s + (P.t==='bank' ? ' · title verified' : '');
-  const ib = byId('rail-ibft');
-  ib.classList.toggle('disabled', P.t==='raast');
-  byId('ibft-d').textContent = P.t==='raast' ? 'Not available — this payee has only a Raast ID' : 'Fee Rs 15 · bank account transfers only';
-  if (P.t==='raast') { rail = 'raast'; ['raast','ibft'].forEach(x => byId('rail-'+x).classList.toggle('selected', x==='raast')); }
-  byId('cb-bank').classList.toggle('active', P.t==='bank' && P.id==='AT'); byId('cb-raast').classList.toggle('active', P.id==='FW');
+  byId('cb-bank').classList.toggle('active', mode==='saved' && P.id==='AT'); byId('cb-raast').classList.toggle('active', mode==='saved' && P.id==='FW');
+  applyRail();
+}
+function setMode(m){
+  mode = m;
+  byId('m-saved').classList.toggle('active', m==='saved'); byId('m-new').classList.toggle('active', m==='new');
+  byId('saved-box').style.display = m==='saved' ? 'block' : 'none'; byId('new-box').style.display = m==='new' ? 'block' : 'none';
+  applyRail(); update();
+}
+function setOtType(t){
+  otType = t;
+  byId('ot-bank-t').classList.toggle('active', t==='bank'); byId('ot-raast-t').classList.toggle('active', t==='raast');
+  byId('ot-bank-f').style.display = t==='bank' ? 'block' : 'none';
+  byId('ot-lbl').textContent = t==='bank' ? 'Account number or IBAN' : 'Mobile number (Raast ID)';
+  byId('ot-num').value = t==='bank' ? 'PK55 MEZN 0001 2345 6789 0987' : '0333 5550321';
+  byId('ot-num').placeholder = t==='bank' ? 'PK36 SCBL 0000 0011 2345 6702' : '03XX XXXXXXX';
+  byId('ot-verify').textContent = t==='bank' ? 'Verify account title' : 'Verify Raast ID';
+  otReset(); applyRail(); update();
+}
+function otReset(){ otCand = null; byId('ot-ok').style.display = 'none'; byId('ot-err').style.display = 'none'; update(); }
+function otVerify(){
+  otReset();
+  const raw = byId('ot-num').value, digits = raw.replace(/\D/g,'');
+  if ((otType==='bank' && raw.replace(/\s/g,'').length < 12) || (otType==='raast' && digits.length !== 11)) {
+    byId('ot-err').style.display = 'flex';
+    byId('ot-err-t').textContent = otType==='bank' ? 'Enter a valid account number or IBAN.' : 'Enter an 11-digit mobile number, e.g. 0333 5550321.'; return;
+  }
+  const last4 = digits.slice(-4), title = otType==='bank' ? 'GREEN VALLEY MART' : 'ZARA ENTERPRISES';
+  const nm = title.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+  otCand = { id: 'N' + otType[0] + last4, n: nm, av: nm.split(' ').map(w => w[0]).join('').slice(0,2), t: otType,
+             s: otType==='bank' ? byId('ot-bank').value + ' · ···· ' + last4 : 'Raast ID · ' + digits.slice(0,4) + ' ···· ' + digits.slice(-3) };
+  byId('ot-name').textContent = title; byId('ot-ok').style.display = 'flex'; update();
 }
 function update(){
   const a = intOf('amt'), fee = rail==='ibft' ? 15 : 0, tot = a + fee, over = tot > FS.balance;
   byId('bal').textContent = rs(FS.balance) + '.00';
   byId('s-amt').textContent = rs(a); byId('s-fee').textContent = rs(fee); byId('s-tot').textContent = rs(tot);
   byId('over').style.display = over ? 'flex' : 'none';
-  byId('cta').disabled = (a <= 0 || over);
+  byId('cta').disabled = (a <= 0 || over || (mode==='new' && !otCand));
   byId('change').href = 'screen-26-beneficiaries.html?pick=1&to=' + P.id + '&amt=' + a + '&rail=' + rail;
 }
 function setBene(id){ P = payee(id); applyPayee(); update(); }
@@ -134,10 +178,17 @@ function setAmt(k){
   byId('amt').value = num(k==='over' ? FS.balance + 50000 : 25000); update();
 }
 function goReview(){
-  location.href = 'screen-25-send-confirm.html?to=' + P.id + '&amt=' + intOf('amt') + '&rail=' + rail +
-    '&purpose=' + encodeURIComponent(byId('purpose').value) + '&ref=' + encodeURIComponent(byId('ref').value);
+  const base = '&amt=' + intOf('amt') + '&rail=' + rail + '&purpose=' + encodeURIComponent(byId('purpose').value) + '&ref=' + encodeURIComponent(byId('ref').value);
+  if (mode === 'saved') { location.href = 'screen-25-send-confirm.html?to=' + P.id + base; return; }
+  const exists = payee(otCand.id);
+  location.href = 'screen-25-send-confirm.html?to=' + (exists ? otCand.id : 'ONE') + '&pid=' + otCand.id + '&name=' + encodeURIComponent(otCand.n) + '&s=' + encodeURIComponent(otCand.s) + '&type=' + otCand.t + '&save=' + (byId('ot-save').checked && !exists ? 1 : 0) + base;
 }
 if (Q.get('amt')) byId('amt').value = num(parseInt(Q.get('amt')));
+if (Q.get('to') === 'ONE') {
+  setMode('new'); setOtType(Q.get('type') === 'raast' ? 'raast' : 'bank');
+  otCand = { id: Q.get('pid') || 'ONE', n: Q.get('name'), av: (Q.get('name') || 'NA').split(' ').map(w => w[0]).join('').slice(0,2), t: Q.get('type'), s: Q.get('s') };
+  byId('ot-name').textContent = otCand.n.toUpperCase(); byId('ot-ok').style.display = 'flex';
+} else if (Q.get('mode') === 'new') setMode('new');
 applyPayee(); update();
 
 </script>
